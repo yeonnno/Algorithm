@@ -17,8 +17,8 @@ public class BOJ_10971_외판원순회2 {
         StringTokenizer st = null;
 
         N = Integer.parseInt(br.readLine());
-
         W = new int[N][N];
+        
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
