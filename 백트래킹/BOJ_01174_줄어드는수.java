@@ -37,7 +37,7 @@ public class BOJ_01174_줄어드는수 {
 
         if (depth > 9) return;
 
-        backtrack(depth+1, (num*10) + number[depth]);
+        backtrack(depth + 1, (num * 10) + number[depth]);
         backtrack(depth + 1, num);
     }
 }
