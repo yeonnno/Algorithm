@@ -40,6 +40,7 @@ public class BOJ_02529_부등호 {
     private static void backtrack(int depth, String num) {
         if (depth == K + 1) {
             list.add(num);
+            
         } else {
             for (int i = 0; i < 10; i++) {
                 if (visited[i]) continue;
