@@ -16,7 +16,6 @@ public class BOJ_13908_비밀번호 {
         M = sc.nextInt();
 
         visited = new boolean[10];
-
         for (int i = 0; i < M; i++) {
             visited[sc.nextInt()] = true;
         }
@@ -29,9 +28,11 @@ public class BOJ_13908_비밀번호 {
 
     private static void backtrack(int depth, int numCnt) {
         if (depth == N) {
+            
             if (numCnt == M) res++;
             
         } else {
+            
             for (int i = 0; i < 10; i++) {
                 if (visited[i]) {
                     visited[i] = false;
