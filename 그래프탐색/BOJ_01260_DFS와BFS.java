@@ -9,8 +9,8 @@ import java.util.*;
 public class BOJ_01260_DFS와BFS {
 
     static int N, M, V;
-    static ArrayList<Integer>[] adj;
     static boolean[] visited;
+    static ArrayList<Integer>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,11 +28,11 @@ public class BOJ_01260_DFS와BFS {
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
-            adj[s].add(e);
-            adj[e].add(s);
+            adj[a].add(b);
+            adj[b].add(a);
         }
 
         for (int i = 0; i <= N; i++) {
@@ -48,29 +48,28 @@ public class BOJ_01260_DFS와BFS {
         BFS(V);
     }
 
-    private static void DFS(int v) {
-        visited[v] = true;
-        System.out.print(v + " ");
+    private static void DFS(int now) {
+        visited[now] = true;
+        System.out.print(now + " ");
 
-        for (int i = 0; i < adj[v].size(); i++) {
-            int next = adj[v].get(i);
+        for (int i = 0; i < adj[now].size(); i++) {
+            int next = adj[now].get(i);
 
             if (!visited[next]) {
-                visited[next] = true;
                 DFS(next);
             }
         }
     }
 
-    private static void BFS(int v) {
+    private static void BFS(int start) {
         Queue<Integer> Q = new LinkedList<>();
-        visited[v] = true;
-        Q.add(v);
+        Q.add(start);
+        visited[start] = true;
 
         while (!Q.isEmpty()) {
             int now = Q.poll();
-
             System.out.print(now + " ");
+
             for (int i = 0; i < adj[now].size(); i++) {
                 int next = adj[now].get(i);
 
@@ -79,7 +78,6 @@ public class BOJ_01260_DFS와BFS {
                     Q.add(next);
                 }
             }
-
         }
     }
 }
