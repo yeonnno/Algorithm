@@ -4,13 +4,16 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class BOJ_02606_바이러스 {
 
     static int V, E, res;
-    static ArrayList<Integer>[] adj;
     static boolean[] visited;
+    static ArrayList<Integer>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -53,8 +56,8 @@ public class BOJ_02606_바이러스 {
 
                 if (!visited[next]) {
                     visited[next] = true;
-                    res++;
                     Q.add(next);
+                    res++;
                 }
             }
         }
