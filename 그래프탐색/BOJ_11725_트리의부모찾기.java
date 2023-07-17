@@ -1,4 +1,3 @@
-package 그래프탐색;
 /**
  * BOJ : 11725 S2 트리의 부모 찾기
  */
@@ -13,9 +12,9 @@ import java.util.StringTokenizer;
 public class BOJ_11725_트리의부모찾기 {
 
     static int N;
-    static ArrayList<Integer>[] adj;
     static int[] parent;
     static boolean[] visited;
+    static ArrayList<Integer>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
