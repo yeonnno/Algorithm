@@ -12,7 +12,6 @@ public class BOJ_01012_유기농배추 {
 
     static int T, M, N, K, res;
     static int[][] map;
-    static boolean[][] visited;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -37,17 +36,15 @@ public class BOJ_01012_유기농배추 {
                 map[x][y] = 1;
             }
 
-            visited = new boolean[M][N];
             res = 0;
             for (int i = 0; i < M; i++) {
                 for (int j = 0; j < N; j++) {
-                    if (map[i][j] == 1 && !visited[i][j]) {
+                    if (map[i][j] == 1) {
                         res++;
                         BFS(new Point(i, j));
                     }
                 }
             }
-
             sb.append(res).append("\n");
         }
         System.out.println(sb);
@@ -55,35 +52,31 @@ public class BOJ_01012_유기농배추 {
 
     private static void BFS(Point p) {
         Queue<Point> Q = new LinkedList<>();
-        visited[p.x][p.y] = true;
         Q.add(p);
+        map[p.x][p.y] = 0;
 
         while (!Q.isEmpty()) {
             Point now = Q.poll();
-            int x = now.x;
-            int y = now.y;
 
             for (int d = 0; d < 4; d++) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
 
                 if (!isPossible(nx, ny)) continue;
-                if (visited[nx][ny] || map[nx][ny] == 0) continue;
+                if (map[nx][ny] != 1) continue;
 
-                visited[nx][ny] = true;
                 Q.add(new Point(nx, ny));
+                map[nx][ny] = 0;
             }
         }
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < M && ny >= 0 && ny < N) {
-            return true;
-        }
-        return false;
+        if (nx >= 0 && nx < M && ny >= 0 && ny < N) return true;
+        else return false;
     }
 
-    static class Point {
+    private static class Point {
         int x;
         int y;
 
