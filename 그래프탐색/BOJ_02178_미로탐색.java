@@ -10,9 +10,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_02178_미로탐색 {
 
-    static int N, M, res;
-    static int[][] map;
-    static boolean[][] visited;
+    static int N, M;
+    static int[][] map, dist;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -25,45 +24,41 @@ public class BOJ_02178_미로탐색 {
         M = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
+        dist = new int[N][M];
         for (int i = 0; i < N; i++) {
-            String s = br.readLine();
+            String tmp = br.readLine();
             for (int j = 0; j < M; j++) {
-                map[i][j] = s.charAt(j) - '0';
+                map[i][j] = tmp.charAt(j) - '0';
+                dist[i][j] = Integer.MAX_VALUE;
             }
         }
 
-        res = 0;
-        visited = new boolean[N][M];
-        BFS(new Point(0, 0, 1));
+        BFS(new Point(0, 0));
 
-        System.out.println(res);
+        System.out.println(dist[N-1][M-1]);
     }
 
     private static void BFS(Point p) {
         Queue<Point> Q = new LinkedList<>();
         Q.add(p);
-        visited[p.x][p.y] = true;
+        dist[p.x][p.y] = 1;
 
         while (!Q.isEmpty()) {
             Point now = Q.poll();
             int x = now.x;
             int y = now.y;
-            int cnt = now.cnt;
 
             for (int d = 0; d < 4; d++) {
                 int nx = x + dx[d];
                 int ny = y + dy[d];
 
-                if (nx == N - 1 && ny == M - 1) {
-                    res = cnt+1;
-                    return;
-                }
-
                 if (!isPossible(nx, ny)) continue;
-                if (visited[nx][ny] || map[nx][ny] == 0) continue;
+                if (map[nx][ny] != 1) continue;
 
-                Q.add(new Point(nx, ny, cnt + 1));
-                visited[nx][ny] = true;
+                if (dist[nx][ny] > dist[x][y] + 1) {
+                    dist[nx][ny] = dist[x][y] + 1;
+                    Q.add(new Point(nx, ny));
+                }
             }
         }
     }
@@ -76,12 +71,10 @@ public class BOJ_02178_미로탐색 {
     static class Point {
         int x;
         int y;
-        int cnt;
 
-        Point(int x, int y, int cnt) {
+        Point(int x, int y) {
             this.x = x;
             this.y = y;
-            this.cnt = cnt;
         }
     }
 }
