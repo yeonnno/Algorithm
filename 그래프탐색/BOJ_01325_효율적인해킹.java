@@ -12,13 +12,14 @@ import java.util.StringTokenizer;
 public class BOJ_01325_효율적인해킹 {
 
     static int N, M;
-    static ArrayList<Integer>[] adj;
-    static boolean[] visited;
     static int[] count;
+    static boolean[] visited;
+    static ArrayList<Integer>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
+        StringBuilder sb = new StringBuilder();
 
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
@@ -45,22 +46,20 @@ public class BOJ_01325_효율적인해킹 {
 
         int max = 0;
         for (int i = 1; i <= N; i++) {
-            if (max < count[i]) {
-                max = count[i];
-            }
+            max = Math.max(max, count[i]);
         }
 
         for (int i = 1; i <= N; i++) {
-            if (max == count[i]) {
-                System.out.print(i + " ");
-            }
+            if (count[i] == max) sb.append(i).append(" ");
         }
+
+        System.out.println(sb);
     }
 
-    private static void BFS(int start) {
+    private static void BFS(int v) {
         Queue<Integer> Q = new LinkedList<>();
-        visited[start] = true;
-        Q.add(start);
+        Q.add(v);
+        visited[v] = true;
 
         while (!Q.isEmpty()) {
             int now = Q.poll();
