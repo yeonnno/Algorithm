@@ -13,76 +13,71 @@ public class BOJ_02667_단지번호붙이기 {
 
     static int N, res;
     static int[][] map;
-    static boolean[][] visited;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
-    static ArrayList<Integer> houseCnt;
+    static ArrayList<Integer> count;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
         N = Integer.parseInt(br.readLine());
         map = new int[N][N];
-
         for (int i = 0; i < N; i++) {
-            String s = br.readLine();
+            String tmp = br.readLine();
             for (int j = 0; j < N; j++) {
-                map[i][j] = s.charAt(j) - '0';
+                map[i][j] = tmp.charAt(j) - '0';
             }
         }
 
         res = 0;
-        visited = new boolean[N][N];
-        houseCnt = new ArrayList<>();
+        count = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (map[i][j] == 1 && !visited[i][j]) {
+                if (map[i][j] == 1) {
                     res++;
                     BFS(new Point(i, j));
                 }
             }
         }
 
-        Collections.sort(houseCnt);
+        Collections.sort(count);
 
-        System.out.println(res);
-        for (int i = 0; i < houseCnt.size(); i++) {
-            System.out.println(houseCnt.get(i));
+        sb.append(res).append("\n");
+        for (int c : count) {
+            sb.append(c).append("\n");
         }
+
+        System.out.println(sb);
     }
 
     private static void BFS(Point p) {
         Queue<Point> Q = new LinkedList<>();
-        visited[p.x][p.y] = true;
         Q.add(p);
-        int cnt = 0;
+        map[p.x][p.y] = 0;
 
+        int cnt = 0;
         while (!Q.isEmpty()) {
             Point now = Q.poll();
-            int x = now.x;
-            int y = now.y;
             cnt++;
 
             for (int d = 0; d < 4; d++) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
 
                 if (!isPossible(nx, ny)) continue;
-                if (map[nx][ny] != 1 || visited[nx][ny]) continue;
+                if (map[nx][ny] == 0) continue;
 
-                visited[nx][ny] = true;
+                map[nx][ny] = 0;
                 Q.add(new Point(nx, ny));
             }
         }
-
-        houseCnt.add(cnt);
+        count.add(cnt);
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < N && ny >= 0 && ny < N) {
-            return true;
-        }
-        return false;
+        if (nx >= 0 && nx < N && ny >= 0 && ny < N) return true;
+        else return false;
     }
 
     static class Point {
