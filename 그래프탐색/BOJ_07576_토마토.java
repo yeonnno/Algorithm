@@ -12,9 +12,9 @@ public class BOJ_07576_토마토 {
 
     static int M, N, res;
     static int[][] map;
+    static Queue<Point> tomato;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
-    static Queue<Point> tomato;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,43 +39,40 @@ public class BOJ_07576_토마토 {
         res = 0;
         BFS();
 
-        if (checkTomato()) {
+        if (checkZero()) {
             System.out.println(res-1);
         } else {
             System.out.println(-1);
         }
-
     }
 
-    private static boolean checkTomato() {
+    private static boolean checkZero() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (map[i][j] == 0) {
+                if (map[i][j] == 0)
                     return false;
-                }
             }
         }
+
         return true;
     }
 
     private static void BFS() {
-        while (true) {
-            if (tomato.isEmpty()) break;
+        while (!tomato.isEmpty()) {
+            int size = tomato.size();
 
-            int size = tomato.size();;
             for (int i = 0; i < size; i++) {
                 Point now = tomato.poll();
-                int x = now.x;
-                int y = now.y;
 
                 for (int d = 0; d < 4; d++) {
-                    int nx = x + dx[d];
-                    int ny = y + dy[d];
+                    int nx = now.x + dx[d];
+                    int ny = now.y + dy[d];
 
-                    if (isPossible(nx, ny) && map[nx][ny] == 0) {
-                        map[nx][ny] = 1;
-                        tomato.add(new Point(nx, ny));
-                    }
+                    if (!isPossible(nx, ny)) continue;
+                    if (map[nx][ny] != 0) continue;
+
+                    map[nx][ny] = 1;
+                    tomato.add(new Point(nx, ny));
                 }
             }
 
@@ -84,10 +81,8 @@ public class BOJ_07576_토마토 {
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
-            return true;
-        }
-        return false;
+        if (nx >= 0 && nx < N && ny >= 0 && ny < M) return true;
+        else return false;
     }
 
     static class Point {
