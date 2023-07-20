@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
 
 public class BOJ_10026_적록색약 {
 
@@ -18,11 +17,9 @@ public class BOJ_10026_적록색약 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = null;
         StringBuilder sb = new StringBuilder();
 
         N = Integer.parseInt(br.readLine());
-
         map = new char[N][N];
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
@@ -37,7 +34,7 @@ public class BOJ_10026_적록색약 {
             for (int j = 0; j < N; j++) {
                 if (!visited[i][j]) {
                     res++;
-                    BFS(i, j, map[i][j]);
+                    BFS(new Point(i, j), map[i][j]);
                 }
             }
         }
@@ -45,9 +42,7 @@ public class BOJ_10026_적록색약 {
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (map[i][j] == 'G') {
-                    map[i][j] = 'R';
-                }
+                if (map[i][j] == 'R') map[i][j] = 'G';
             }
         }
 
@@ -57,7 +52,7 @@ public class BOJ_10026_적록색약 {
             for (int j = 0; j < N; j++) {
                 if (!visited[i][j]) {
                     res++;
-                    BFS(i, j, map[i][j]);
+                    BFS(new Point(i, j), map[i][j]);
                 }
             }
         }
@@ -66,22 +61,20 @@ public class BOJ_10026_적록색약 {
         System.out.println(sb);
     }
 
-    private static void BFS(int i, int j, char color) {
+    private static void BFS(Point p, char color) {
         Queue<Point> Q = new LinkedList<>();
-        visited[i][j] = true;
-        Q.add(new Point(i, j));
+        Q.add(p);
+        visited[p.x][p.y] = true;
 
         while (!Q.isEmpty()) {
             Point now = Q.poll();
-            int x = now.x;
-            int y = now.y;
 
             for (int d = 0; d < 4; d++) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
 
-                if (!isPossible(nx, ny)) continue;
-                if (visited[nx][ny] || map[nx][ny] != color) continue;
+                if (!isPossible(nx, ny) || visited[nx][ny]) continue;
+                if (map[nx][ny] != color) continue;
 
                 visited[nx][ny] = true;
                 Q.add(new Point(nx, ny));
@@ -91,7 +84,7 @@ public class BOJ_10026_적록색약 {
 
     private static boolean isPossible(int nx, int ny) {
         if (nx >= 0 && nx < N && ny >= 0 && ny < N) return true;
-        return false;
+        else return false;
     }
 
     static class Point {
