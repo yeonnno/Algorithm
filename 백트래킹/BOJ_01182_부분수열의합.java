@@ -38,7 +38,7 @@ public class BOJ_01182_부분수열의합 {
             if (sum == S) res++;
             return;
         }
-
+        
         backtrack(depth + 1, sum + num[depth]);
         backtrack(depth + 1, sum);
     }
