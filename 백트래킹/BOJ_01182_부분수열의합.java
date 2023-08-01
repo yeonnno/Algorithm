@@ -36,10 +36,9 @@ public class BOJ_01182_부분수열의합 {
     private static void backtrack(int depth, int sum) {
         if (depth == N) {
             if (sum == S) res++;
-            return;
+        } else {
+            backtrack(depth + 1, sum + num[depth]);
+            backtrack(depth + 1, sum);
         }
-        
-        backtrack(depth + 1, sum + num[depth]);
-        backtrack(depth + 1, sum);
     }
 }
