@@ -17,8 +17,8 @@ public class BOJ_10971_외판원순회2 {
         StringTokenizer st = null;
 
         N = Integer.parseInt(br.readLine());
+
         W = new int[N][N];
-        
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
@@ -26,7 +26,7 @@ public class BOJ_10971_외판원순회2 {
             }
         }
 
-        start = 1;
+        start = 0;
         res = Integer.MAX_VALUE;
         visited = new boolean[N];
 
@@ -34,24 +34,25 @@ public class BOJ_10971_외판원순회2 {
             visited[i] = true;
             start = i;
             travel(i, 0, 0);
+            visited[i] = false;
         }
 
         System.out.println(res);
     }
 
-    private static void travel(int idx, int cnt, int cost) {
-        if (cnt == N - 1) {
+    private static void travel(int idx, int depth, int cost) {
+        if (depth == N - 1) {
             if (W[idx][start] != 0) {
                 cost += W[idx][start];
                 res = Math.min(res, cost);
             }
         } else {
             for (int i = 0; i < N; i++) {
-                if (!visited[i] && W[idx][i] != 0) {
-                    visited[i] = true;
-                    travel(i, cnt + 1, cost + W[idx][i]);
-                    visited[i] = false;
-                }
+                if (visited[i] || W[idx][i] == 0) continue;
+
+                visited[i] = true;
+                travel(i, depth + 1, cost + W[idx][i]);
+                visited[i] = false;
             }
         }
     }
