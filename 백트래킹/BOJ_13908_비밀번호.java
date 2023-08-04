@@ -26,21 +26,19 @@ public class BOJ_13908_비밀번호 {
         System.out.println(res);
     }
 
-    private static void backtrack(int depth, int numCnt) {
+    private static void backtrack(int depth, int cnt) {
         if (depth == N) {
-            
-            if (numCnt == M) res++;
-            
-        } else {
-            
-            for (int i = 0; i < 10; i++) {
-                if (visited[i]) {
-                    visited[i] = false;
-                    backtrack(depth + 1, numCnt + 1);
-                    visited[i] = true;
-                } else {
-                    backtrack(depth + 1, numCnt);
-                }
+            if (cnt == M) res++;
+            return;
+        }
+
+        for (int cur = 0; cur < 10; cur++) {
+            if (visited[cur]) {
+                visited[cur] = false;
+                backtrack(depth + 1, cnt + 1);
+                visited[cur] = true;
+            } else {
+                backtrack(depth + 1, cnt);
             }
         }
     }
