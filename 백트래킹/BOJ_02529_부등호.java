@@ -29,7 +29,6 @@ public class BOJ_02529_부등호 {
 
         visited = new boolean[10];
         list = new ArrayList<>();
-
         backtrack(0, "");
 
         sb.append(list.get(list.size() - 1)).append("\n").append(list.get(0));
@@ -40,24 +39,24 @@ public class BOJ_02529_부등호 {
     private static void backtrack(int depth, String num) {
         if (depth == K + 1) {
             list.add(num);
-            
-        } else {
-            for (int i = 0; i < 10; i++) {
-                if (visited[i]) continue;
+            return;
+        }
 
-                if (depth == 0 || compare(num.charAt(depth - 1) - '0', i, arr[depth - 1])) {
-                    visited[i] = true;
-                    backtrack(depth + 1, num + i);
-                    visited[i] = false;
-                }
+        for (int i = 0; i < 10; i++) {
+            if (visited[i]) continue;
+
+            if (depth == 0 || compare(num.charAt(depth - 1) - '0', i, arr[depth - 1])) {
+                visited[i] = true;
+                backtrack(depth + 1, num + i);
+                visited[i] = false;
             }
         }
     }
 
-    private static boolean compare(int a, int b, char c) {
-        if (c == '<') {
+    private static boolean compare(int a, int b, char op) {
+        if (op == '<') {
             if (a < b) return true;
-        } else if (c == '>') {
+        } else if (op == '>'){
             if (a > b) return true;
         }
         return false;
