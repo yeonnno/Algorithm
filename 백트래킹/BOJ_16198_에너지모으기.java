@@ -33,14 +33,15 @@ public class BOJ_16198_에너지모으기 {
     private static void backtrack(int sum) {
         if (list.size() <= 2) {
             res = Math.max(res, sum);
-        } else {
-            for (int i = 1; i < list.size() - 1; i++) {
-                int temp = list.get(i);
-                int energy = list.get(i - 1) * list.get(i + 1);
-                list.remove(i);
-                backtrack(sum + energy);
-                list.add(i, temp);
-            }
+            return;
+        }
+
+        for (int i = 1; i < list.size() - 1; i++) {
+            int tmp = list.get(i);
+            int energy = list.get(i - 1) * list.get(i + 1);
+            list.remove(i);
+            backtrack(sum + energy);
+            list.add(i, tmp);
         }
     }
 }
