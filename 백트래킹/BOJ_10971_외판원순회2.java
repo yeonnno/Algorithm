@@ -26,7 +26,6 @@ public class BOJ_10971_외판원순회2 {
             }
         }
 
-        start = 0;
         res = Integer.MAX_VALUE;
         visited = new boolean[N];
 
@@ -46,14 +45,15 @@ public class BOJ_10971_외판원순회2 {
                 cost += W[idx][start];
                 res = Math.min(res, cost);
             }
-        } else {
-            for (int i = 0; i < N; i++) {
-                if (visited[i] || W[idx][i] == 0) continue;
+            return;
+        }
 
-                visited[i] = true;
-                travel(i, depth + 1, cost + W[idx][i]);
-                visited[i] = false;
-            }
+        for (int i = 0; i < N; i++) {
+            if (visited[i] || W[idx][i] == 0) continue;
+
+            visited[i] = true;
+            travel(i, depth + 1, cost + W[idx][i]);
+            visited[i] = false;
         }
     }
 }
