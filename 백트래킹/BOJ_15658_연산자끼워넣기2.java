@@ -8,8 +8,9 @@ import java.util.StringTokenizer;
 
 public class BOJ_15658_연산자끼워넣기2 {
 
-    static int N, tmp, max, min;
-    static int[] num, op, selected;
+    static int N, max, min, res;
+    static int[] num, op;
+    static int[] selected;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,9 +31,9 @@ public class BOJ_15658_연산자끼워넣기2 {
             op[i] = Integer.parseInt(st.nextToken());
         }
 
+        selected = new int[N - 1];
         max = Integer.MIN_VALUE;
         min = Integer.MAX_VALUE;
-        selected = new int[N - 1];
 
         backtrack(0);
 
@@ -41,15 +42,14 @@ public class BOJ_15658_연산자끼워넣기2 {
     }
 
     private static void backtrack(int depth) {
-        if (depth == N-1) {
-            tmp = num[0];
-            for (int i = 0; i < N - 1; i++) {
-                calc(num[i + 1], selected[i]);
+        if (depth == N - 1) {
+            res = num[0];
+            for (int i = 1; i < N; i++) {
+                calc(selected[i-1], num[i]);
             }
 
-            max = Math.max(max, tmp);
-            min = Math.min(min, tmp);
-
+            max = Math.max(res, max);
+            min = Math.min(res, min);
             return;
         }
 
@@ -63,19 +63,19 @@ public class BOJ_15658_연산자끼워넣기2 {
         }
     }
 
-    private static void calc(int n, int op) {
+    private static void calc(int op, int num) {
         switch (op) {
             case 0:
-                tmp += n;
+                res += num;
                 break;
             case 1:
-                tmp -= n;
+                res -= num;
                 break;
             case 2:
-                tmp *= n;
+                res *= num;
                 break;
             case 3:
-                tmp /= n;
+                res /= num;
                 break;
         }
     }
