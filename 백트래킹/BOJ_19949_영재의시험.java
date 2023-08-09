@@ -23,15 +23,15 @@ public class BOJ_19949_영재의시험 {
 
         res = 0;
         answer = new int[10];
+
         backtrack(0, 0);
 
         System.out.println(res);
     }
 
     private static void backtrack(int depth, int score) {
-        if (10 - depth + score < 5) {
+        if (10 - depth + score < 5)
             return;
-        }
 
         if (depth == 10) {
             if (score >= 5) res++;
@@ -40,7 +40,7 @@ public class BOJ_19949_영재의시험 {
 
         for (int i = 1; i <= 5; i++) {
             if (depth >= 2) {
-                if (answer[depth-2] == i && answer[depth-1] == i) continue;
+                if (answer[depth - 2] == i && answer[depth - 1] == i) continue;
             }
 
             answer[depth] = i;
