@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_14889_스타트와링크 {
 
     static int N, res;
-    static int[][] S;
+    static int[][] map;
     static int[] teamA, teamB;
     static boolean[] visited;
 
@@ -19,11 +19,11 @@ public class BOJ_14889_스타트와링크 {
 
         N = Integer.parseInt(br.readLine());
 
-        S = new int[N][N];
+        map = new int[N][N];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
-                S[i][j] = Integer.parseInt(st.nextToken());
+                map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
@@ -50,15 +50,16 @@ public class BOJ_14889_스타트와링크 {
 
             res = Math.min(res, Math.abs(a - b));
 
-        } else {
-            for (int i = pre; i < N; i++) {
-                if (visited[i]) continue;
+            return;
+        }
 
-                visited[i] = true;
-                teamA[depth] = i;
-                makeTeam(depth + 1, i + 1);
-                visited[i] = false;
-            }
+        for (int i = pre; i < N; i++) {
+            if (visited[i]) continue;
+
+            visited[i] = true;
+            teamA[depth] = i;
+            makeTeam(depth + 1, i + 1);
+            visited[i] = false;
         }
     }
 
@@ -67,10 +68,9 @@ public class BOJ_14889_스타트와링크 {
         for (int i = 0; i < N / 2; i++) {
             for (int j = 0; j < N / 2; j++) {
                 if (i == j) continue;
-                sum += S[team[i]][team[j]];
+                sum += map[team[i]][team[j]];
             }
         }
         return sum;
     }
-
 }
