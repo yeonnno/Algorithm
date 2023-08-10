@@ -42,7 +42,6 @@ public class BOJ_06603_로또 {
                 sb.append(num[selected[i]]).append(" ");
             }
             sb.append("\n");
-
             return ;
         }
 
