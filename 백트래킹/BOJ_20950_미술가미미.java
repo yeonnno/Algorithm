@@ -50,7 +50,6 @@ public class BOJ_20950_미술가미미 {
                 for (int j = 0; j < limit; j++) {
                     mun[i] += map[selected[j]][i];
                 }
-
                 mun[i] /= limit;
             }
 
