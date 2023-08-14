@@ -25,18 +25,20 @@ public class BOJ_16198_에너지모으기 {
         }
 
         res = Integer.MIN_VALUE;
+
         backtrack(0);
 
         System.out.println(res);
     }
 
     private static void backtrack(int sum) {
-        if (list.size() <= 2) {
+        if (list.size() == 2) {
             res = Math.max(res, sum);
             return;
         }
 
-        for (int i = 1; i < list.size() - 1; i++) {
+        int size = list.size();
+        for (int i = 1; i < size - 1; i++) {
             int tmp = list.get(i);
             int energy = list.get(i - 1) * list.get(i + 1);
             list.remove(i);
