@@ -29,10 +29,10 @@ public class BOJ_02529_부등호 {
 
         visited = new boolean[10];
         list = new ArrayList<>();
+
         backtrack(0, "");
 
         sb.append(list.get(list.size() - 1)).append("\n").append(list.get(0));
-
         System.out.println(sb);
     }
 
@@ -53,11 +53,11 @@ public class BOJ_02529_부등호 {
         }
     }
 
-    private static boolean compare(int a, int b, char op) {
+    private static boolean compare(int x, int y, char op) {
         if (op == '<') {
-            if (a < b) return true;
-        } else if (op == '>'){
-            if (a > b) return true;
+            if (x < y) return true;
+        } else if (op == '>') {
+            if (x > y) return true;
         }
         return false;
     }
