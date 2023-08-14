@@ -8,9 +8,9 @@ import java.util.StringTokenizer;
 
 public class BOJ_20950_미술가미미 {
 
-    static int N, min, res;
-    static int[][] map;
-    static int[] gom, mun, selected;
+    static int N, res;
+    static int[][] RGB;
+    static int[] gom, selected, mun;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,11 +18,11 @@ public class BOJ_20950_미술가미미 {
 
         N = Integer.parseInt(br.readLine());
 
-        map = new int[N][3];
+        RGB = new int[N][3];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < 3; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+                RGB[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
@@ -48,17 +48,19 @@ public class BOJ_20950_미술가미미 {
             mun = new int[3];
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < limit; j++) {
-                    mun[i] += map[selected[j]][i];
+                    mun[i] += RGB[selected[j]][i];
                 }
+
                 mun[i] /= limit;
             }
 
-            min = 0;
+            int tmp = 0;
             for (int i = 0; i < 3; i++) {
-                min += Math.abs(gom[i] - mun[i]);
+                tmp += Math.abs(gom[i] - mun[i]);
             }
 
-            res = Math.min(res, min);
+            res = Math.min(res, tmp);
+
             return;
         }
 
