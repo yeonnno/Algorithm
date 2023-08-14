@@ -1,7 +1,6 @@
 /**
  * BOJ : 13908 S2 비밀번호
  */
-import java.io.IOException;
 import java.util.Scanner;
 
 public class BOJ_13908_비밀번호 {
@@ -9,7 +8,7 @@ public class BOJ_13908_비밀번호 {
     static int N, M, res;
     static boolean[] visited;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         N = sc.nextInt();
@@ -32,14 +31,13 @@ public class BOJ_13908_비밀번호 {
             return;
         }
 
-        for (int cur = 0; cur < 10; cur++) {
-            if (visited[cur]) {
-                visited[cur] = false;
+        for (int i = 0; i < 10; i++) {
+            if (visited[i]) {
+                visited[i] = false;
                 backtrack(depth + 1, cnt + 1);
-                visited[cur] = true;
-            } else {
+                visited[i] = true;
+            } else
                 backtrack(depth + 1, cnt);
-            }
         }
     }
 }
