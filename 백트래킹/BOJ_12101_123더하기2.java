@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 public class BOJ_12101_123더하기2 {
 
     static int N, K, cnt;
-    static boolean check;
     static int[] selected;
+    static boolean check;
     static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
@@ -45,10 +45,12 @@ public class BOJ_12101_123더하기2 {
             if (cnt == K) {
                 check = true;
                 for (int i = 0; i < depth - 1; i++) {
-                    sb.append(selected[i]).append("+");
+                    sb.append(selected[i]).append('+');
                 }
                 sb.append(selected[depth - 1]);
             }
+
+            return;
         }
 
         for (int i = 1; i <= 3; i++) {
