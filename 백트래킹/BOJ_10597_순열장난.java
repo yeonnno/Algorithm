@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 
 public class BOJ_10597_순열장난 {
 
+    static String str;
     static int N, len;
     static int[] res;
-    static String str;
     static boolean[] visited;
     static boolean flag;
     static StringBuilder sb;
@@ -21,7 +21,6 @@ public class BOJ_10597_순열장난 {
         str = br.readLine();
 
         len = str.length();
-
         if (len < 10) {
             N = len;
         } else {
@@ -65,6 +64,5 @@ public class BOJ_10597_순열장난 {
                 visited[two] = false;
             }
         }
-
     }
 }
