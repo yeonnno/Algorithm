@@ -31,8 +31,9 @@ public class BOJ_18290_NM과K1 {
             }
         }
 
-        visited = new boolean[N][M];
         res = Integer.MIN_VALUE;
+        visited = new boolean[N][M];
+
         backtrack(0, 0, 0, 0);
 
         System.out.println(res);
@@ -58,16 +59,14 @@ public class BOJ_18290_NM과K1 {
     }
 
     private static boolean check(int x, int y) {
-        boolean flag = true;
-
         for (int d = 0; d < 4; d++) {
             int nx = x + dx[d];
             int ny = y + dy[d];
 
-            if (isPossible(nx, ny) && visited[nx][ny]) flag = false;
+            if (isPossible(nx, ny) && visited[nx][ny]) return false;
         }
 
-        return flag;
+        return true;
     }
 
     private static boolean isPossible(int nx, int ny) {
