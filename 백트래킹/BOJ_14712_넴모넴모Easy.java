@@ -1,6 +1,5 @@
-package 백트래킹;
 /**
- * BOJ : 14712 S1 넴모넴모(Easy)
+ * BOJ : 14712 G5 넴모넴모 (Easy)
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class BOJ_14712_넴모넴모Easy {
         int x = idx / M + 1;
         int y = idx % M + 1;
 
-        if (map[x][y - 1] && map[x - 1][y] && map[x - 1][y - 1]) {
+        if (map[x - 1][y] && map[x][y - 1] && map[x - 1][y - 1]) {
             backtrack(idx + 1);
         } else {
             backtrack(idx + 1);
