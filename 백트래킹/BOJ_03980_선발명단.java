@@ -29,6 +29,7 @@ public class BOJ_03980_선발명단 {
 
             res = 0;
             visited = new boolean[11];
+
             backtrack(0, 0);
 
             sb.append(res).append("\n");
@@ -40,14 +41,15 @@ public class BOJ_03980_선발명단 {
     private static void backtrack(int depth, int sum) {
         if (depth == 11) {
             res = Math.max(res, sum);
-        } else {
-            for (int i = 0; i < 11; i++) {
-                if (!visited[i] && map[depth][i] != 0) {
-                    visited[i] = true;
-                    backtrack(depth + 1, sum + map[depth][i]);
-                    visited[i] = false;
-                }
-            }
+            return;
+        }
+
+        for (int i = 0; i < 11; i++) {
+            if (visited[i] || map[depth][i] == 0) continue;
+
+            visited[i] = true;
+            backtrack(depth + 1, sum + map[depth][i]);
+            visited[i] = false;
         }
     }
 }
