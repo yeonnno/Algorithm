@@ -19,12 +19,12 @@ public class BOJ_01174_줄어드는수 {
         N = Integer.parseInt(br.readLine());
         list = new ArrayList<>();
 
-        backtrack(0, 0);
+        backtrack(0, 0L);
 
         Collections.sort(list);
 
         try {
-            System.out.println(list.get(N-1));
+            System.out.println(list.get(N - 1));
         } catch (Exception e) {
             System.out.println(-1);
         }
