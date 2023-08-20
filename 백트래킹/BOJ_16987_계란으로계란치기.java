@@ -56,9 +56,9 @@ public class BOJ_16987_계란으로계란치기 {
 
             backtrack(depth + 1, cnt);
 
+            cnt = tmp;
             egg[depth][0] += egg[i][1];
             egg[i][0] += egg[depth][1];
-            cnt = tmp;
         }
     }
 }
