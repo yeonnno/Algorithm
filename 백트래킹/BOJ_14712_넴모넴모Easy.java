@@ -36,14 +36,13 @@ public class BOJ_14712_넴모넴모Easy {
         int x = idx / M + 1;
         int y = idx % M + 1;
 
-        if (map[x - 1][y] && map[x][y - 1] && map[x - 1][y - 1]) {
+        if (map[x][y - 1] && map[x - 1][y] && map[x - 1][y - 1]) {
             backtrack(idx + 1);
         } else {
-            backtrack(idx + 1);
-
             map[x][y] = true;
             backtrack(idx + 1);
             map[x][y] = false;
+            backtrack(idx + 1);
         }
     }
 }
