@@ -10,8 +10,8 @@ public class BOJ_06443_애너그램 {
 
     static int N, len;
     static char[] ch;
-    static int[] selected;
     static boolean[] visited;
+    static int[] selected;
     static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
@@ -21,12 +21,12 @@ public class BOJ_06443_애너그램 {
         N = Integer.parseInt(br.readLine());
         for (int n = 0; n < N; n++) {
             ch = br.readLine().toCharArray();
-
+            
             Arrays.sort(ch);
 
             len = ch.length;
-            selected =  new int[len];
             visited = new boolean[len];
+            selected = new int[len];
 
             backtrack(0);
         }
@@ -41,6 +41,7 @@ public class BOJ_06443_애너그램 {
             }
 
             sb.append(tmp).append("\n");
+            
             return;
         }
 
@@ -50,7 +51,6 @@ public class BOJ_06443_애너그램 {
             if (before == ch[i]) continue;
 
             before = ch[i];
-
             visited[i] = true;
             selected[depth] = i;
             backtrack(depth + 1);
