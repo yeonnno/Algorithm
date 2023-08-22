@@ -34,7 +34,6 @@ public class BOJ_03980_선발명단 {
 
             sb.append(res).append("\n");
         }
-
         System.out.println(sb);
     }
 
