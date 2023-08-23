@@ -11,7 +11,7 @@ public class BOJ_01759_암호만들기 {
 
     static int L, C;
     static char[] ch;
-    static boolean[] visited;
+    static int[] selected;
     static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
@@ -30,29 +30,31 @@ public class BOJ_01759_암호만들기 {
         }
 
         Arrays.sort(ch);
-        visited = new boolean[C];
+        selected = new int[L];
 
-        backtrack(0, 0,  "");
+        backtrack(0, 0);
 
         System.out.println(sb);
     }
 
-    private static void backtrack(int depth, int pre, String str) {
+    private static void backtrack(int depth, int pre) {
         if (depth == L) {
-            int vowel = 0;
+            int cnt = 0;
+            StringBuilder tmp = new StringBuilder();
             for (int i = 0; i < L; i++) {
-                if (str.charAt(i) == 'a' || str.charAt(i) == 'e' || str.charAt(i) == 'i' || str.charAt(i) == 'o' || str.charAt(i) == 'u') vowel++;
+                char c = ch[selected[i]];
+                if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') cnt++;
+                tmp.append(c);
             }
 
-            if (vowel >= 1 && L - vowel >= 2) {
-                sb.append(str).append("\n");
-            }
+            if (cnt >= 1 && L - cnt >= 2) sb.append(tmp).append("\n");
 
             return;
         }
 
         for (int i = pre; i < C; i++) {
-            backtrack(depth + 1, i + 1, str + ch[i]);
+            selected[depth] = i;
+            backtrack(depth + 1, i + 1);
         }
     }
 }
