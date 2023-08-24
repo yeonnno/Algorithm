@@ -10,8 +10,8 @@ import java.util.Collections;
 public class BOJ_01038_감소하는수 {
 
     static int N;
-    static ArrayList<Long> list;
     static int[] number = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+    static ArrayList<Long> list;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -37,7 +37,7 @@ public class BOJ_01038_감소하는수 {
 
         if (depth > 9) return;
 
-        backtrack(depth + 1, (num * 10) + number[depth]);
+        backtrack(depth + 1, num * 10 + number[depth]);
         backtrack(depth + 1, num);
     }
 }
