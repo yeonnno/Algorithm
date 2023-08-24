@@ -19,8 +19,10 @@ public class BOJ_07490_0만들기 {
             N = Integer.parseInt(br.readLine());
 
             backtrack(1, 0, 1, 1, "1");
+
             sb.append("\n");
         }
+
         System.out.println(sb);
     }
 
