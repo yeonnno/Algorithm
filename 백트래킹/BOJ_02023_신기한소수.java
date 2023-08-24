@@ -39,10 +39,10 @@ public class BOJ_02023_신기한소수 {
         }
     }
 
-    private static boolean isPrime(int n) {
-        int sqrt = (int) Math.sqrt(n) + 1;
+    private static boolean isPrime(int tmp) {
+        int sqrt = (int) Math.sqrt(tmp) + 1;
         for (int i = 2; i < sqrt; i++) {
-            if (n % i == 0) return false;
+            if (tmp % i == 0) return false;
         }
         return true;
     }
