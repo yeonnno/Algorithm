@@ -1,5 +1,5 @@
 /**
- * BOJ : 18430 G5 무기 공학
+ * BOJ : 18430 G4 무기 공학
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,16 +12,16 @@ public class BOJ_18430_무기공학 {
     static int[][] map;
     static boolean[][] visited;
     static int[][] dx = {
-            {0, 1}, // 1
-            {0, -1}, // 2
-            {0, -1}, // 3
-            {0, 1} // 4
+            {0, 1},
+            {0, -1},
+            {0, -1},
+            {0, 1}
     };
     static int[][] dy = {
-            {-1, 0}, // 1
-            {-1, 0}, // 2
-            {1, 0}, // 3
-            {1, 0} // 4
+            {-1, 0},
+            {-1, 0},
+            {1, 0},
+            {1, 0}
     };
 
     public static void main(String[] args) throws IOException {
@@ -42,7 +42,10 @@ public class BOJ_18430_무기공학 {
 
         res = 0;
         visited = new boolean[N][M];
-        backtrack(0, 0);
+
+        if (N + M >= 4) {
+            backtrack(0, 0);
+        }
 
         System.out.println(res);
     }
@@ -50,35 +53,35 @@ public class BOJ_18430_무기공학 {
     private static void backtrack(int idx, int sum) {
         if (idx == N * M) {
             res = Math.max(res, sum);
-        } else {
-            int x = idx / M;
-            int y = idx % M;
-
-            for (int d = 0; d < 4; d++) { // 부메랑 4개중에 하나 선택
-                int ax = x + dx[d][0];
-                int ay = y + dy[d][0];
-                int bx = x + dx[d][1];
-                int by = y + dy[d][1];
-
-                if (!isPossible(x, y) || visited[x][y]) continue;
-                if (!isPossible(ax, ay) || visited[ax][ay]) continue;
-                if (!isPossible(bx, by) || visited[bx][by]) continue;
-
-                visited[x][y] = true;
-                visited[ax][ay] = true;
-                visited[bx][by] = true;
-
-                int tmp = map[x][y] * 2 + map[ax][ay] + map[bx][by];
-
-                backtrack(idx + 1, sum + tmp);
-
-                visited[x][y] = false;
-                visited[ax][ay] = false;
-                visited[bx][by] = false;
-            }
-
-            backtrack(idx + 1, sum);
+            return;
         }
+
+        int x = idx / M;
+        int y = idx % M;
+
+        for (int d = 0; d < 4; d++) {
+            int ax = x + dx[d][0];
+            int ay = y + dy[d][0];
+            int bx = x + dx[d][1];
+            int by = y + dy[d][1];
+
+            if (visited[x][y]) continue;
+            if (!isPossible(ax, ay) || visited[ax][ay]) continue;
+            if (!isPossible(bx, by) || visited[bx][by]) continue;
+
+            visited[x][y] = true;
+            visited[ax][ay] = true;
+            visited[bx][by] = true;
+
+            int tmp = map[x][y] * 2 + map[ax][ay] + map[bx][by];
+            backtrack(idx + 1, sum + tmp);
+
+            visited[x][y] = false;
+            visited[ax][ay] = false;
+            visited[bx][by] = false;
+        }
+
+        backtrack(idx + 1, sum);
     }
 
     private static boolean isPossible(int nx, int ny) {
