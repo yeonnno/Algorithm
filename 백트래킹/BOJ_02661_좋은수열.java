@@ -8,23 +8,23 @@ import java.io.InputStreamReader;
 public class BOJ_02661_좋은수열 {
 
     static int N;
-    static boolean isEnd;
+    static boolean flag;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         N = Integer.parseInt(br.readLine());
+        flag = false;
 
-        isEnd = false;
         backtrack("");
     }
 
     private static void backtrack(String num) {
-        if (isEnd) return;
+        if (flag) return;
 
         if (num.length() == N) {
             System.out.println(num);
-            isEnd = true;
+            flag = true;
             return;
         }
 
@@ -36,16 +36,16 @@ public class BOJ_02661_좋은수열 {
     }
 
     private static boolean check(String str) {
-        int half = str.length() / 2;
+        int len = str.length();
+        int half = len / 2;
 
         for (int i = 1; i <= half; i++) {
-            String a = str.substring(str.length() - i, str.length());
-            String b = str.substring(str.length() - i - i, str.length() - i);
+            String a = str.substring(len - i, len);
+            String b = str.substring(len - i - i, len - i);
 
-            if (a.equals(b)) {
-                return false;
-            }
+            if (a.equals(b)) return false;
         }
+
         return true;
     }
 }
