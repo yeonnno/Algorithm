@@ -43,9 +43,7 @@ public class BOJ_18430_무기공학 {
         res = 0;
         visited = new boolean[N][M];
 
-        if (N + M >= 4) {
-            backtrack(0, 0);
-        }
+        backtrack(0, 0);
 
         System.out.println(res);
     }
@@ -58,16 +56,14 @@ public class BOJ_18430_무기공학 {
 
         int x = idx / M;
         int y = idx % M;
-
         for (int d = 0; d < 4; d++) {
             int ax = x + dx[d][0];
             int ay = y + dy[d][0];
             int bx = x + dx[d][1];
             int by = y + dy[d][1];
 
-            if (visited[x][y]) continue;
-            if (!isPossible(ax, ay) || visited[ax][ay]) continue;
-            if (!isPossible(bx, by) || visited[bx][by]) continue;
+            if (!isPossible(ax, ay) || !isPossible(bx, by)) continue;
+            if (visited[x][y] || visited[ax][ay] || visited[bx][by]) continue;
 
             visited[x][y] = true;
             visited[ax][ay] = true;
