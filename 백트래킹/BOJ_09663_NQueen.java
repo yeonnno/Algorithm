@@ -43,6 +43,7 @@ public class BOJ_09663_NQueen {
             if (map[row] == map[i]) return false;
             else if (Math.abs(map[row] - map[i]) == Math.abs(row - i)) return false;
         }
+
         return true;
     }
 }
