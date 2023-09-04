@@ -41,7 +41,7 @@ public class BOJ_01062_가르침 {
             visited['i' - 'a'] = true;
             visited['n' - 'a'] = true;
             visited['t' - 'a'] = true;
-            
+
             backtrack(0, 0);
 
             System.out.println(res);
@@ -51,9 +51,11 @@ public class BOJ_01062_가르침 {
     private static void backtrack(int depth, int pre) {
         if (depth == K - 5) {
             int cnt = 0;
+
             for (int i = 0; i < N; i++) {
                 boolean check = true;
                 int len = word[i].length();
+
                 for (int j = 0; j < len; j++) {
                     if (visited[word[i].charAt(j) - 'a']) continue;
 
