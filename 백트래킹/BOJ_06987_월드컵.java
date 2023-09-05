@@ -52,10 +52,8 @@ public class BOJ_06987_월드컵 {
             } else {
                 sb.append(0);
             }
-
             sb.append(" ");
         }
-
         System.out.println(sb);
     }
 
