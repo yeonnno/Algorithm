@@ -16,26 +16,26 @@ public class BOJ_02661_좋은수열 {
         N = Integer.parseInt(br.readLine());
         flag = false;
 
-        backtrack("");
+        backtrack(0, "");
     }
 
-    private static void backtrack(String num) {
+    private static void backtrack(int depth, String num) {
         if (flag) return;
 
-        if (num.length() == N) {
+        if (depth == N) {
             System.out.println(num);
             flag = true;
             return;
         }
 
         for (int i = 1; i <= 3; i++) {
-            if (check(num + i)) {
-                backtrack(num + i);
-            }
+            if (!isPossible(num + i)) continue;
+
+            backtrack(depth + 1, num + i);
         }
     }
 
-    private static boolean check(String str) {
+    private static boolean isPossible(String str) {
         int len = str.length();
         int half = len / 2;
 
