@@ -53,28 +53,29 @@ public class BOJ_02239_스도쿠 {
 
         if (map[x][y] == 0) {
             for (int i = 1; i <= 9; i++) {
-                if (!check(x, y, i)) continue;
+                if (!isPossible(x, y, i)) continue;
 
                 map[x][y] = i;
                 backtrack(x, y + 1);
                 map[x][y] = 0;
             }
+
             return;
         }
 
         backtrack(x, y + 1);
     }
 
-    private static boolean check(int x, int y, int n) {
+    private static boolean isPossible(int x, int y, int n) {
         for (int i = 0; i < 9; i++) {
             if (map[x][i] == n) return false;
             if (map[i][y] == n) return false;
         }
 
-        int r = x / 3 * 3;
-        int c = y / 3 * 3;
-        for (int i = r; i < r + 3; i++) {
-            for (int j = c; j < c + 3; j++) {
+        int nx = x / 3 * 3;
+        int ny = y / 3 * 3;
+        for (int i = nx; i < nx + 3; i++) {
+            for (int j = ny; j < ny + 3; j++) {
                 if (map[i][j] == n) return false;
             }
         }
