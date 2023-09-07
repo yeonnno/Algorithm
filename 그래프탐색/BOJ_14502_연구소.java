@@ -12,6 +12,7 @@ public class BOJ_14502_연구소 {
 
     static int N, M, res;
     static int[][] map, copyMap;
+    static Queue<Point> Q;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -31,58 +32,54 @@ public class BOJ_14502_연구소 {
             }
         }
 
-        res = 0;
-        comb(0);
+        res = Integer.MIN_VALUE;
+
+        backtrack(0);
 
         System.out.println(res);
     }
 
-    private static void comb(int depth) {
+    private static void backtrack(int depth) {
         if (depth == 3) {
-            virus();
-            countSafeArea();
-        } else {
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < M; j++) {
-                    if (map[i][j] == 0) {
-                        map[i][j] = 1;
-                        comb(depth + 1);
-                        map[i][j] = 0;
-                    }
-                }
+            spreadVirus();
+            countSafe();
+            return;
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (map[i][j] != 0) continue;
+
+                map[i][j] = 1;
+                backtrack(depth + 1);
+                map[i][j] = 0;
             }
         }
     }
 
-    private static void countSafeArea() {
+    private static void countSafe() {
         int cnt = 0;
-
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (copyMap[i][j] == 0) {
-                    cnt++;
-                }
+                if (copyMap[i][j] == 0) cnt++;
             }
         }
 
         res = Math.max(res, cnt);
     }
 
-    static Queue<Point> Q;
-    private static void virus() {
+    private static void spreadVirus() {
         Q = new LinkedList<>();
-
         copyMap = new int[N][M];
+
         copy();
 
         while (!Q.isEmpty()) {
             Point now = Q.poll();
-            int x = now.x;
-            int y = now.y;
 
             for (int d = 0; d < 4; d++) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
 
                 if (!isPossible(nx, ny)) continue;
                 if (copyMap[nx][ny] != 0) continue;
@@ -110,7 +107,7 @@ public class BOJ_14502_연구소 {
         }
     }
 
-    static class Point {
+    private static class Point {
         int x;
         int y;
 
