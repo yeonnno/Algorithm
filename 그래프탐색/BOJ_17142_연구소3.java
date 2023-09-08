@@ -1,5 +1,5 @@
 /**
- * BOJ : 17142 G3 연구소3
+ * BOJ : 17142 G3 연구소 3
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,10 +11,11 @@ import java.util.StringTokenizer;
 
 public class BOJ_17142_연구소3 {
 
-    static int N, M, zeroCnt, res;
+    static int N, M, zeroCnt, virusSize, res;
     static int[][] map, copyMap;
     static ArrayList<Point> virus;
-    static boolean[] visited;
+    static boolean[] selected;
+    static Queue<Point> Q;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -25,9 +26,8 @@ public class BOJ_17142_연구소3 {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        res = Integer.MAX_VALUE;
-        zeroCnt = 0;
 
+        zeroCnt = 0;
         map = new int[N][N];
         virus = new ArrayList<>();
         for (int i = 0; i < N; i++) {
@@ -35,53 +35,45 @@ public class BOJ_17142_연구소3 {
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
 
-                if (map[i][j] == 2) {
-                    virus.add(new Point(i, j));
-                } else if (map[i][j] == 0) {
-                    zeroCnt++;
-                }
+                if (map[i][j] == 0) zeroCnt++;
+                else if (map[i][j] == 2) virus.add(new Point(i, j));
             }
         }
 
-        if (zeroCnt == 0) {
-            res = 0;
-        }
-        visited = new boolean[virus.size()];
-        comb(0, 0);
+        virusSize = virus.size();
+        selected = new boolean[virusSize];
+        res = Integer.MAX_VALUE;
+        if (zeroCnt == 0) res = 0;
 
-        if (res == Integer.MAX_VALUE) {
-            System.out.println(-1);
-        } else {
-            System.out.println(res);
-        }
+        backtrack(0, 0);
+
+        if (res == Integer.MAX_VALUE) System.out.println(-1);
+        else System.out.println(res);
     }
 
-    private static void comb(int depth, int idx) {
+    private static void backtrack(int depth, int pre) {
         if (depth == M) {
-
             spreadVirus();
+            return;
+        }
 
-        } else {
-            for (int cur = idx; cur < virus.size(); cur++) {
-                if (!visited[cur]) {
-                    visited[cur] = true;
-                    comb(depth + 1, cur + 1);
-                    visited[cur] = false;
-                }
-            }
+        for (int i = pre; i < virusSize; i++) {
+            selected[i] = true;
+            backtrack(depth + 1, i + 1);
+            selected[i] = false;
         }
     }
 
     private static void spreadVirus() {
-        Queue<Point> Q = new LinkedList<>();
-
+        Q = new LinkedList<>();
         copyMap = new int[N][N];
+
         copy();
 
-        for (int i = 0; i < virus.size(); i++) {
-            if (visited[i]) {
-                Q.add(virus.get(i));
-            }
+        for (int i = 0; i < virusSize; i++) {
+            if (!selected[i]) continue;
+
+            Q.add(virus.get(i));
         }
 
         int time = 0;
@@ -91,32 +83,29 @@ public class BOJ_17142_연구소3 {
 
             for (int i = 0; i < size; i++) {
                 Point now = Q.poll();
-                int x = now.x;
-                int y = now.y;
 
                 for (int d = 0; d < 4; d++) {
-                    int nx = x + dx[d];
-                    int ny = y + dy[d];
+                    int nx = now.x + dx[d];
+                    int ny = now.y + dy[d];
 
                     if (!isPossible(nx, ny)) continue;
-                    if (copyMap[nx][ny] == 1) continue;
 
                     if (copyMap[nx][ny] == 0) {
+                        zCnt--;
                         copyMap[nx][ny] = 2;
                         Q.add(new Point(nx, ny));
-                        zCnt--;
                     } else if (copyMap[nx][ny] == 3) {
                         copyMap[nx][ny] = 2;
                         Q.add(new Point(nx, ny));
                     }
+
+
                 }
             }
 
             time++;
 
-            if (zCnt == 0) {
-                res = Math.min(res, time);
-            }
+            if (zCnt == 0) res = Math.min(res, time);
         }
     }
 
@@ -132,18 +121,15 @@ public class BOJ_17142_연구소3 {
             }
         }
 
-        for (int i = 0; i < virus.size(); i++) {
-            Point p = virus.get(i);
+        for (int i = 0; i < virusSize; i++) {
+            if (selected[i]) continue;
 
-            if (visited[i]) {
-                copyMap[p.x][p.y] = 2; // 활성 바이러스
-            } else {
-                copyMap[p.x][p.y] = 3; // 비활성 바이러스
-            }
+            Point p = virus.get(i);
+            copyMap[p.x][p.y] = 3;
         }
     }
 
-    static class Point {
+    private static class Point {
         int x;
         int y;
 
