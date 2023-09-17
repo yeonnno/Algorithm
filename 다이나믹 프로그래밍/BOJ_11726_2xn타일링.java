@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public class BOJ_11726_2xn타일링 {
 
-    static int N;
+    static int N, MOD = 10007;
     static int[] dp;
 
     public static void main(String[] args) throws IOException {
@@ -21,10 +21,10 @@ public class BOJ_11726_2xn타일링 {
             dp[2] = 2;
 
             for (int i = 3; i <= N; i++) {
-                dp[i] = (dp[i - 1] + dp[i - 2]) % 10007;
+                dp[i] = (dp[i - 1] + dp[i - 2]) % MOD;
             }
         }
 
-        System.out.println(dp[N]);
+        System.out.println(dp[N] % MOD);
     }
 }
