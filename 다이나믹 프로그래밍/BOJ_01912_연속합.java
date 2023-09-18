@@ -17,19 +17,18 @@ public class BOJ_01912_연속합 {
 
         N = Integer.parseInt(br.readLine());
 
-        num = new int[N];
+        num = new int[N + 1];
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
+        for (int i = 1; i <= N; i++) {
             num[i] = Integer.parseInt(st.nextToken());
         }
 
-        dp = new int[N];
-        dp[0] = num[0];
-        res = num[0];
+        res = Integer.MIN_VALUE;
+        dp = new int[N + 1];
 
-        for (int i = 1; i < N; i++) {
+        for (int i = 1; i <= N; i++) {
             dp[i] = Math.max(dp[i - 1] + num[i], num[i]);
-            res = Math.max(res, dp[i]);
+            if (dp[i] > res) res = dp[i];
         }
 
         System.out.println(res);
