@@ -24,14 +24,13 @@ public class BOJ_11055_가장큰증가하는부분수열 {
         }
 
         dp = new int[N];
-        dp[0] = num[0];
-        res = dp[0];
+        res = dp[0] = num[0];
 
         for (int i = 1; i < N; i++) {
             dp[i] = num[i];
 
             for (int j = 0; j < i; j++) {
-                if (num[i] > num[j]) {
+                if (num[j] < num[i]) {
                     dp[i] = Math.max(dp[j] + num[i], dp[i]);
                 }
             }
