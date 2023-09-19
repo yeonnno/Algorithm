@@ -33,8 +33,8 @@ public class BOJ_09465_스티커 {
             dp[1][1] = map[1][1];
 
             for (int i = 2; i <= N; i++) {
-                dp[0][i] = Math.max(dp[1][i - 1], dp[1][i - 2]) + map[0][i];
-                dp[1][i] = Math.max(dp[0][i - 1], dp[0][i - 2]) + map[1][i];
+                dp[0][i] = Math.max(dp[1][i - 2], dp[1][i - 1]) + map[0][i];
+                dp[1][i] = Math.max(dp[0][i - 2], dp[0][i - 1]) + map[1][i];
             }
 
             sb.append(Math.max(dp[0][N], dp[1][N])).append("\n");
