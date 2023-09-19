@@ -27,7 +27,7 @@ public class BOJ_01890_점프 {
         }
 
         dp = new long[N][N];
-        dp[0][0] = 1;
+        dp[0][0] = 1L;
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
