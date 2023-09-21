@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_11052_카드구매하기 {
 
     static int N;
-    static int[] map, dp;
+    static int[] num, dp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,16 +17,16 @@ public class BOJ_11052_카드구매하기 {
 
         N = Integer.parseInt(br.readLine());
 
-        map = new int[N + 1];
+        num = new int[N + 1];
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
-            map[i] = Integer.parseInt(st.nextToken());
+            num[i] = Integer.parseInt(st.nextToken());
         }
 
         dp = new int[N + 1];
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= i; j++) {
-                dp[i] = Math.max(dp[i], dp[i - j] + map[j]);
+                dp[i] = Math.max(dp[i], dp[i - j] + num[j]);
             }
         }
 
