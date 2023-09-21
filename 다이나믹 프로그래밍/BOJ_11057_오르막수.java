@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public class BOJ_11057_오르막수 {
 
-    static int N;
+    static int N, MOD = 10007;
     static int[][] dp;
 
     public static void main(String[] args) throws IOException {
@@ -24,11 +24,11 @@ public class BOJ_11057_오르막수 {
             for (int j = 0; j < 10; j++) {
                 for (int k = j; k < 10; k++) {
                     dp[i][j] += dp[i - 1][k];
-                    dp[i][j] %= 10007;
+                    dp[i][j] %= MOD;
                 }
             }
         }
 
-        System.out.println(dp[N][0] % 10007);
+        System.out.println(dp[N][0] % MOD);
     }
 }
