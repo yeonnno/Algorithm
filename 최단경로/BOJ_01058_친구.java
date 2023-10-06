@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public class BOJ_01058_친구 {
 
-    static int N, res, INF = 100000000;
+    static int N, res, INF = 999999999;
     static int[][] adj;
 
     public static void main(String[] args) throws IOException {
@@ -43,10 +43,10 @@ public class BOJ_01058_친구 {
     }
 
     private static void floyd() {
-        for (int k = 1; k <= N; k++) {
-            for (int i = 1; i <= N; i++) {
-                for (int j = 1; j <= N; j++) {
-                    if (i == j || j == k || i == k) continue;
+        for (int k = 1; k <= N; k++) { // 경유지
+            for (int i = 1; i <= N; i++) { // 출발지
+                for (int j = 1; j <= N; j++) { // 도착지
+                    if (i == j || j == k || k == i) continue;
 
                     if (adj[i][j] > adj[i][k] + adj[k][j]) {
                         adj[i][j] = adj[i][k] + adj[k][j];
