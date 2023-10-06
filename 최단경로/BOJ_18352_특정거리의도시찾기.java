@@ -37,17 +37,16 @@ public class BOJ_18352_특정거리의도시찾기 {
             adj[s].add(e);
         }
 
-        visited = new boolean[N + 1];
-        
         dist = new int[N + 1];
-        Arrays.fill(dist, -1);
-        
+        Arrays.fill(dist, Integer.MAX_VALUE);
         dist[X] = 0;
-        BFS(X);
+        visited = new boolean[N + 1];
+
+        dijkstra(X);
 
         int cnt = 0;
         for (int i = 1; i <= N; i++) {
-            if (dist[i] == K) {
+            if (dist[i] == K){
                 sb.append(i).append("\n");
                 cnt++;
             }
@@ -57,7 +56,7 @@ public class BOJ_18352_특정거리의도시찾기 {
         else System.out.println(sb);
     }
 
-    private static void BFS(int start) {
+    private static void dijkstra(int start) {
         Queue<Integer> Q = new LinkedList<>();
         Q.add(start);
         visited[start] = true;
@@ -68,9 +67,9 @@ public class BOJ_18352_특정거리의도시찾기 {
             for (int i = 0; i < adj[now].size(); i++) {
                 int next = adj[now].get(i);
 
-                if (!visited[next] && dist[next] == -1) {
-                    visited[next] = true;
+                if (!visited[next] && dist[next] > dist[now] + 1) {
                     dist[next] = dist[now] + 1;
+                    visited[next] = true;
                     Q.add(next);
                 }
             }
