@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_01389_케빈베이컨의6단계법칙 {
 
-    static int N, M, INF = 999999999, min, res;
+    static int N, M, min, res, INF = 999999999;
     static int[][] adj;
 
     public static void main(String[] args) throws IOException {
@@ -39,7 +39,6 @@ public class BOJ_01389_케빈베이컨의6단계법칙 {
 
         min = INF;
         res = 0;
-
         for (int i = 1; i <= N; i++) {
             int sum = 0;
 
