@@ -1,5 +1,5 @@
 /**
- * BOJ : 2211 S2 네트워크 복구
+ * BOJ : 2211 G2 네트워크 복구
  */
 import java.io.BufferedReader;
 import java.io.IOException;
