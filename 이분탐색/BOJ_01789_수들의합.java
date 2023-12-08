@@ -15,25 +15,19 @@ public class BOJ_01789_수들의합 {
         S = Long.parseLong(br.readLine());
         N = 0;
 
-        binarySearch(1, S);
+        long left = 1, right = S;
+        while (left <= right) {
+            long mid = (left + right) / 2;
+            long sum = (mid * (mid + 1)) / 2;
+
+            if (sum <= S) {
+                left = mid + 1;
+                N = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
 
         System.out.println(N);
-    }
-
-    private static void binarySearch(long start, long end) {
-        if (start > end) return;
-
-        long mid = (start + end) / 2;
-        long sum = (mid * (mid + 1)) / 2;
-
-        if (sum > S) {
-            binarySearch(start, mid - 1);
-        } else if (sum < S) {
-            N = Math.max(N, mid);
-            binarySearch(mid + 1, end);
-        } else {
-            N = mid;
-            return;
-        }
     }
 }
