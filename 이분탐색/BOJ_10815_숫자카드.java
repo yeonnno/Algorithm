@@ -15,7 +15,7 @@ public class BOJ_10815_숫자카드 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
 
         N = Integer.parseInt(br.readLine());
 
@@ -32,27 +32,27 @@ public class BOJ_10815_숫자카드 {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
             int num = Integer.parseInt(st.nextToken());
+            int left = 0, right = N - 1;
+            boolean check = false;
 
-            if (binarySearch(num)) sb.append("1 ");
-            else sb.append("0 ");
+            while (left <= right) {
+                int mid = (left + right) / 2;
+
+                if (card[mid] > num) {
+                    right = mid - 1;
+                } else if (card[mid] < num) {
+                    left = mid + 1;
+                } else {
+                    check = true;
+                    break;
+                }
+            }
+
+            if (check) sb.append(1);
+            else sb.append(0);
+            sb.append(" ");
         }
 
-        System.out.println(sb);
-    }
-
-    private static boolean binarySearch(int num) {
-        int left = 0;
-        int right = N - 1;
-
-        while (left <= right) {
-            int midIdx = (left + right) / 2;
-            int mid = card[midIdx];
-
-            if (num < mid) right = midIdx - 1;
-            else if (num > mid) left = midIdx + 1;
-            else return true;
-        }
-
-        return false;
+        System.out.print(sb);
     }
 }
