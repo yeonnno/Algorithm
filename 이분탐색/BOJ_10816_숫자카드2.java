@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_10816_숫자카드2 {
 
-    static int N, M;
+    static int N, M, cnt;
     static int[] card;
 
     public static void main(String[] args) throws IOException {
@@ -28,38 +28,39 @@ public class BOJ_10816_숫자카드2 {
         Arrays.sort(card);
 
         M = Integer.parseInt(br.readLine());
+
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
             int num = Integer.parseInt(st.nextToken());
 
-            sb.append(upper(num) - lower(num)).append(" ");
+            cnt = upper(num) - lower(num);
+
+            sb.append(cnt).append(" ");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
-    private static int lower(int num) {
-        int left = 0;
-        int right = N;
+    private static int upper(int num) {
+        int left = 0, right = N;
 
         while (left < right) {
             int mid = (left + right) / 2;
 
-            if (num <= card[mid]) right = mid;
+            if (card[mid] > num) right = mid;
             else left = mid + 1;
         }
 
         return left;
     }
 
-    private static int upper(int num) {
-        int left = 0;
-        int right = N;
+    private static int lower(int num) {
+        int left = 0, right = N;
 
         while (left < right) {
             int mid = (left + right) / 2;
 
-            if (num < card[mid]) right = mid;
+            if (card[mid] >= num) right = mid;
             else left = mid + 1;
         }
 
