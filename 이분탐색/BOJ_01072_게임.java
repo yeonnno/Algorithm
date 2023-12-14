@@ -1,5 +1,5 @@
 /**
- * BOJ : 1072 G3 게임
+ * BOJ : 1072 S3 게임
  */
 import java.io.BufferedReader;
 import java.io.IOException;
