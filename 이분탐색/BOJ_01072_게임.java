@@ -1,5 +1,5 @@
 /**
- * BOJ : 1072 S3 게임
+ * BOJ : 1072 G3 게임
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,15 +17,14 @@ public class BOJ_01072_게임 {
         st = new StringTokenizer(br.readLine());
         X = Integer.parseInt(st.nextToken());
         Y = Integer.parseInt(st.nextToken());
-        Z = avg(X, Y);
+        Z = getAvg(X, Y);
 
         res = -1;
-        int left = 0;
-        int right = (int) 1e9;
+        int left = 0, right = 1_000_000_000;
         while (left <= right) {
             int mid = (left + right) / 2;
 
-            if (avg(X + mid, Y + mid) != Z) {
+            if (getAvg(X + mid, Y + mid) != Z) {
                 res = mid;
                 right = mid - 1;
             } else {
@@ -36,7 +35,7 @@ public class BOJ_01072_게임 {
         System.out.println(res);
     }
 
-    private static int avg(int x, int y) {
+    private static int getAvg(int x, int y) {
         return (int) ((long) y * 100 / x);
     }
 }
