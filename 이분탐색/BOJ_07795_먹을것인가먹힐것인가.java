@@ -36,11 +36,10 @@ public class BOJ_07795_먹을것인가먹힐것인가 {
             }
 
             Arrays.sort(B);
-            res = 0;
 
+            res = 0;
             for (int a : A) {
-                int left = 0;
-                int right = M - 1;
+                int left = 0, right = M - 1;
                 int idx = 0;
 
                 while (left <= right) {
