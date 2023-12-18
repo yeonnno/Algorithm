@@ -20,22 +20,25 @@ public class BOJ_13702_이상한술집 {
         K = Integer.parseInt(st.nextToken());
 
         arr = new int[N];
-        long left = 1; long right = 0;
+        long left = 1, right = 0;
         for (int i = 0; i < N; i++) {
             arr[i] = Integer.parseInt(br.readLine());
             right = Math.max(right, arr[i]);
         }
 
         while (left <= right) {
-            long mid = (left + right) / 2;
+            long mid = (left + right) / 2; // 막걸리의 양
             int cnt = 0;
 
             for (int a : arr) {
                 cnt += a / mid;
             }
 
-            if (cnt >= K) left = mid + 1;
-            else right = mid - 1;
+            if (cnt >= K) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
         }
 
         System.out.println(right);
