@@ -11,25 +11,23 @@ public class BOJ_11561_징검다리 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         int T = Integer.parseInt(br.readLine());
         for (int t = 0; t < T; t++) {
             N = Long.parseLong(br.readLine());
 
             res = 1;
-            long left = 1;
-            long right = Integer.MAX_VALUE;
-
+            long left = 1, right = Integer.MAX_VALUE;
             while (left <= right) {
-                long mid = (left + right) / 2;
-                long val = mid * (mid + 1) / 2;
+                long mid = (left + right) / 2; // 징검다리 수 (징검다리 번호)
+                long sum = mid * (mid + 1) / 2; // 1부터 mid 까지의 합
 
-                if (val > N) {
-                    right = mid - 1;
-                } else {
-                    res = Math.max(res, mid);
+                if (sum <= N) {
                     left = mid + 1;
+                    res = Math.max(res, mid);
+                } else {
+                    right = mid - 1;
                 }
             }
 
