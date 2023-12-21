@@ -46,11 +46,8 @@ public class BOJ_11663_선분위의점 {
         while (left <= right) {
             int mid = (left + right) / 2;
 
-            if (arr[mid] < num) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+            if (arr[mid] < num) left = mid + 1;
+            else right = mid - 1;
         }
 
         return right;
@@ -62,11 +59,8 @@ public class BOJ_11663_선분위의점 {
         while (left <= right) {
             int mid = (left + right) / 2;
 
-            if (arr[mid] <= num) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+            if (arr[mid] <= num) left = mid + 1;
+            else right = mid - 1;
         }
 
         return right;
