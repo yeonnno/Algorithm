@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_02805_나무자르기 {
 
-    static int N, M;
-    static int[] num;
+    static int N, M, max;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,29 +19,27 @@ public class BOJ_02805_나무자르기 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        int left = 0;
-        int right = 0;
-
-        num = new int[N];
+        max = -1;
+        arr = new int[N];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            num[i] = Integer.parseInt(st.nextToken());
-
-            if (right < num[i]) right = num[i];
+            arr[i] = Integer.parseInt(st.nextToken());
+            max = Math.max(max, arr[i]);
         }
 
-        while (left < right) {
+        int left = 0, right = max;
+        while (left <= right) {
             int mid = (left + right) / 2;
             long sum = 0;
 
-            for (int height : num) {
-                if (height - mid > 0) sum += height - mid;
+            for (int a : arr) {
+                if (a - mid > 0) sum += a - mid;
             }
 
-            if (sum < M) right = mid;
-            else left = mid + 1;
+            if (sum >= M) left = mid + 1;
+            else right = mid - 1;
         }
 
-        System.out.println(left - 1);
+        System.out.println(right);
     }
 }
