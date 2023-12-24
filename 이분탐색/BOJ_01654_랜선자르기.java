@@ -9,8 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_01654_랜선자르기 {
 
     static int K, N;
-    static int[] num;
-    static long left, right;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,29 +19,31 @@ public class BOJ_01654_랜선자르기 {
         K = Integer.parseInt(st.nextToken());
         N = Integer.parseInt(st.nextToken());
 
-        num = new int[K];
-
-        left = right = 0;
+        arr = new int[K];
+        long left = 1, right = 0;
         for (int i = 0; i < K; i++) {
-            num[i] = Integer.parseInt(br.readLine());
-
-            if (right < num[i]) right = num[i];
+            arr[i] = Integer.parseInt(br.readLine());
+            right = Math.max(right, arr[i]);
         }
-
         right++;
 
-        while (left < right) {
-            long sum = 0;
+        long res = 0;
+        while (left <= right) {
             long mid = (left + right) / 2;
+            long sum = 0;
 
-            for (int i = 0; i < K; i++) {
-                sum += num[i] / mid;
+            for (int a : arr) {
+                sum += a / mid;
             }
 
-            if (sum < N) right = mid;
-            else left = mid + 1;
+            if (sum >= N) {
+                left = mid + 1;
+                res = mid;
+            } else {
+                right = mid - 1;
+            }
         }
 
-        System.out.println(left - 1);
+        System.out.println(res);
     }
 }
