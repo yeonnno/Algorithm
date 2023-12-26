@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_06236_용돈관리 {
 
     static int N, M, res;
-    static int[] pay;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,19 +19,18 @@ public class BOJ_06236_용돈관리 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        int left = 0;
-        pay = new int[N];
+        int left = 0, right = 10000 * 100000;
+        arr = new int[N];
         for (int i = 0; i < N; i++) {
-            pay[i] = Integer.parseInt(br.readLine());
-            left = Math.max(left, pay[i]);
+            arr[i] = Integer.parseInt(br.readLine());
+            left = Math.max(left, arr[i]);
         }
 
         res = 0;
-        int right = 10000 * 100000;
         while (left <= right) {
-            int mid = (left + right) / 2;
+            int mid = (left + right) / 2; // 인출 할 금액
 
-            if (M >= getCount(mid)) {
+            if (getCount(mid) <= M) {
                 res = mid;
                 right = mid - 1;
             } else {
@@ -46,12 +45,12 @@ public class BOJ_06236_용돈관리 {
         int cnt = 1;
         int money = mid;
 
-        for (int p : pay) {
-            money -= p;
+        for (int a : arr) {
+            money -= a;
 
             if (money < 0) {
                 cnt++;
-                money = mid - p;
+                money = mid - a;
             }
         }
 
