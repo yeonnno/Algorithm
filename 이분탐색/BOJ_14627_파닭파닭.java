@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 public class BOJ_14627_파닭파닭 {
 
     static int S, C;
-    static long res;
     static int[] arr;
+    static long res;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,7 +31,7 @@ public class BOJ_14627_파닭파닭 {
         res = 0;
         while (left <= right) {
             long mid = (left + right) / 2;
-            int cnt = 0;
+            long cnt = 0;
 
             for (int a : arr) {
                 cnt += a / mid;
