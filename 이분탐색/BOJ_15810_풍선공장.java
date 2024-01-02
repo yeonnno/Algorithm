@@ -27,7 +27,8 @@ public class BOJ_15810_풍선공장 {
             min = Math.min(min, arr[i]);
         }
 
-        long left = 0, right = min * M;
+        long res = 0;
+        long left = 1, right = min * M;
         while (left <= right) {
             long mid = (left + right) / 2;
             long cnt = 0;
@@ -38,11 +39,12 @@ public class BOJ_15810_풍선공장 {
 
             if (cnt >= M) {
                 right = mid - 1;
+                res = mid;
             } else {
                 left = mid + 1;
             }
         }
 
-        System.out.println(left);
+        System.out.println(res);
     }
 }
