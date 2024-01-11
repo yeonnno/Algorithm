@@ -20,7 +20,7 @@ public class BOJ_01058_친구 {
             String s = br.readLine();
             for (int j = 1; j <= N; j++) {
                 if (s.charAt(j - 1) == 'Y') adj[i][j] = 1;
-                else if (s.charAt(j - 1) == 'N') adj[i][j] = INF;
+                else adj[i][j] = INF;
             }
         }
 
@@ -43,9 +43,9 @@ public class BOJ_01058_친구 {
     }
 
     private static void floyd() {
-        for (int k = 1; k <= N; k++) { // 경유지
-            for (int i = 1; i <= N; i++) { // 출발지
-                for (int j = 1; j <= N; j++) { // 도착지
+        for (int k = 1; k <= N; k++) {
+            for (int i = 1; i <= N; i++) {
+                for (int j = 1; j <= N; j++) {
                     if (i == j || j == k || k == i) continue;
 
                     if (adj[i][j] > adj[i][k] + adj[k][j]) {
