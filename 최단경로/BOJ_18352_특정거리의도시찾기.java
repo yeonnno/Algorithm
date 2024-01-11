@@ -8,10 +8,9 @@ import java.util.*;
 
 public class BOJ_18352_특정거리의도시찾기 {
 
-    static int N, M, K, X;
+    static int N, M, K, X, INF = 999999999;
     static ArrayList<Integer>[] adj;
     static int[] dist;
-    static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -38,38 +37,33 @@ public class BOJ_18352_특정거리의도시찾기 {
         }
 
         dist = new int[N + 1];
-        Arrays.fill(dist, Integer.MAX_VALUE);
+        Arrays.fill(dist, INF);
         dist[X] = 0;
-        visited = new boolean[N + 1];
 
         dijkstra(X);
 
-        int cnt = 0;
+        boolean check = false;
         for (int i = 1; i <= N; i++) {
-            if (dist[i] == K){
+            if (dist[i] == K) {
                 sb.append(i).append("\n");
-                cnt++;
+                check = true;
             }
         }
 
-        if (cnt == 0) System.out.println(-1);
-        else System.out.println(sb);
+        if (check) System.out.print(sb);
+        else System.out.println(-1);
     }
 
     private static void dijkstra(int start) {
         Queue<Integer> Q = new LinkedList<>();
         Q.add(start);
-        visited[start] = true;
 
         while (!Q.isEmpty()) {
             int now = Q.poll();
 
-            for (int i = 0; i < adj[now].size(); i++) {
-                int next = adj[now].get(i);
-
-                if (!visited[next] && dist[next] > dist[now] + 1) {
+            for (int next : adj[now]) {
+                if (dist[next] > dist[now] + 1) {
                     dist[next] = dist[now] + 1;
-                    visited[next] = true;
                     Q.add(next);
                 }
             }
