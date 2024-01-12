@@ -11,7 +11,7 @@ public class BOJ_01446_지름길 {
 
     static int N, D;
     static int[] dist;
-    static ArrayList<Shortcut>[] adj;
+    static ArrayList<Point>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,7 +34,7 @@ public class BOJ_01446_지름길 {
             int e = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Shortcut(e, w));
+            adj[s].add(new Point(e, w));
         }
 
         dijkstra(0);
@@ -49,9 +49,7 @@ public class BOJ_01446_지름길 {
             dist[now + 1] = dist[now] + 1;
         }
 
-        for (int i = 0; i < adj[now].size(); i++) {
-            Shortcut next = adj[now].get(i);
-
+        for (Point next : adj[now]) {
             if (dist[next.e] > dist[now] + next.w) {
                 dist[next.e] = dist[now] + next.w;
             }
@@ -60,11 +58,11 @@ public class BOJ_01446_지름길 {
         dijkstra(now + 1);
     }
 
-    private static class Shortcut {
+    private static class Point {
         int e;
         int w;
 
-        Shortcut(int e, int w) {
+        Point(int e, int w) {
             this.e = e;
             this.w = w;
         }
