@@ -22,17 +22,18 @@ public class BOJ_01389_케빈베이컨의6단계법칙 {
         adj = new int[N + 1][N + 1];
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= N; j++) {
+                adj[i][j] = INF;
+
                 if (i == j) adj[i][j] = 0;
-                else adj[i][j] = INF;
             }
         }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
 
-            adj[a][b] = adj[b][a] = 1;
+            adj[x][y] = adj[y][x] = 1;
         }
 
         floyd();
