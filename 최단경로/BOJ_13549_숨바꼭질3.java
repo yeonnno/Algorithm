@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_13549_숨바꼭질3 {
 
-    static int N, K;
+    static int N, K, INF = 100001;
     static int[] dist;
 
     public static void main(String[] args) throws IOException {
@@ -22,7 +22,7 @@ public class BOJ_13549_숨바꼭질3 {
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        dist = new int[100001];
+        dist = new int[INF];
         Arrays.fill(dist, -1);
 
         BFS();
@@ -40,19 +40,19 @@ public class BOJ_13549_숨바꼭질3 {
 
             if (now == K) return;
 
-            if (now * 2 <= 100000 && dist[now * 2] == -1) {
-                DQ.addFirst(now * 2);
+            if (now * 2 < INF && dist[now * 2] == -1) {
                 dist[now * 2] = dist[now];
+                DQ.addFirst(now * 2);
             }
 
             if (now > 0 && dist[now - 1] == -1) {
-                DQ.offer(now - 1);
                 dist[now - 1] = dist[now] + 1;
+                DQ.add(now - 1);
             }
 
-            if (now < 100000 && dist[now + 1] == -1) {
-                DQ.offer(now + 1);
+            if (now < INF - 1 && dist[now + 1] == -1) {
                 dist[now + 1] = dist[now] + 1;
+                DQ.add(now + 1);
             }
         }
     }
