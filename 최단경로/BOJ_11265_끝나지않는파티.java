@@ -38,10 +38,11 @@ public class BOJ_11265_끝나지않는파티 {
 
             if (adj[a][b] <= c) sb.append("Enjoy other party");
             else sb.append("Stay here");
+
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
@@ -50,7 +51,9 @@ public class BOJ_11265_끝나지않는파티 {
                 for (int j = 1; j <= N; j++) {
                     if (i == j || j == k || k == i) continue;
 
-                    adj[i][j] = Math.min(adj[i][j], adj[i][k] + adj[k][j]);
+                    if (adj[i][j] > adj[i][k] + adj[k][j]) {
+                        adj[i][j] = adj[i][k] + adj[k][j];
+                    }
                 }
             }
         }
