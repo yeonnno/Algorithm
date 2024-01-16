@@ -4,7 +4,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class BOJ_01916_최소비용구하기 {
 
@@ -41,15 +44,16 @@ public class BOJ_01916_최소비용구하기 {
         dist = new int[N + 1];
         Arrays.fill(dist, INF);
         dist[start] = 0;
+
         visited = new boolean[N + 1];
 
-        dijkstra(start);
+        dijkstra();
 
         System.out.println(dist[end]);
     }
 
-    private static void dijkstra(int v) {
-        PriorityQueue<Point> PQ = new PriorityQueue();
+    private static void dijkstra() {
+        PriorityQueue<Point> PQ = new PriorityQueue<>();
         PQ.add(new Point(start, 0));
 
         while (!PQ.isEmpty()) {
@@ -59,11 +63,7 @@ public class BOJ_01916_최소비용구하기 {
 
             visited[now.e] = true;
 
-            for (int i = 0; i < adj[now.e].size(); i++) {
-                Point next = adj[now.e].get(i);
-
-                if (visited[next.e]) continue;
-
+            for (Point next : adj[now.e]) {
                 if (dist[next.e] > dist[now.e] + next.cost) {
                     dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Point(next.e, dist[next.e]));
