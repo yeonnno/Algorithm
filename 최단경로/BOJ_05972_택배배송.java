@@ -4,12 +4,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class BOJ_05972_택배배송 {
 
     static int N, M, INF = 999999999;
-    static ArrayList<Node>[] adj;
+    static ArrayList<Point>[] adj;
     static int[] dist;
     static boolean[] visited;
 
@@ -30,15 +33,16 @@ public class BOJ_05972_택배배송 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Node(e, w));
-            adj[e].add(new Node(s, w));
+            adj[s].add(new Point(e, cost));
+            adj[e].add(new Point(s, cost));
         }
 
         dist = new int[N + 1];
         Arrays.fill(dist, INF);
         dist[1] = 0;
+
         visited = new boolean[N + 1];
 
         dijkstra(1);
@@ -47,39 +51,37 @@ public class BOJ_05972_택배배송 {
     }
 
     private static void dijkstra(int start) {
-        PriorityQueue<Node> PQ = new PriorityQueue<>();
-        PQ.add(new Node(start, 0));
+        PriorityQueue<Point> PQ = new PriorityQueue<>();
+        PQ.add(new Point(start, 0));
 
         while (!PQ.isEmpty()) {
-            Node now = PQ.poll();
+            Point now = PQ.poll();
 
             if (visited[now.e]) continue;
 
             visited[now.e] = true;
 
-            for (Node next : adj[now.e]) {
-                if (visited[next.e]) continue;
-
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
-                    PQ.add(new Node(next.e, dist[next.e]));
+            for (Point next : adj[now.e]) {
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
+                    PQ.add(new Point(next.e, dist[next.e]));
                 }
             }
         }
     }
 
-    private static class Node implements Comparable<Node> {
+    private static class Point implements Comparable<Point> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Point(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
-        public int compareTo(Node o) {
-            return this.w - o.w;
+        public int compareTo(Point o) {
+            return this.cost - o.cost;
         }
     }
 }
