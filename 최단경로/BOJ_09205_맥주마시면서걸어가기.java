@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_09205_맥주마시면서걸어가기 {
 
-    static int T, N;
+    static int N;
     static ArrayList<Point> list;
     static boolean[][] visited;
 
@@ -18,7 +18,7 @@ public class BOJ_09205_맥주마시면서걸어가기 {
         StringTokenizer st = null;
         StringBuilder sb = new StringBuilder();
 
-        T = Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
         for (int t = 0; t < T; t++) {
             N = Integer.parseInt(br.readLine());
 
@@ -34,7 +34,7 @@ public class BOJ_09205_맥주마시면서걸어가기 {
             visited = new boolean[N + 2][N + 2];
             for (int i = 0; i < N + 2; i++) {
                 for (int j = i + 1; j < N + 2; j++) {
-                    int dist = manhattan(i, j);
+                    int dist = manhattan(list.get(i), list.get(j));
 
                     if (dist <= 1000) visited[i][j] = visited[j][i] = true;
                 }
@@ -47,21 +47,23 @@ public class BOJ_09205_맥주마시면서걸어가기 {
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
         for (int k = 0; k < N + 2; k++) {
             for (int i = 0; i < N + 2; i++) {
                 for (int j = 0; j < N + 2; j++) {
+                    if (i == j || j == k || k == i) continue;
+
                     if (visited[i][k] && visited[k][j]) visited[i][j] = true;
                 }
             }
         }
     }
 
-    private static int manhattan(int i, int j) {
-        return Math.abs(list.get(i).x - list.get(j).x) + Math.abs(list.get(i).y - list.get(j).y);
+    private static int manhattan(Point p1, Point p2) {
+        return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
     }
 
     private static class Point {
