@@ -4,13 +4,14 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class BOJ_02660_회장뽑기 {
 
-    static int N, INF = 999999999;
+    static int N, min, max, INF = 999999999;
     static int[][] adj;
-    static int[] res;
+    static ArrayList<Integer> list;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,10 +21,9 @@ public class BOJ_02660_회장뽑기 {
         N = Integer.parseInt(br.readLine());
 
         adj = new int[N + 1][N + 1];
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= N; j++) {
-                if (i == j) adj[i][j] = 0;
-                else adj[i][j] = INF;
+        for (int i = 0; i <= N; i++) {
+            for (int j = 0; j <= N; j++) {
+                if (i != j) adj[i][j] = INF;
             }
         }
 
@@ -39,29 +39,27 @@ public class BOJ_02660_회장뽑기 {
 
         floyd();
 
-        int min = INF;
-        int cnt = 0;
-        res = new int[N + 1];
+        min = INF;
+        list = new ArrayList<>();
         for (int i = 1; i <= N; i++) {
-            int score = 0;
+            max = -INF;
 
             for (int j = 1; j <= N; j++) {
-                if (adj[i][j] != INF) score = Math.max(score, adj[i][j]);
+                max = Math.max(max, adj[i][j]);
             }
 
-            res[i] = score;
-
-            if (min > score) {
-                min = score;
-                cnt = 1;
-            } else if (min == score) {
-                cnt++;
+            if (min > max) {
+                list.clear();
+                list.add(i);
+                min = max;
+            } else if (min == max) {
+                list.add(i);
             }
         }
-        sb.append(min).append(" ").append(cnt).append("\n");
 
-        for (int i = 1; i <= N; i++) {
-            if (res[i] == min) sb.append(i).append(" ");
+        sb.append(min).append(" ").append(list.size()).append("\n");
+        for (int li : list) {
+            sb.append(li).append(" ");
         }
 
         System.out.println(sb);
