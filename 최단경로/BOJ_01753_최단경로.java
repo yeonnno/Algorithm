@@ -24,7 +24,6 @@ public class BOJ_01753_최단경로 {
         st = new StringTokenizer(br.readLine());
         V = Integer.parseInt(st.nextToken());
         E = Integer.parseInt(st.nextToken());
-
         K = Integer.parseInt(br.readLine());
 
         adj = new ArrayList[V + 1];
@@ -36,30 +35,30 @@ public class BOJ_01753_최단경로 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Node(e, w));
+            adj[s].add(new Node(e, cost));
         }
 
         dist = new int[V + 1];
         Arrays.fill(dist, INF);
         dist[K] = 0;
+
         visited = new boolean[V + 1];
 
-        dijkstra(K);
+        dijkstra();
 
         for (int i = 1; i <= V; i++) {
-            if (dist[i] == INF) sb.append("INF");
-            else sb.append(dist[i]);
-            sb.append("\n");
+            if (dist[i] == INF) sb.append("INF\n");
+            else sb.append(dist[i]).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
-    private static void dijkstra(int v) {
+    private static void dijkstra() {
         PriorityQueue<Node> PQ = new PriorityQueue<>();
-        PQ.add(new Node(v, 0));
+        PQ.add(new Node(K, 0));
 
         while (!PQ.isEmpty()) {
             Node now = PQ.poll();
@@ -69,10 +68,8 @@ public class BOJ_01753_최단경로 {
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (visited[next.e]) continue;
-
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Node(next.e, dist[next.e]));
                 }
             }
@@ -81,16 +78,16 @@ public class BOJ_01753_최단경로 {
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
