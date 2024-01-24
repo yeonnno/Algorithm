@@ -30,9 +30,9 @@ public class BOJ_11404_플로이드 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s][e] = Math.min(adj[s][e], w);
+            adj[s][e] = Math.min(adj[s][e], cost);
         }
 
         floyd();
@@ -46,7 +46,7 @@ public class BOJ_11404_플로이드 {
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
@@ -55,7 +55,9 @@ public class BOJ_11404_플로이드 {
                 for (int j = 1; j <= N; j++) {
                     if (i == j || j == k || k == i) continue;
 
-                    adj[i][j] = Math.min(adj[i][j], adj[i][k] + adj[k][j]);
+                    if (adj[i][j] > adj[i][k] + adj[k][j]) {
+                        adj[i][j] = adj[i][k] + adj[k][j];
+                    }
                 }
             }
         }
