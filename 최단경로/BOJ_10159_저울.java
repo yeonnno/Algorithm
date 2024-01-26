@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_10159_저울 {
 
-    static int N, M, INF = 999999999;
+    static int N, M;
     static int[][] adj;
 
     public static void main(String[] args) throws IOException {
@@ -43,7 +43,7 @@ public class BOJ_10159_저울 {
             sb.append(cnt).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
@@ -52,13 +52,9 @@ public class BOJ_10159_저울 {
                 for (int j = 1; j <= N; j++) {
                     if (i == j || j == k || k == i) continue;
 
-                    if (adj[i][k] == 1 && adj[k][j] == 1) {
-                        adj[i][j] = 1;
-                    }
+                    if (adj[i][k] == 1 && adj[k][j] == 1) adj[i][j] = 1;
 
-                    if (adj[i][k] == -1 && adj[k][j] == -1) {
-                        adj[i][j] = -1;
-                    }
+                    if (adj[i][k] == -1 && adj[k][j] == -1) adj[i][j] = -1;
                 }
             }
         }
