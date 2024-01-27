@@ -27,9 +27,9 @@ public class BOJ_11657_타임머신 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[i] = new Node(s, e, w);
+            adj[i] = new Node(s, e, cost);
         }
 
         dist = new long[N + 1];
@@ -46,7 +46,7 @@ public class BOJ_11657_타임머신 {
             sb.append(-1).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static boolean bellman() {
@@ -54,8 +54,8 @@ public class BOJ_11657_타임머신 {
             for (int j = 0; j < M; j++) {
                 Node node = adj[j];
 
-                if (dist[node.s] != INF && dist[node.e] > dist[node.s] + node.w) {
-                    dist[node.e] = dist[node.s] + node.w;
+                if (dist[node.s] != INF && dist[node.e] > dist[node.s] + node.cost) {
+                    dist[node.e] = dist[node.s] + node.cost;
                 }
             }
         }
@@ -63,7 +63,7 @@ public class BOJ_11657_타임머신 {
         for (int i = 0; i < M; i++) {
             Node node = adj[i];
 
-            if (dist[node.s] != INF && dist[node.e] > dist[node.s] + node.w) return false;
+            if (dist[node.s] != INF && dist[node.e] > dist[node.s] + node.cost) return false;
         }
 
         return true;
@@ -72,12 +72,12 @@ public class BOJ_11657_타임머신 {
     private static class Node {
         int s;
         int e;
-        int w;
+        int cost;
 
-        Node(int s, int e, int w) {
+        Node(int s, int e, int cost) {
             this.s = s;
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
     }
 }
