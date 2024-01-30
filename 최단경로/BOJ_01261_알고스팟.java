@@ -4,16 +4,19 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.PriorityQueue;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
-
+/**
+ * 0-1 BFS 풀이
+ */
 public class BOJ_01261_알고스팟 {
 
     static int N, M, res;
     static int[][] map;
-    static boolean[][] visited;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
+    static boolean[][] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,18 +37,18 @@ public class BOJ_01261_알고스팟 {
         res = 0;
         visited = new boolean[N][M];
 
-        BFS(new Point(0, 0, 0));
+        BFS();
 
         System.out.println(res);
     }
 
-    private static void BFS(Point p) {
-        PriorityQueue<Point> PQ = new PriorityQueue<>();
-        PQ.add(p);
-        visited[p.x][p.y] = true;
+    private static void BFS() {
+        Deque<Point> DQ = new LinkedList<>();
+        DQ.add(new Point(0, 0, 0));
+        visited[0][0] = true;
 
-        while (!PQ.isEmpty()) {
-            Point now = PQ.poll();
+        while (!DQ.isEmpty()) {
+            Point now = DQ.poll();
 
             if (now.x == N - 1 && now.y == M - 1) {
                 res = now.cnt;
@@ -60,11 +63,9 @@ public class BOJ_01261_알고스팟 {
                 if (visited[nx][ny]) continue;
 
                 visited[nx][ny] = true;
-                if (map[nx][ny] == 0) {
-                    PQ.add(new Point(nx, ny, now.cnt));
-                } else {
-                    PQ.add(new Point(nx, ny, now.cnt + 1));
-                }
+
+                if (map[nx][ny] == 0) DQ.addFirst(new Point(nx, ny, now.cnt));
+                else DQ.add(new Point(nx, ny, now.cnt + 1));
             }
         }
     }
@@ -74,7 +75,7 @@ public class BOJ_01261_알고스팟 {
         else return false;
     }
 
-    private static class Point implements Comparable<Point> {
+    private static class Point{
         int x;
         int y;
         int cnt;
@@ -83,11 +84,6 @@ public class BOJ_01261_알고스팟 {
             this.x = x;
             this.y = y;
             this.cnt = cnt;
-        }
-
-        @Override
-        public int compareTo(Point o) {
-            return this.cnt - o.cnt;
         }
     }
 }
