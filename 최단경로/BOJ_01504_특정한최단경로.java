@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-
+/**
+ * 이전 풀이의 개선 버전 (시간 단축)
+ */
 public class BOJ_01504_특정한최단경로 {
 
-    static int N, E, v1, v2, res1, res2, INF = 200000000;
-    static ArrayList<Point>[] adj;
-    static int[] dist;
+    static int N, E, v1, v2, res1, res2;
+    static final int INF = 200000000;
+    static ArrayList<Node>[] adj;
+    static int[] dist1, distV1, distV2;
     static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
@@ -33,10 +36,10 @@ public class BOJ_01504_특정한최단경로 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Point(e, w));
-            adj[e].add(new Point(s, w));
+            adj[s].add(new Node(e, cost));
+            adj[e].add(new Node(s, cost));
         }
 
         st = new StringTokenizer(br.readLine());
@@ -44,59 +47,57 @@ public class BOJ_01504_특정한최단경로 {
         v2 = Integer.parseInt(st.nextToken());
 
         res1 = res2 = 0;
+        dist1 = dijkstra(1);
+        distV1 = dijkstra(v1);
+        distV2 = dijkstra(v2);
 
-        res1 += dijkstra(1, v1);
-        res1 += dijkstra(v1, v2);
-        res1 += dijkstra(v2, N);
-
-        res2 += dijkstra(1, v2);
-        res2 += dijkstra(v2, v1);
-        res2 += dijkstra(v1, N);
+        res1 = dist1[v1] + distV1[v2] + distV2[N];
+        res2 = dist1[v2] + distV2[v1] + distV1[N];
 
         if (res1 >= INF && res2 >= INF) System.out.println(-1);
         else System.out.println(Math.min(res1, res2));
     }
 
-    private static int dijkstra(int start, int end) {
-        dist = new int[N + 1];
+    private static int[] dijkstra(int start) {
+        PriorityQueue<Node> PQ = new PriorityQueue<>();
+        PQ.add(new Node(start, 0));
+
+        int[] dist = new int[N + 1];
         Arrays.fill(dist, INF);
         dist[start] = 0;
+
         visited = new boolean[N + 1];
 
-        PriorityQueue<Point> PQ = new PriorityQueue<>();
-        PQ.add(new Point(start, 0));
-
         while (!PQ.isEmpty()) {
-            Point now = PQ.poll();
+            Node now = PQ.poll();
 
             if (visited[now.e]) continue;
+
             visited[now.e] = true;
 
-            for (Point next : adj[now.e]) {
-                if (visited[next.e]) continue;
-
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
-                    PQ.add(new Point(next.e, dist[next.e]));
+            for (Node next : adj[now.e]) {
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
+                    PQ.add(new Node(next.e, dist[next.e]));
                 }
             }
         }
 
-        return dist[end];
+        return dist;
     }
 
-    private static class Point implements Comparable<Point> {
+    private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Point(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
-        public int compareTo(Point o) {
-            return this.w - o.w;
+        public int compareTo(Node o) {
+            return this.cost - o.cost;
         }
     }
 }
