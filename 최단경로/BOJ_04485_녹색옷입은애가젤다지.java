@@ -4,14 +4,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class BOJ_04485_녹색옷입은애가젤다지 {
 
-    static int N, INF = 999999999;
-    static int[][] map, dist;
+    static int N, res;
+    static int[][] map;
     static boolean[][] visited;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
@@ -24,7 +23,6 @@ public class BOJ_04485_녹색옷입은애가젤다지 {
         int tc = 0;
         while (true) {
             tc++;
-
             N = Integer.parseInt(br.readLine());
 
             if (N == 0) break;
@@ -37,31 +35,29 @@ public class BOJ_04485_녹색옷입은애가젤다지 {
                 }
             }
 
-            dist = new int[N][N];
-            for (int i = 0; i < N; i++) {
-                Arrays.fill(dist[i], INF);
-            }
-            dist[0][0] = map[0][0];
-
+            res = 0;
             visited = new boolean[N][N];
+            visited[0][0] = true;
 
-            dijkstra(new Point(0, 0, dist[0][0]));
+            dijkstra();
 
-            sb.append("Problem ").append(tc).append(": ").append(dist[N - 1][N - 1]).append("\n");
+            sb.append("Problem ").append(tc).append(": ").append(res).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
-    private static void dijkstra(Point p) {
-        PriorityQueue<Point> PQ = new PriorityQueue<>();
-        visited[0][0] = true;
-        PQ.add(p);
+    private static void dijkstra() {
+        PriorityQueue<Point> PQ = new PriorityQueue();
+        PQ.add(new Point(0, 0, map[0][0]));
 
         while (!PQ.isEmpty()) {
             Point now = PQ.poll();
 
-            if (now.x == N - 1 && now.y == N - 1) return;
+            if (now.x == N - 1 && now.y == N - 1) {
+                res = now.cost;
+                return;
+            }
 
             for (int d = 0; d < 4; d++) {
                 int nx = now.x + dx[d];
@@ -71,11 +67,7 @@ public class BOJ_04485_녹색옷입은애가젤다지 {
                 if (visited[nx][ny]) continue;
 
                 visited[nx][ny] = true;
-
-                if (dist[nx][ny] > dist[now.x][now.y] + map[nx][ny]) {
-                    dist[nx][ny] = dist[now.x][now.y] + map[nx][ny];
-                    PQ.add(new Point(nx, ny, dist[nx][ny]));
-                }
+                PQ.add(new Point(nx, ny, now.cost + map[nx][ny]));
             }
         }
     }
