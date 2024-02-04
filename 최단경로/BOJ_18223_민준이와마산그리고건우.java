@@ -11,9 +11,10 @@ import java.util.StringTokenizer;
 
 public class BOJ_18223_민준이와마산그리고건우 {
 
-    static int V, E, P, res1, res2, INF = 999999999;
+    static int V, E, P;
+    static final int INF = 999999999;
     static ArrayList<Node>[] adj;
-    static int[] dist;
+    static int[] dist, distP;
     static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
@@ -34,63 +35,64 @@ public class BOJ_18223_민준이와마산그리고건우 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Node(e, w));
-            adj[e].add(new Node(s, w));
+            adj[s].add(new Node(e, cost));
+            adj[e].add(new Node(s, cost));
         }
 
-        res1 = res2 = 0;
-
-        res1 = dijkstra(1, V);
-
-        res2 += dijkstra(1, P);
-        res2 += dijkstra(P, V);
-
-        if (res1 < res2) System.out.println("GOOD BYE");
-        else System.out.println("SAVE HIM");
-    }
-
-    private static int dijkstra(int start, int end) {
         dist = new int[V + 1];
         Arrays.fill(dist, INF);
-        dist[start] = 0;
+        dist[1] = 0;
+
         visited = new boolean[V + 1];
 
+        dijkstra(1, dist);
+
+        distP = new int[V + 1];
+        Arrays.fill(distP, INF);
+        distP[P] = 0;
+
+        visited = new boolean[V + 1];
+
+        dijkstra(P, distP);
+
+        if (dist[V] == dist[P] + distP[V]) System.out.println("SAVE HIM");
+        else System.out.println("GOOD BYE");
+    }
+
+    private static void dijkstra(int start, int[] di) {
         PriorityQueue<Node> PQ = new PriorityQueue<>();
-        PQ.add(new Node(start, dist[start]));
+        PQ.add(new Node(start, 0));
 
         while (!PQ.isEmpty()) {
             Node now = PQ.poll();
 
             if (visited[now.e]) continue;
+
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (visited[next.e]) continue;
-
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
-                    PQ.add(new Node(next.e, dist[next.e]));
+                if (di[next.e] > di[now.e] + next.cost) {
+                    di[next.e] = di[now.e] + next.cost;
+                    PQ.add(new Node(next.e, di[next.e]));
                 }
             }
         }
-
-        return dist[end];
     }
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
