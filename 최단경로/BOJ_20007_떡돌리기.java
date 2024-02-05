@@ -11,7 +11,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_20007_떡돌리기 {
 
-    static int N, M, X, Y, res, INF = 999999999;
+    static int N, M, X, Y, res;
+    static final int INF = 999999999;
     static ArrayList<Node>[] adj;
     static int[] dist;
     static boolean[] visited;
@@ -35,18 +36,19 @@ public class BOJ_20007_떡돌리기 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken()) * 2;
 
-            adj[s].add(new Node(e, w));
-            adj[e].add(new Node(s, w));
+            adj[s].add(new Node(e, cost));
+            adj[e].add(new Node(s, cost));
         }
 
         dist = new int[N];
         Arrays.fill(dist, INF);
         dist[Y] = 0;
+
         visited = new boolean[N];
 
-        dijkstra(new Node(Y, 0));
+        dijkstra(Y);
 
         Arrays.sort(dist);
 
@@ -60,35 +62,34 @@ public class BOJ_20007_떡돌리기 {
         int sum = 0;
 
         for (int i = 0; i < N; i++) {
-            if (dist[i] * 2 > X) {
+            if (dist[i] > X) {
                 res = -1;
-                break;
+                return;
             }
 
-            sum += dist[i] * 2;
+            sum += dist[i];
 
             if (sum > X) {
                 res++;
-                sum = dist[i] * 2;
+                sum = dist[i];
             }
         }
     }
 
-    private static void dijkstra(Node node) {
+    private static void dijkstra(int start) {
         PriorityQueue<Node> PQ = new PriorityQueue<>();
-        PQ.add(node);
+        PQ.add(new Node(start, 0));
 
         while (!PQ.isEmpty()) {
             Node now = PQ.poll();
 
             if (visited[now.e]) continue;
+
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (visited[next.e]) continue;
-
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Node(next.e, dist[next.e]));
                 }
             }
@@ -97,16 +98,16 @@ public class BOJ_20007_떡돌리기 {
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
