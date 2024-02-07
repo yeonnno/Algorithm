@@ -5,14 +5,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class BOJ_21940_가운데에서만나기 {
 
-    static int N, M, K, INF = 999999999;
+    static int N, M, K;
+    static final int INF = 999999999;
     static int[][] adj;
     static int[] friends;
-    static ArrayList<Integer> res;
+    static List<Integer> res;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,10 +36,12 @@ public class BOJ_21940_가운데에서만나기 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s][e] = w;
+            adj[s][e] = cost;
         }
+
+        floyd();
 
         K = Integer.parseInt(br.readLine());
 
@@ -47,23 +51,20 @@ public class BOJ_21940_가운데에서만나기 {
             friends[i] = Integer.parseInt(st.nextToken());
         }
 
-        floyd();
-
+        int min = INF;
         res = new ArrayList<>();
-
-        int max = INF;
         for (int i = 1; i <= N; i++) {
-            int now = 0;
+            int max = -INF;
 
-            for (int f : friends) {
-                now = Math.max(now, adj[f][i] + adj[i][f]);
+            for (int friend : friends) {
+                max = Math.max(max, adj[i][friend] + adj[friend][i]);
             }
 
-            if (max > now) {
-                max = now;
+            if (min > max) {
                 res.clear();
                 res.add(i);
-            } else if (max == now) {
+                min = max;
+            } else if (min == max) {
                 res.add(i);
             }
         }
