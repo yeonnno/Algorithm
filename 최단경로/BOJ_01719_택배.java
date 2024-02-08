@@ -8,7 +8,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_01719_택배 {
 
-    static int N, M, INF = 999999999;
+    static int N, M;
+    static final int INF = 999999999;
     static int[][] adj, res;
 
     public static void main(String[] args) throws IOException {
@@ -28,7 +29,6 @@ public class BOJ_01719_택배 {
                     adj[i][j] = INF;
                     res[i][j] = j;
                 }
-
             }
         }
 
@@ -36,10 +36,10 @@ public class BOJ_01719_택배 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s][e] = w;
-            adj[e][s] = w;
+            adj[s][e] = cost;
+            adj[e][s] = cost;
         }
 
         floyd();
@@ -53,7 +53,7 @@ public class BOJ_01719_택배 {
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
