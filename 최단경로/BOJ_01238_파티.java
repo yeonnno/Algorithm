@@ -11,9 +11,10 @@ import java.util.StringTokenizer;
 
 public class BOJ_01238_파티 {
 
-    static int N, M, X, res, INF = 999999999;
+    static int N, M, X, res;
+    static final int INF = 999999999;
     static ArrayList<Node>[] nAdj, rAdj;
-    static int[] dist;
+    static int[] go, back, dist;
     static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
@@ -36,16 +37,16 @@ public class BOJ_01238_파티 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            nAdj[s].add(new Node(e, w));
-            rAdj[e].add(new Node(s, w));
+            nAdj[s].add(new Node(e, cost));
+            rAdj[e].add(new Node(s, cost));
         }
 
-        int[] go = dijkstra(rAdj);
-        int[] back = dijkstra(nAdj);
+        go = dijkstra(rAdj);
+        back = dijkstra(nAdj);
 
-        res = Integer.MIN_VALUE;
+        res = -INF;
         for (int i = 1; i <= N; i++) {
             res = Math.max(res, go[i] + back[i]);
         }
@@ -67,11 +68,12 @@ public class BOJ_01238_파티 {
             Node now = PQ.poll();
 
             if (visited[now.e]) continue;
+
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Node(next.e, dist[next.e]));
                 }
             }
@@ -82,16 +84,16 @@ public class BOJ_01238_파티 {
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
