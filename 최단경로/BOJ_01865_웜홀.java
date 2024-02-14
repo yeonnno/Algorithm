@@ -10,7 +10,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_01865_웜홀 {
 
-    static int N, M, W, INF = 999999999;
+    static int N, M, W;
+    static final int INF = 999999999;
     static ArrayList<Node>[] adj;
     static int[] dist;
 
@@ -35,13 +36,13 @@ public class BOJ_01865_웜홀 {
                 st = new StringTokenizer(br.readLine());
                 int s = Integer.parseInt(st.nextToken());
                 int e = Integer.parseInt(st.nextToken());
-                int w = Integer.parseInt(st.nextToken());
+                int cost = Integer.parseInt(st.nextToken());
 
                 if (i < M) {
-                    adj[s].add(new Node(e, w));
-                    adj[e].add(new Node(s, w));
+                    adj[s].add(new Node(e, cost));
+                    adj[e].add(new Node(s, cost));
                 } else {
-                    adj[s].add(new Node(e, -w));
+                    adj[s].add(new Node(e, -cost));
                 }
             }
 
@@ -53,31 +54,31 @@ public class BOJ_01865_웜홀 {
             else sb.append("NO\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static boolean bellman() {
-        boolean check = false;
+        boolean isUpdate = false;
 
         for (int i = 1; i < N; i++) {
-            check = false;
+            isUpdate = false;
 
             for (int j = 1; j <= N; j++) {
                 for (Node next : adj[j]) {
-                    if (dist[next.e] > dist[j] + next.w) {
-                        dist[next.e] = dist[j] + next.w;
-                        check = true;
+                    if (dist[next.e] > dist[j] + next.cost) {
+                        dist[next.e] = dist[j] + next.cost;
+                        isUpdate = true;
                     }
                 }
             }
 
-            if (!check) break;
+            if (!isUpdate) break;
         }
 
-        if (check) {
+        if (isUpdate) {
             for (int i = 1; i <= N; i++) {
                 for (Node next : adj[i]) {
-                    if (dist[next.e] > dist[i] + next.w) return true;
+                    if (dist[next.e] > dist[i] + next.cost) return true;
                 }
             }
         }
@@ -87,11 +88,11 @@ public class BOJ_01865_웜홀 {
 
     private static class Node {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
     }
 }
