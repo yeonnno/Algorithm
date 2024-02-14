@@ -32,6 +32,7 @@ public class BOJ_01613_역사 {
         floyd();
 
         S = Integer.parseInt(br.readLine());
+
         for (int i = 0; i < S; i++) {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
@@ -40,10 +41,11 @@ public class BOJ_01613_역사 {
             if (adj[s][e]) sb.append(-1);
             else if (adj[e][s]) sb.append(1);
             else sb.append(0);
+            
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
