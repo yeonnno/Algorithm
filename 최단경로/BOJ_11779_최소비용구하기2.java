@@ -8,7 +8,8 @@ import java.util.*;
 
 public class BOJ_11779_최소비용구하기2 {
 
-    static int N, M, S, E, INF = 999999999;
+    static int N, M, S, E;
+    static final int INF = 999999999;
     static ArrayList<Node>[] adj;
     static int[] dist, check;
     static boolean[] visited;
@@ -31,9 +32,9 @@ public class BOJ_11779_최소비용구하기2 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Node(e, w));
+            adj[s].add(new Node(e, cost));
         }
 
         st = new StringTokenizer(br.readLine());
@@ -44,26 +45,25 @@ public class BOJ_11779_최소비용구하기2 {
         dist = new int[N + 1];
         Arrays.fill(dist, INF);
         dist[S] = 0;
+
         visited = new boolean[N + 1];
 
         dijkstra();
 
         stack = new Stack<>();
         stack.push(E);
-        int idx = E;
 
+        int idx = E;
         while (true) {
             if (check[idx] == S) break;
 
-            stack.push(check[idx]);
             idx = check[idx];
+            stack.push(idx);
         }
         stack.push(S);
 
         sb.append(dist[E]).append("\n").append(stack.size()).append("\n");
-        while (true) {
-            if (stack.size() == 0) break;
-
+        while (!stack.isEmpty()) {
             sb.append(stack.pop()).append(" ");
         }
 
@@ -78,11 +78,12 @@ public class BOJ_11779_최소비용구하기2 {
             Node now = PQ.poll();
 
             if (visited[now.e]) continue;
+
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Node(next.e, dist[next.e]));
                     check[next.e] = now.e;
                 }
@@ -92,16 +93,16 @@ public class BOJ_11779_최소비용구하기2 {
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
