@@ -8,7 +8,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_11562_백양로브레이크 {
 
-    static int N, M, K, INF = 999999999;
+    static int N, M, K;
+    static final int INF = 999999999;
     static int[][] adj;
 
     public static void main(String[] args) throws IOException {
@@ -29,22 +30,20 @@ public class BOJ_11562_백양로브레이크 {
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            adj[u][v] = 0;
+            adj[s][e] = 0;
 
-            if (b == 0) {
-                adj[v][u] = 1;
-            } else {
-                adj[v][u] = 0;
-            }
+            if (b == 0) adj[e][s] = 1;
+            else adj[e][s] = 0;
         }
 
         floyd();
 
         K = Integer.parseInt(br.readLine());
+
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
@@ -53,7 +52,7 @@ public class BOJ_11562_백양로브레이크 {
             sb.append(adj[s][e]).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
