@@ -8,8 +8,9 @@ import java.util.StringTokenizer;
 
 public class BOJ_01507_궁금한민호 {
 
-    static int N, res, INF = 999999999;
-    static int[][] oriAdj, preAdj;
+    static int N, res;
+    static final int INF = 999999999;
+    static int[][] beforeAdj, afterAdj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,23 +18,22 @@ public class BOJ_01507_궁금한민호 {
 
         N = Integer.parseInt(br.readLine());
 
-        oriAdj = new int[N + 1][N + 1]; // 주어진 배열
-        preAdj = new int[N + 1][N + 1]; // 플로이드워셜 수행 전 배열
+        beforeAdj = new int[N + 1][N + 1];
+        afterAdj = new int[N + 1][N + 1];
         for (int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 1; j <= N; j++) {
-                oriAdj[i][j] = preAdj[i][j] = Integer.parseInt(st.nextToken());
+                beforeAdj[i][j] = afterAdj[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
         if (floyd()) {
             res = 0;
-
             for (int i = 1; i <= N; i++) {
                 for (int j = i + 1; j <= N; j++) {
-                    if (preAdj[i][j] == INF) continue;
+                    if (beforeAdj[i][j] == INF) continue;
 
-                    res += preAdj[i][j];
+                    res += beforeAdj[i][j];
                 }
             }
 
@@ -49,12 +49,10 @@ public class BOJ_01507_궁금한민호 {
                 for (int j = 1; j <= N; j++) {
                     if (i == j || j == k || k == i) continue;
 
-                    if (oriAdj[i][j] > oriAdj[i][k] + oriAdj[k][j]) {
+                    if (afterAdj[i][j] > afterAdj[i][k] + afterAdj[k][j]) {
                         return false;
-                    }
-
-                    if (oriAdj[i][j] == oriAdj[i][k] + oriAdj[k][j]) {
-                        preAdj[i][j] = INF;
+                    } else if (afterAdj[i][j] == afterAdj[i][k] + afterAdj[k][j]) {
+                        beforeAdj[i][j] = INF;
                     }
                 }
             }
