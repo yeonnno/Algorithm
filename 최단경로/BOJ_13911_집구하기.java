@@ -11,10 +11,10 @@ import java.util.StringTokenizer;
 
 public class BOJ_13911_집구하기 {
 
-    static int V, E, M, S, X, Y, res, INF = 999999999;
+    static int V, E, M, S, X, Y, res;
+    static final int INF = 999999999;
     static ArrayList<Node>[] adj;
     static int[] mcdonaldDist, starbucksDist;
-    static boolean[] visited;
     static PriorityQueue<Node> PQ;
 
     public static void main(String[] args) throws IOException {
@@ -34,20 +34,20 @@ public class BOJ_13911_집구하기 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Node(e, w));
-            adj[e].add(new Node(s, w));
+            adj[s].add(new Node(e, cost));
+            adj[e].add(new Node(s, cost));
         }
 
         st = new StringTokenizer(br.readLine());
         M = Integer.parseInt(st.nextToken());
         X = Integer.parseInt(st.nextToken());
 
-        PQ = new PriorityQueue<>();
         mcdonaldDist = new int[V + 1];
         Arrays.fill(mcdonaldDist, INF);
 
+        PQ = new PriorityQueue<>();
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
             int idx = Integer.parseInt(st.nextToken());
@@ -61,10 +61,10 @@ public class BOJ_13911_집구하기 {
         S = Integer.parseInt(st.nextToken());
         Y = Integer.parseInt(st.nextToken());
 
-        PQ = new PriorityQueue<>();
         starbucksDist = new int[V + 1];
         Arrays.fill(starbucksDist, INF);
 
+        PQ = new PriorityQueue<>();
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < S; i++) {
             int idx = Integer.parseInt(st.nextToken());
@@ -76,9 +76,8 @@ public class BOJ_13911_집구하기 {
 
         res = INF;
         for (int i = 1; i <= V; i++) {
-            if (mcdonaldDist[i] != 0 && mcdonaldDist[i] <= X && starbucksDist[i] != 0 && starbucksDist[i] <= Y) {
-                res = Math.min(res, mcdonaldDist[i] + starbucksDist[i]);
-            }
+            if (mcdonaldDist[i] == 0 || starbucksDist[i] == 0) continue;
+            if (mcdonaldDist[i] <= X && starbucksDist[i] <= Y) res = Math.min(res, mcdonaldDist[i] + starbucksDist[i]);
         }
 
         if (res == INF) System.out.println(-1);
@@ -86,17 +85,18 @@ public class BOJ_13911_집구하기 {
     }
 
     private static void dijkstra(int[] dist) {
-        visited = new boolean[V + 1];
+        boolean[] visited = new boolean[V + 1];
 
         while (!PQ.isEmpty()) {
             Node now = PQ.poll();
 
-            if (visited[now.e]) continue;
+            if(visited[now.e]) continue;
+
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Node(next.e, dist[next.e]));
                 }
             }
@@ -105,16 +105,16 @@ public class BOJ_13911_집구하기 {
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
