@@ -8,7 +8,8 @@ import java.util.*;
 
 public class BOJ_02211_네트워크복구 {
 
-    static int N, M, INF = 999999999;
+    static int N, M;
+    static final int INF = 999999999;
     static ArrayList<Node>[] adj;
     static int[] dist, path;
     static boolean[] visited;
@@ -32,10 +33,10 @@ public class BOJ_02211_네트워크복구 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s].add(new Node(e, w));
-            adj[e].add(new Node(s, w));
+            adj[s].add(new Node(e, cost));
+            adj[e].add(new Node(s, cost));
         }
 
         path = new int[N + 1];
@@ -64,7 +65,7 @@ public class BOJ_02211_네트워크복구 {
             sb.append(str).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void dijkstra() {
@@ -75,11 +76,12 @@ public class BOJ_02211_네트워크복구 {
             Node now = PQ.poll();
 
             if (visited[now.e]) continue;
+
             visited[now.e] = true;
 
             for (Node next : adj[now.e]) {
-                if (dist[next.e] > dist[now.e] + next.w) {
-                    dist[next.e] = dist[now.e] + next.w;
+                if (dist[next.e] > dist[now.e] + next.cost) {
+                    dist[next.e] = dist[now.e] + next.cost;
                     PQ.add(new Node(next.e, dist[next.e]));
                     path[next.e] = now.e;
                 }
@@ -89,16 +91,16 @@ public class BOJ_02211_네트워크복구 {
 
     private static class Node implements Comparable<Node> {
         int e;
-        int w;
+        int cost;
 
-        Node(int e, int w) {
+        Node(int e, int cost) {
             this.e = e;
-            this.w = w;
+            this.cost = cost;
         }
 
         @Override
         public int compareTo(Node o) {
-            return this.w - o.w;
+            return this.cost - o.cost;
         }
     }
 }
