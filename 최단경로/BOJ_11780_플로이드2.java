@@ -4,14 +4,16 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_11780_플로이드2 {
 
-    static int N, M, INF = 999999999;
-    static int[][] adj;
-    static ArrayList<Integer>[][] path;
+    static int N, M;
+    static final int INF = 999999999;
+    static int[][] adj, path;
+    static Queue<Integer> Q;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,11 +24,9 @@ public class BOJ_11780_플로이드2 {
         M = Integer.parseInt(br.readLine());
 
         adj = new int[N + 1][N + 1];
-        path = new ArrayList[N + 1][N + 1];
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= N; j++) {
                 if (i != j) adj[i][j] = INF;
-                path[i][j] = new ArrayList<>();
             }
         }
 
@@ -34,40 +34,59 @@ public class BOJ_11780_플로이드2 {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            adj[s][e] = Math.min(adj[s][e], w);
+            adj[s][e] = Math.min(adj[s][e], cost);
+        }
+
+        path = new int[N + 1][N + 1];
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                if (i != j) path[i][j] = j;
+            }
         }
 
         floyd();
 
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= N; j++) {
-                if (adj[i][j] == INF) sb.append(0);
-                else sb.append(adj[i][j]);
-                sb.append(" ");
+                if (adj[i][j] == INF) adj[i][j] = 0;
+                sb.append(adj[i][j]).append(" ");
             }
             sb.append("\n");
         }
 
+        Q = new LinkedList<>();
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= N; j++) {
-                int size = path[i][j].size();
-
-                if (i == j || adj[i][j] == INF) {
-                    sb.append("0\n");
+                if (adj[i][j] == 0) {
+                    sb.append(0).append("\n");
                     continue;
                 }
 
-                sb.append(size + 2).append(" ").append(i).append(" ");
-                for (int node : path[i][j]) {
-                    sb.append(node).append(" ");
+                Q.add(i);
+
+                int idx = i;
+                while (true) {
+                    if (path[idx][j] == j) break;
+
+                    idx = path[idx][j];
+                    Q.add(idx);
                 }
-                sb.append(j).append("\n");
+
+                Q.add(j);
+
+                sb.append(Q.size()).append(" ");
+
+                while (!Q.isEmpty()) {
+                    sb.append(Q.poll()).append(" ");
+                }
+
+                sb.append("\n");
             }
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void floyd() {
@@ -78,22 +97,10 @@ public class BOJ_11780_플로이드2 {
 
                     if (adj[i][j] > adj[i][k] + adj[k][j]) {
                         adj[i][j] = adj[i][k] + adj[k][j];
-                        pathTracking(i, j, k);
+                        path[i][j] = path[i][k];
                     }
                 }
             }
-        }
-    }
-
-    private static void pathTracking(int i, int j, int k) {
-        path[i][j].clear();
-
-        for (int node : path[i][k]) {
-            path[i][j].add(node);
-        }
-        path[i][j].add(k);
-        for (int node : path[k][j]) {
-            path[i][j].add(node);
         }
     }
 }
