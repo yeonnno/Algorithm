@@ -37,8 +37,9 @@ public class BOJ_14676_영우는사기꾼 {
             indegree[b]++;
         }
 
-        String res = "King-God-Emperor";
         buildCnt = new int[N + 1];
+        String res = "King-God-Emperor";
+
 
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
@@ -49,24 +50,24 @@ public class BOJ_14676_영우는사기꾼 {
                 if (indegree[now] != 0) {
                     res = "Lier!";
                     break;
-                } else {
-                    buildCnt[now]++;
-                    if (buildCnt[now] == 1 && adj[now].size() > 0) {
-                        for (int next : adj[now]) {
-                            indegree[next]--;
-                        }
+                }
+
+                buildCnt[now]++;
+                if (buildCnt[now] == 1) {
+                    for (int next : adj[now]) {
+                        indegree[next]--;
                     }
                 }
             } else if (order == 2) {
                 if (buildCnt[now] == 0) {
                     res = "Lier!";
                     break;
-                } else {
-                    buildCnt[now]--;
-                    if (buildCnt[now] == 0 && adj[now].size() > 0) {
-                        for (int next : adj[now]) {
-                            indegree[next]++;
-                        }
+                }
+
+                buildCnt[now]--;
+                if (buildCnt[now] == 0) {
+                    for (int next : adj[now]) {
+                        indegree[next]++;
                     }
                 }
             }
