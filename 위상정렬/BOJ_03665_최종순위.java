@@ -8,7 +8,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
-
+/**
+ * 순서가 미리 정해져있고, 순위의 선후관계만 바뀜 -> 각 순위마다 모든 관계를 추가해주어야 함.
+ * 진입차수를 작년 순위에 맞게 초기화
+ * 바뀐 순위의 선후관계에 맞게 연결리스트와 진입차수 수정
+ * 진입차수가 0인 값이 1개보다 많으면 확실한 순위를 찾을 수 없는 것 -> "?" 출력
+ * while문이 아닌 for문을 통해 위상정렬 알고리즘이 정상 동작하는지 확인
+ * 1부터 N까지 돌기 전에 Queue가 비어버리면 비정상적으로 종료된 것 -> "IMPOSSIBLE" 출력
+ * 정상 종료되면 1순위부터 N순위까지 출력
+ */
 public class BOJ_03665_최종순위 {
 
     static int N, M;
