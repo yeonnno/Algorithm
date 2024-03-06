@@ -6,28 +6,31 @@ class Solution {
         
         Queue<Integer> bridge = new LinkedList<>();
         for (int i = 0; i < bridge_length; i++) {
-            bridge.add(0);
+            bridge.offer(0);
         }
         
-        Deque<Integer> truck_weight = new ArrayDeque<>();
-        for (int i = 0; i < truck_weights.length; i++) {
-            truck_weight.add(truck_weights[i]);
+        Deque<Integer> truck = new ArrayDeque<>();
+        for (int truck_weight : truck_weights) {
+            truck.offer(truck_weight);
         }
         
-        int w = 0;
+        int w = 0; // 현재 다리 위의 무게
         while (!bridge.isEmpty()) {
             answer++;
-            int temp = bridge.poll();
-            w -= temp;
             
-            if (!truck_weight.isEmpty()) {
-                int temp2 = truck_weight.poll();
-                if (w + temp2 <= weight) {
-                    w += temp2;
-                    bridge.add(temp2);
+            int tmp = bridge.poll();
+            w -= tmp; // 현재 다리 위 무게 - 건넌 트럭 무게
+            
+            if (!truck.isEmpty()) {
+                int tmp2 = truck.poll();
+                
+                // 다리 위로 올라갈 수 있는 트럭인지
+                if (w + tmp2 <= weight) {
+                    bridge.offer(tmp2);
+                    w += tmp2;
                 } else {
-                    truck_weight.addFirst(temp2);
-                    bridge.add(0);
+                    truck.offerFirst(tmp2);
+                    bridge.offer(0);
                 }
             }
         }
