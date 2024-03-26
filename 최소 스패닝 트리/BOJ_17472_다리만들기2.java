@@ -17,7 +17,7 @@ public class BOJ_17472_다리만들기2 {
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
     static int[] parent;
-    static PriorityQueue<Node> PQ;
+    static PriorityQueue<Point> PQ;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -35,17 +35,19 @@ public class BOJ_17472_다리만들기2 {
             }
         }
 
+        // 1. 섬 구분하기
         int idx = 1;
         visited = new boolean[N][M];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (map[i][j] != -1) continue;
 
-                BFS(i, j, idx);
+                checkLand(i, j, idx);
                 idx++;
             }
         }
 
+        // 2. 섬과 섬 사이 최단거리 구하기 (다리 연결)
         PQ = new PriorityQueue<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -55,6 +57,7 @@ public class BOJ_17472_다리만들기2 {
             }
         }
 
+        // 3. 모든 섬을 연결하는 다리 길이 최소값 구하기
         parent = new int[idx];
         for (int i = 1; i < idx; i++) {
             parent[i] = i;
@@ -68,6 +71,7 @@ public class BOJ_17472_다리만들기2 {
         boolean check = true;
         for (int i = 2; i < idx; i++) {
             if (tmp == find(i)) continue;
+
             check = false;
             break;
         }
@@ -78,15 +82,12 @@ public class BOJ_17472_다리만들기2 {
 
     private static void kruskal() {
         while (!PQ.isEmpty()) {
-            Node node = PQ.poll();
+            Point now = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
+            if (find(now.x) == find(now.y)) continue;
 
-            if (x == y) continue;
-
-            res += node.cost;
-            union(node.s, node.e);
+            res += now.cost;
+            union(now.x, now.y);
         }
     }
 
@@ -103,30 +104,30 @@ public class BOJ_17472_다리만들기2 {
     }
 
     private static void makeBridge(int i, int j, int idx) {
-        Queue<Node> Q = new LinkedList<>();
+        Queue<Point> Q = new LinkedList<>();
         visited = new boolean[N][M];
 
         for (int d = 0; d < 4; d++) {
-            Q.offer(new Node(i, j, 0));
+            Q.offer(new Point(i, j, 0));
             visited[i][j] = true;
 
             while (!Q.isEmpty()) {
-                Node now = Q.poll();
+                Point now = Q.poll();
 
-                int nx = now.s + dx[d];
-                int ny = now.e + dy[d];
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
 
                 if (!isPossible(nx, ny) || visited[nx][ny]) continue;
                 if (map[nx][ny] == idx) continue;
 
                 if (map[nx][ny] != 0) {
                     if (now.cost >= 2) {
-                        PQ.offer(new Node(idx, map[nx][ny], now.cost));
+                        PQ.offer(new Point(idx, map[nx][ny], now.cost));
                         break;
                     }
                 } else {
                     visited[nx][ny] = true;
-                    Q.offer(new Node(nx, ny, now.cost + 1));
+                    Q.offer(new Point(nx, ny, now.cost + 1));
                 }
             }
 
@@ -134,7 +135,7 @@ public class BOJ_17472_다리만들기2 {
         }
     }
 
-    private static void BFS(int i, int j, int idx) {
+    private static void checkLand(int i, int j, int idx) {
         Queue<Point> Q = new LinkedList<>();
         Q.offer(new Point(i, j));
         visited[i][j] = true;
@@ -147,10 +148,9 @@ public class BOJ_17472_다리만들기2 {
                 int nx = now.x + dx[d];
                 int ny = now.y + dy[d];
 
-                if (!isPossible(nx, ny)) continue;
-                if (visited[nx][ny] || map[nx][ny] == 0) continue;
+                if (!isPossible(nx, ny) || visited[nx][ny]) continue;
+                if (map[nx][ny] != -1) continue;
 
-                visited[nx][ny] = true;
                 map[nx][ny] = idx;
                 Q.offer(new Point(nx, ny));
             }
@@ -162,29 +162,24 @@ public class BOJ_17472_다리만들기2 {
         else return false;
     }
 
-    private static class Point {
+    private static class Point implements Comparable<Point> {
         int x;
         int y;
+        int cost;
 
         public Point(int x, int y) {
             this.x = x;
             this.y = y;
         }
-    }
 
-    private static class Node implements Comparable<Node> {
-        int s;
-        int e;
-        int cost;
-
-        public Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Point(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
         @Override
-        public int compareTo(Node o) {
+        public int compareTo(Point o) {
             return this.cost - o.cost;
         }
     }
