@@ -39,15 +39,13 @@ public class BOJ_04179_불 {
             }
         }
 
-        res = Integer.MAX_VALUE;
+        res = 0;
 
-        BFS();
-
-        if (res != Integer.MAX_VALUE) System.out.println(res);
+        if (BFS()) System.out.println(res);
         else System.out.println("IMPOSSIBLE");
     }
 
-    private static void BFS() {
+    private static boolean BFS() {
         while (!Q.isEmpty()) {
             int fireSize = fire.size();
             for (int i = 0; i < fireSize; i++) {
@@ -74,8 +72,8 @@ public class BOJ_04179_불 {
                     int ny = now.y + dy[d];
 
                     if (!isPossible(nx, ny)) {
-                        res = Math.min(res, now.time + 1);
-                        continue;
+                        res = now.time + 1;
+                        return true;
                     }
 
                     if (map[nx][ny] != '.') continue;
@@ -85,6 +83,8 @@ public class BOJ_04179_불 {
                 }
             }
         }
+
+        return false;
     }
 
     private static boolean isPossible(int nx, int ny) {
