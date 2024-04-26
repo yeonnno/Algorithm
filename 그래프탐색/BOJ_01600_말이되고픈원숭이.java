@@ -4,7 +4,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_01600_말이되고픈원숭이 {
@@ -43,13 +44,13 @@ public class BOJ_01600_말이되고픈원숭이 {
     }
 
     private static void BFS() {
-        PriorityQueue<Point> PQ = new PriorityQueue<>();
-        PQ.offer(new Point(0, 0, 0, 0));
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(0, 0, 0, 0));
 
         visited[0][0][0] = true;
 
-        while (!PQ.isEmpty()) {
-            Point now = PQ.poll();
+        while (!Q.isEmpty()) {
+            Point now = Q.poll();
 
             if (now.x == N - 1 && now.y == M - 1) {
                 res = now.dist;
@@ -64,18 +65,20 @@ public class BOJ_01600_말이되고픈원숭이 {
                 if (map[nx][ny] == 1 || visited[now.cnt][nx][ny]) continue;
 
                 visited[now.cnt][nx][ny] = true;
-                PQ.offer(new Point(nx, ny, now.cnt, now.dist + 1));
+                Q.offer(new Point(nx, ny, now.cnt, now.dist + 1));
             }
+
+            if (now.cnt >= K) continue;
 
             for (int d = 0; d < 8; d++) {
                 int nx = now.x + hx[d];
                 int ny = now.y + hy[d];
 
                 if (!isPossible(nx, ny)) continue;
-                if (map[nx][ny] == 1 || now.cnt >= K || visited[now.cnt + 1][nx][ny]) continue;
+                if (map[nx][ny] == 1 || visited[now.cnt + 1][nx][ny]) continue;
 
                 visited[now.cnt + 1][nx][ny] = true;
-                PQ.offer(new Point(nx, ny, now.cnt + 1, now.dist + 1));
+                Q.offer(new Point(nx, ny, now.cnt + 1, now.dist + 1));
             }
         }
     }
@@ -85,7 +88,7 @@ public class BOJ_01600_말이되고픈원숭이 {
         else return false;
     }
 
-    private static class Point implements Comparable<Point> {
+    private static class Point {
         int x;
         int y;
         int cnt;
@@ -96,11 +99,6 @@ public class BOJ_01600_말이되고픈원숭이 {
             this.y = y;
             this.cnt = cnt;
             this.dist = dist;
-        }
-
-        @Override
-        public int compareTo(Point o) {
-            return this.dist - o.dist;
         }
     }
 }
