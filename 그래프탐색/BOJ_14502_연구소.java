@@ -4,15 +4,14 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class BOJ_14502_연구소 {
 
     static int N, M, res;
     static int[][] map, copyMap;
-    static Queue<Point> Q;
+    static ArrayList<Virus> virus;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -25,40 +24,63 @@ public class BOJ_14502_연구소 {
         M = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
+        copyMap = new int[N][M];
+        virus = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
+
+                if (map[i][j] == 2)
+                    virus.add(new Virus(i, j));
             }
         }
 
-        res = Integer.MIN_VALUE;
+        res = 0;
 
-        backtrack(0);
+        backtrack(0, 0);
 
         System.out.println(res);
     }
 
-    private static void backtrack(int depth) {
+    private static void backtrack(int depth, int pre) {
         if (depth == 3) {
-            spreadVirus();
-            countSafe();
-            return;
-        }
+            for (int i = 0; i < N; i++)
+                System.arraycopy(map[i], 0, copyMap[i], 0, M);
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if (map[i][j] != 0) continue;
+            for (Virus v : virus)
+                spreadVirus(v.x, v.y);
 
-                map[i][j] = 1;
-                backtrack(depth + 1);
-                map[i][j] = 0;
+            countSafeArea();
+        } else {
+            for (int cur = pre; cur < N * M; cur++) {
+                int x = cur / M;
+                int y = cur % M;
+
+                if (map[x][y] != 0) continue;
+
+                map[x][y] = 1;
+                backtrack(depth + 1, cur + 1);
+                map[x][y] = 0;
             }
         }
     }
 
-    private static void countSafe() {
+    private static void spreadVirus(int x, int y) {
+        for (int d = 0; d < 4; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+
+            if (!isPossible(nx, ny) || copyMap[nx][ny] != 0) continue;
+
+            copyMap[nx][ny] = 2;
+            spreadVirus(nx,  ny);
+        }
+    }
+
+    private static void countSafeArea() {
         int cnt = 0;
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (copyMap[i][j] == 0) cnt++;
@@ -68,50 +90,16 @@ public class BOJ_14502_연구소 {
         res = Math.max(res, cnt);
     }
 
-    private static void spreadVirus() {
-        Q = new LinkedList<>();
-        copyMap = new int[N][M];
-
-        copy();
-
-        while (!Q.isEmpty()) {
-            Point now = Q.poll();
-
-            for (int d = 0; d < 4; d++) {
-                int nx = now.x + dx[d];
-                int ny = now.y + dy[d];
-
-                if (!isPossible(nx, ny)) continue;
-                if (copyMap[nx][ny] != 0) continue;
-
-                copyMap[nx][ny] = 2;
-                Q.add(new Point(nx, ny));
-            }
-        }
-    }
-
     private static boolean isPossible(int nx, int ny) {
         if (nx >= 0 && nx < N && ny >= 0 && ny < M) return true;
         else return false;
     }
 
-    private static void copy() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                copyMap[i][j] = map[i][j];
-
-                if (copyMap[i][j] == 2) {
-                    Q.add(new Point(i, j));
-                }
-            }
-        }
-    }
-
-    private static class Point {
+    private static class Virus {
         int x;
         int y;
 
-        Point(int x, int y) {
+        public Virus(int x, int y) {
             this.x = x;
             this.y = y;
         }
