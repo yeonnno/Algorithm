@@ -13,9 +13,8 @@ public class BOJ_17141_연구소2 {
 
     static int N, M, virusSize, res;
     static int[][] map, copyMap;
-    static ArrayList<Point> virus;
-    static boolean[] selected;
-    static Queue<Point> Q;
+    static ArrayList<Virus> virus;
+    static int[] selected;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -35,14 +34,14 @@ public class BOJ_17141_연구소2 {
                 map[i][j] = Integer.parseInt(st.nextToken());
 
                 if (map[i][j] == 2) {
-                    virus.add(new Point(i, j));
+                    virus.add(new Virus(i, j));
                     map[i][j] = 0;
                 }
             }
         }
 
+        selected = new int[M];
         virusSize = virus.size();
-        selected = new boolean[virusSize];
         res = Integer.MAX_VALUE;
 
         backtrack(0, 0);
@@ -54,14 +53,14 @@ public class BOJ_17141_연구소2 {
     private static void backtrack(int depth, int pre) {
         if (depth == M) {
             int time = spreadVirus();
-            if (checkZero()) res = Math.min(res, time);
-            return;
-        }
 
-        for (int i = pre; i < virusSize; i++) {
-            selected[i] = true;
-            backtrack(depth + 1, i + 1);
-            selected[i] = false;
+            if (checkZero())
+                res = Math.min(res, time);
+        } else {
+            for (int cur = pre; cur < virusSize; cur++) {
+                selected[depth] = cur;
+                backtrack(depth + 1, cur + 1);
+            }
         }
     }
 
@@ -76,33 +75,46 @@ public class BOJ_17141_연구소2 {
     }
 
     private static int spreadVirus() {
-        Q = new LinkedList<>();
         copyMap = new int[N][N];
-
         copy();
+
+        Queue<Virus> Q = new LinkedList<>();
+
+        for (int sel : selected) {
+            int x = virus.get(sel).x;
+            int y = virus.get(sel).y;
+
+            Q.offer(new Virus(x, y));
+            copyMap[x][y] = 2;
+        }
 
         int time = 0;
         while (!Q.isEmpty()) {
             int size = Q.size();
 
             for (int i = 0; i < size; i++) {
-                Point now = Q.poll();
+                Virus now = Q.poll();
 
                 for (int d = 0; d < 4; d++) {
                     int nx = now.x + dx[d];
                     int ny = now.y + dy[d];
 
-                    if (!isPossible(nx, ny)) continue;
-                    if (copyMap[nx][ny] != 0) continue;
+                    if (!isPossible(nx, ny) || copyMap[nx][ny] != 0) continue;
 
                     copyMap[nx][ny] = 2;
-                    Q.add(new Point(nx, ny));
+                    Q.offer(new Virus(nx, ny));
                 }
             }
+
             time++;
         }
 
         return time;
+    }
+
+    private static void copy() {
+        for (int i = 0; i < N; i++)
+            System.arraycopy(map[i], 0, copyMap[i], 0, N);
     }
 
     private static boolean isPossible(int nx, int ny) {
@@ -110,28 +122,11 @@ public class BOJ_17141_연구소2 {
         else return false;
     }
 
-    private static void copy() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                copyMap[i][j] = map[i][j];
-            }
-        }
-
-        for (int i = 0; i < virusSize; i++) {
-            if (!selected[i]) continue;
-
-            int x = virus.get(i).x;
-            int y = virus.get(i).y;
-            copyMap[x][y] = 2;
-            Q.add(new Point(x, y));
-        }
-    }
-
-    private static class Point {
+    private static class Virus {
         int x;
         int y;
 
-        Point(int x, int y) {
+        public Virus(int x, int y) {
             this.x = x;
             this.y = y;
         }
