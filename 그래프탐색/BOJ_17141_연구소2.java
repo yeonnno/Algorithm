@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_17141_연구소2 {
 
-    static int N, M, virusSize, res;
+    static int N, M, zeroCnt, virusSize, res;
     static int[][] map, copyMap;
     static ArrayList<Virus> virus;
     static int[] selected;
@@ -26,6 +26,7 @@ public class BOJ_17141_연구소2 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
+        zeroCnt = 0;
         map = new int[N][N];
         virus = new ArrayList<>();
         for (int i = 0; i < N; i++) {
@@ -37,25 +38,31 @@ public class BOJ_17141_연구소2 {
                     virus.add(new Virus(i, j));
                     map[i][j] = 0;
                 }
+
+                if (map[i][j] == 0)
+                    zeroCnt++;
             }
         }
 
-        selected = new int[M];
-        virusSize = virus.size();
-        res = Integer.MAX_VALUE;
+        if (zeroCnt == 0) {
+            System.out.println(0);
+        } else {
+            virusSize = virus.size();
+            res = Integer.MAX_VALUE;
+            selected = new int[M];
 
-        backtrack(0, 0);
+            backtrack(0, 0);
 
-        if (res == Integer.MAX_VALUE) System.out.println(-1);
-        else System.out.println(res - 1);
+            if (res == Integer.MAX_VALUE)
+                System.out.println(-1);
+            else
+                System.out.println(res);
+        }
     }
 
     private static void backtrack(int depth, int pre) {
         if (depth == M) {
-            int time = spreadVirus();
-
-            if (checkZero())
-                res = Math.min(res, time);
+            spreadVirus();
         } else {
             for (int cur = pre; cur < virusSize; cur++) {
                 selected[depth] = cur;
@@ -64,35 +71,31 @@ public class BOJ_17141_연구소2 {
         }
     }
 
-    private static boolean checkZero() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (copyMap[i][j] == 0) return false;
-            }
-        }
+    private static void spreadVirus() {
+        Queue<Virus> Q = new LinkedList<>();
 
-        return true;
-    }
-
-    private static int spreadVirus() {
         copyMap = new int[N][N];
         copy();
 
-        Queue<Virus> Q = new LinkedList<>();
-
+        int zCnt = zeroCnt;
         for (int sel : selected) {
-            int x = virus.get(sel).x;
-            int y = virus.get(sel).y;
+            Virus v = virus.get(sel);
 
-            Q.offer(new Virus(x, y));
-            copyMap[x][y] = 2;
+            Q.offer(v);
+            copyMap[v.x][v.y] = 2;
+            zCnt--;
+        }
+
+        if (zCnt == 0) {
+            res = 0;
+            return;
         }
 
         int time = 0;
         while (!Q.isEmpty()) {
-            int size = Q.size();
+            int qSize = Q.size();
 
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < qSize; i++) {
                 Virus now = Q.poll();
 
                 for (int d = 0; d < 4; d++) {
@@ -101,25 +104,27 @@ public class BOJ_17141_연구소2 {
 
                     if (!isPossible(nx, ny) || copyMap[nx][ny] != 0) continue;
 
+                    zCnt--;
                     copyMap[nx][ny] = 2;
                     Q.offer(new Virus(nx, ny));
                 }
             }
 
             time++;
+
+            if (zCnt == 0)
+                res = Math.min(res, time);
         }
-
-        return time;
-    }
-
-    private static void copy() {
-        for (int i = 0; i < N; i++)
-            System.arraycopy(map[i], 0, copyMap[i], 0, N);
     }
 
     private static boolean isPossible(int nx, int ny) {
         if (nx >= 0 && nx < N && ny >= 0 && ny < N) return true;
         else return false;
+    }
+
+    private static void copy() {
+        for (int i = 0; i < N; i++)
+            System.arraycopy(map[i], 0, copyMap[i], 0, N);
     }
 
     private static class Virus {
