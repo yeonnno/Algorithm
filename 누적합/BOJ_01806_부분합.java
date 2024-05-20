@@ -19,31 +19,22 @@ public class BOJ_01806_부분합 {
         N = Integer.parseInt(st.nextToken());
         S = Integer.parseInt(st.nextToken());
 
-        num = new int[N];
+        num = new int[N + 1];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             num[i] = Integer.parseInt(st.nextToken());
         }
 
-        boolean check = false;
-        int left = 0, right = 0, sum = num[0], cnt = 1, res = N;
-        while (true) {
+        int left = 0, right = 0, sum = 0, res = Integer.MAX_VALUE;
+        while (left <= right && right <= N) {
             if (sum < S) {
-                right++;
-                if (right >= N) break;
-                cnt++;
-                sum += num[right];
+                sum += num[right++];
             } else {
-                check = true;
-                res = Math.min(res, cnt);
-                sum -= num[left];
-                left++;
-                cnt--;
-                if (left >= N) break;
+                res = Math.min(res, right - left);
+                sum -= num[left++];
             }
         }
 
-        if (check) System.out.println(res);
-        else System.out.println(0);
+        System.out.println(res == Integer.MAX_VALUE ? 0 : res);
     }
 }
