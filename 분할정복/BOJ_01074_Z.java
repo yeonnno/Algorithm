@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 public class BOJ_01074_Z {
 
     static int N, R, C, res;
-    static boolean check;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,7 +20,6 @@ public class BOJ_01074_Z {
         C = Integer.parseInt(st.nextToken());
 
         res = 0;
-        check = false;
 
         backtrack(R, C, N);
 
