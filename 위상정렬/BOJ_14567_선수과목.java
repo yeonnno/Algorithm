@@ -25,9 +25,8 @@ public class BOJ_14567_선수과목 {
         M = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         indegree = new int[N + 1];
         for (int i = 0; i < M; i++) {
@@ -43,20 +42,18 @@ public class BOJ_14567_선수과목 {
 
         topologySort();
 
-        for (int i = 1; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             sb.append(res[i]).append(" ");
-        }
 
-        System.out.print(sb);
+        System.out.println(sb);
     }
 
     private static void topologySort() {
         Queue<Integer> Q = new LinkedList<>();
 
         for (int i = 1; i <= N; i++) {
-            if (indegree[i] == 0) {
-                Q.add(i);
-            }
+            if (indegree[i] == 0)
+                Q.offer(i);
         }
 
         int time = 1;
@@ -70,9 +67,9 @@ public class BOJ_14567_선수과목 {
 
                 for (int next : adj[now]) {
                     indegree[next]--;
-                    if (indegree[next] == 0) {
-                        Q.add(next);
-                    }
+
+                    if (indegree[next] == 0)
+                        Q.offer(next);
                 }
             }
 
