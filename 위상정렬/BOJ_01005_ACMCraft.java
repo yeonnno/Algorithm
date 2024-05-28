@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 public class BOJ_01005_ACMCraft {
 
     static int N, K, W;
-    static int[] indegree, delay, res;
+    static int[] delay, indegree, res;
     static ArrayList<Integer>[] adj;
 
     public static void main(String[] args) throws IOException {
@@ -28,14 +28,12 @@ public class BOJ_01005_ACMCraft {
 
             delay = new int[N + 1];
             st = new StringTokenizer(br.readLine());
-            for (int i = 1; i <= N; i++) {
+            for (int i = 1; i <= N; i++)
                 delay[i] = Integer.parseInt(st.nextToken());
-            }
 
             adj = new ArrayList[N + 1];
-            for (int i = 0; i <= N; i++) {
+            for (int i = 0; i <= N; i++)
                 adj[i] = new ArrayList<>();
-            }
 
             indegree = new int[N + 1];
             for (int i = 0; i < K; i++) {
@@ -48,6 +46,7 @@ public class BOJ_01005_ACMCraft {
             }
 
             W = Integer.parseInt(br.readLine());
+
             res = new int[N + 1];
 
             topologySort();
@@ -64,9 +63,8 @@ public class BOJ_01005_ACMCraft {
         for (int i = 1; i <= N; i++) {
             res[i] = delay[i];
 
-            if (indegree[i] == 0) {
-                Q.add(i);
-            }
+            if (indegree[i] == 0)
+                Q.offer(i);
         }
 
         while (!Q.isEmpty()) {
@@ -76,9 +74,8 @@ public class BOJ_01005_ACMCraft {
                 res[next] = Math.max(res[next], res[now] + delay[next]);
                 indegree[next]--;
 
-                if (indegree[next] == 0) {
-                    Q.add(next);
-                }
+                if (indegree[next] == 0)
+                    Q.offer(next);
             }
         }
     }
