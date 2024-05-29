@@ -14,19 +14,20 @@ public class BOJ_02252_줄세우기 {
     static int N, M;
     static int[] indegree;
     static ArrayList<Integer>[] adj;
+    static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
+        sb = new StringBuilder();
 
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         indegree = new int[N + 1];
         for (int i = 0; i < M; i++) {
@@ -39,28 +40,29 @@ public class BOJ_02252_줄세우기 {
         }
 
         topologySort();
+
+        System.out.println(sb);
     }
 
     private static void topologySort() {
         Queue<Integer> Q = new LinkedList<>();
-        StringBuilder sb = new StringBuilder();
 
         for (int i = 1; i <= N; i++) {
             if (indegree[i] == 0)
-                Q.add(i);
+                Q.offer(i);
         }
 
         while (!Q.isEmpty()) {
             int now = Q.poll();
+
             sb.append(now).append(" ");
 
             for (int next : adj[now]) {
                 indegree[next]--;
+
                 if (indegree[next] == 0)
-                    Q.add(next);
+                    Q.offer(next);
             }
         }
-
-        System.out.println(sb);
     }
 }
