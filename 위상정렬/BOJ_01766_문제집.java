@@ -4,26 +4,29 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class BOJ_01766_문제집 {
 
     static int N, M;
-    static ArrayList<Integer>[] adj;
     static int[] indegree;
+    static ArrayList<Integer>[] adj;
+    static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
+        sb = new StringBuilder();
 
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         indegree = new int[N + 1];
         for (int i = 0; i < M; i++) {
@@ -36,13 +39,14 @@ public class BOJ_01766_문제집 {
         }
 
         topologySort();
+
+        System.out.println(sb);
     }
 
     private static void topologySort() {
         PriorityQueue<Integer> PQ = new PriorityQueue<>();
-        StringBuilder sb = new StringBuilder();
 
-        for (int i = N; i >= 1; i--) {
+        for (int i = 1; i <= N; i++) {
             if (indegree[i] == 0)
                 PQ.offer(i);
         }
@@ -54,11 +58,10 @@ public class BOJ_01766_문제집 {
 
             for (int next : adj[now]) {
                 indegree[next]--;
+
                 if (indegree[next] == 0)
                     PQ.offer(next);
             }
         }
-
-        System.out.println(sb);
     }
 }
