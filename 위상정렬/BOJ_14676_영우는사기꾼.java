@@ -10,8 +10,9 @@ import java.util.StringTokenizer;
 public class BOJ_14676_영우는사기꾼 {
 
     static int N, M, K;
-    static ArrayList<Integer>[] adj;
+    static String res;
     static int[] indegree, buildCnt;
+    static ArrayList<Integer>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,9 +24,8 @@ public class BOJ_14676_영우는사기꾼 {
         K = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         indegree = new int[N + 1];
         for (int i = 0; i < M; i++) {
@@ -38,15 +38,14 @@ public class BOJ_14676_영우는사기꾼 {
         }
 
         buildCnt = new int[N + 1];
-        String res = "King-God-Emperor";
-
+        res = "King-God-Emperor";
 
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
-            int order = Integer.parseInt(st.nextToken());
+            int command = Integer.parseInt(st.nextToken());
             int now = Integer.parseInt(st.nextToken());
 
-            if (order == 1) {
+            if (command == 1) {
                 if (indegree[now] != 0) {
                     res = "Lier!";
                     break;
@@ -54,11 +53,10 @@ public class BOJ_14676_영우는사기꾼 {
 
                 buildCnt[now]++;
                 if (buildCnt[now] == 1) {
-                    for (int next : adj[now]) {
+                    for (int next : adj[now])
                         indegree[next]--;
-                    }
                 }
-            } else if (order == 2) {
+            } else if (command == 2) {
                 if (buildCnt[now] == 0) {
                     res = "Lier!";
                     break;
@@ -66,9 +64,8 @@ public class BOJ_14676_영우는사기꾼 {
 
                 buildCnt[now]--;
                 if (buildCnt[now] == 0) {
-                    for (int next : adj[now]) {
+                    for (int next : adj[now])
                         indegree[next]++;
-                    }
                 }
             }
         }
