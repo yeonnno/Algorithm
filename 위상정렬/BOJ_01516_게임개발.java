@@ -12,8 +12,8 @@ import java.util.StringTokenizer;
 public class BOJ_01516_게임개발 {
 
     static int N;
+    static int[] indegree, delay, res;
     static ArrayList<Integer>[] adj;
-    static int[] indegree, time, res;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,15 +23,14 @@ public class BOJ_01516_게임개발 {
         N = Integer.parseInt(br.readLine());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
-        time = new int[N + 1];
+        delay = new int[N + 1];
         indegree = new int[N + 1];
         for (int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
-            time[i] = Integer.parseInt(st.nextToken());
+            delay[i] = Integer.parseInt(st.nextToken());
 
             while (true) {
                 int a = Integer.parseInt(st.nextToken());
@@ -47,9 +46,8 @@ public class BOJ_01516_게임개발 {
 
         topologySort();
 
-        for (int i = 1; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             sb.append(res[i]).append("\n");
-        }
 
         System.out.print(sb);
     }
@@ -58,21 +56,21 @@ public class BOJ_01516_게임개발 {
         Queue<Integer> Q = new LinkedList<>();
 
         for (int i = 1; i <= N; i++) {
-            res[i] = time[i];
+            res[i] = delay[i];
 
             if (indegree[i] == 0)
-                Q.add(i);
+                Q.offer(i);
         }
 
         while (!Q.isEmpty()) {
             int now = Q.poll();
 
             for (int next : adj[now]) {
-                res[next] = Math.max(res[next], res[now] + time[next]);
-
+                res[next] = Math.max(res[next], res[now] + delay[next]);
                 indegree[next]--;
+
                 if (indegree[next] == 0)
-                    Q.add(next);
+                    Q.offer(next);
             }
         }
     }
