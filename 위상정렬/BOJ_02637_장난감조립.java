@@ -12,8 +12,8 @@ import java.util.StringTokenizer;
 public class BOJ_02637_장난감조립 {
 
     static int N, M;
-    static ArrayList<Node>[] adj;
     static int[] indegreeX, indegreeY, res;
+    static ArrayList<Node>[] adj;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,9 +24,8 @@ public class BOJ_02637_장난감조립 {
         M = Integer.parseInt(br.readLine());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         indegreeX = new int[N + 1];
         indegreeY = new int[N + 1];
@@ -56,6 +55,7 @@ public class BOJ_02637_장난감조립 {
     private static void topologySort() {
         Queue<Node> Q = new LinkedList<>();
         Q.offer(new Node(N, 1));
+
         res[N] = 1;
 
         while (!Q.isEmpty()) {
@@ -64,6 +64,7 @@ public class BOJ_02637_장난감조립 {
             for (Node next : adj[now.e]) {
                 res[next.e] += res[now.e] * next.cnt;
                 indegreeY[next.e]--;
+
                 if (indegreeY[next.e] == 0)
                     Q.offer(new Node(next.e, res[next.e]));
             }
@@ -74,7 +75,7 @@ public class BOJ_02637_장난감조립 {
         int e;
         int cnt;
 
-        Node(int e, int cnt) {
+        public Node(int e, int cnt) {
             this.e = e;
             this.cnt = cnt;
         }
