@@ -35,14 +35,12 @@ public class BOJ_03665_최종순위 {
 
             rank = new int[N + 1];
             st = new StringTokenizer(br.readLine());
-            for (int i = 1; i <= N; i++) {
+            for (int i = 1; i <= N; i++)
                 rank[i] = Integer.parseInt(st.nextToken());
-            }
 
             adj = new ArrayList[N + 1];
-            for (int i = 0; i <= N; i++) {
+            for (int i = 0; i <= N; i++)
                 adj[i] = new ArrayList<>();
-            }
 
             indegree = new int[N + 1];
             for (int i = 1; i <= N; i++) {
@@ -84,8 +82,8 @@ public class BOJ_03665_최종순위 {
         int cnt = 0;
         for (int i = 1; i <= N; i++) {
             if (indegree[i] == 0) {
+                Q.offer(i);
                 cnt++;
-                Q.add(i);
             }
         }
 
@@ -109,13 +107,12 @@ public class BOJ_03665_최종순위 {
                 indegree[next]--;
 
                 if (indegree[next] == 0)
-                    Q.add(next);
+                    Q.offer(next);
             }
         }
 
-        for (int i = 1; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             sb.append(res[i]).append(" ");
-        }
         sb.append("\n");
     }
 }
