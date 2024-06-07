@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  * 바뀐 순위의 선후관계에 맞게 연결리스트와 진입차수 수정
  * 진입차수가 0인 값이 1개보다 많으면 확실한 순위를 찾을 수 없는 것 -> "?" 출력
  * while문이 아닌 for문을 통해 위상정렬 알고리즘이 정상 동작하는지 확인
- * 1부터 N까지 돌기 전에 Queue가 비어버리면 비정상적으로 종료된 것 -> "IMPOSSIBLE" 출력
+ * 1부터 N까지 돌기 전에 Queue가 비어버리면 데이터에 일관성이 없어서 순위를 정할 수 없는 것 -> "IMPOSSIBLE" 출력
  * 정상 종료되면 1순위부터 N순위까지 출력
  */
 public class BOJ_03665_최종순위 {
@@ -34,13 +34,12 @@ public class BOJ_03665_최종순위 {
             N = Integer.parseInt(br.readLine());
 
             rank = new int[N + 1];
-            st = new StringTokenizer(br.readLine());
-            for (int i = 1; i <= N; i++)
-                rank[i] = Integer.parseInt(st.nextToken());
-
             adj = new ArrayList[N + 1];
-            for (int i = 0; i <= N; i++)
+            st = new StringTokenizer(br.readLine());
+            for (int i = 1; i <= N; i++) {
+                rank[i] = Integer.parseInt(st.nextToken());
                 adj[i] = new ArrayList<>();
+            }
 
             indegree = new int[N + 1];
             for (int i = 1; i <= N; i++) {
