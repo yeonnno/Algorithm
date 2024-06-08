@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 /**
- * Kruskal 알고리즘
+ * Kruskal 알고리즘 - 간선 선택을 기반으로 하는 알고리즘
  */
 public class BOJ_01197_최소스패닝트리_kruskal {
 
@@ -24,18 +24,17 @@ public class BOJ_01197_최소스패닝트리_kruskal {
         E = Integer.parseInt(st.nextToken());
 
         parent = new int[V + 1];
-        for (int i = 1; i <= V; i++) {
+        for (int i = 1; i <= V; i++)
             parent[i] = i;
-        }
 
         PQ = new PriorityQueue<>();
         for (int i = 0; i < E; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            PQ.offer(new Node(s, e, cost));
+            PQ.offer(new Node(x, y, cost));
         }
 
         res = 0;
@@ -50,21 +49,11 @@ public class BOJ_01197_최소스패닝트리_kruskal {
         for (int i = 0; i < size; i++) {
             Node node = PQ.poll();
 
-            int s = find(node.s);
-            int e = find(node.e);
+            if (find(node.x) == find(node.y)) continue;
 
-            if (!isSameParent(s, e)) {
-                res += node.cost;
-                union(node.s, node.e);
-            }
+            res += node.cost;
+            union(node.x, node.y);
         }
-    }
-
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-        if (x == y) return true;
-        else return false;
     }
 
     private static void union(int x, int y) {
@@ -80,13 +69,13 @@ public class BOJ_01197_최소스패닝트리_kruskal {
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
