@@ -45,8 +45,7 @@ public class BOJ_01197_최소스패닝트리_kruskal {
     }
 
     private static void kruskal() {
-        int size = PQ.size();
-        for (int i = 0; i < size; i++) {
+        while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
             if (find(node.x) == find(node.y)) continue;
