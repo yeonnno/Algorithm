@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 /**
- * Kruskal 알고리즘
+ * Kruskal 풀이
  */
 public class BOJ_01922_네트워크연결_kruskal {
 
@@ -23,18 +23,17 @@ public class BOJ_01922_네트워크연결_kruskal {
         M = Integer.parseInt(br.readLine());
 
         parent = new int[N + 1];
-        for (int i = 1; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             parent[i] = i;
-        }
 
         PQ = new PriorityQueue<>();
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            PQ.offer(new Node(s, e, cost));
+            PQ.offer(new Node(x, y, cost));
         }
 
         res = 0;
@@ -45,17 +44,13 @@ public class BOJ_01922_네트워크연결_kruskal {
     }
 
     private static void kruskal() {
-        int size = PQ.size();
-        for (int i = 0; i < size; i++) {
+        while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int s = find(node.s);
-            int e = find(node.e);
+            if (find(node.x) == find(node.y)) continue;
 
-            if (!isSameParent(s, e)) {
-                res += node.cost;
-                union(node.s, node.e);
-            }
+            res += node.cost;
+            union(node.x, node.y);
         }
     }
 
@@ -66,27 +61,19 @@ public class BOJ_01922_네트워크연결_kruskal {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
