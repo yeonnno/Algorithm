@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 /**
- * Prim 알고리즘
+ * Prim 풀이
  */
 public class BOJ_01922_네트워크연결_prim {
 
@@ -24,9 +24,8 @@ public class BOJ_01922_네트워크연결_prim {
         M = Integer.parseInt(br.readLine());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
@@ -69,7 +68,7 @@ public class BOJ_01922_네트워크연결_prim {
         int e;
         int cost;
 
-        Node(int e, int cost) {
+        public Node(int e, int cost) {
             this.e = e;
             this.cost = cost;
         }
