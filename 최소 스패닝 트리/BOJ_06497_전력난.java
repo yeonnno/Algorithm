@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_06497_전력난 {
 
-    static int N, M, total, res;
+    static int N, M, res;
     static int[] parent;
     static PriorityQueue<Node> PQ;
 
@@ -25,28 +25,25 @@ public class BOJ_06497_전력난 {
 
             if (N == 0 && M == 0) break;
 
-            parent = new int[N + 1];
-            for (int i = 1; i <= N; i++) {
+            parent = new int[N];
+            for (int i = 0; i < N; i++)
                 parent[i] = i;
-            }
 
-            total = 0;
+            res = 0;
             PQ = new PriorityQueue<>();
             for (int i = 0; i < M; i++) {
                 st = new StringTokenizer(br.readLine());
-                int s = Integer.parseInt(st.nextToken());
-                int e = Integer.parseInt(st.nextToken());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
                 int cost = Integer.parseInt(st.nextToken());
 
-                total += cost;
-                PQ.offer(new Node(s, e, cost));
+                res += cost;
+                PQ.offer(new Node(x, y, cost));
             }
-
-            res = 0;
 
             kruskal();
 
-            sb.append(total - res).append("\n");
+            sb.append(res).append("\n");
         }
 
         System.out.print(sb);
@@ -56,13 +53,10 @@ public class BOJ_06497_전력난 {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
+            if (find(node.x) == find(node.y)) continue;
 
-            if (isSameParent(x, y)) continue;
-
-            res += node.cost;
-            union(node.s, node.e);
+            res -= node.cost;
+            union(node.x, node.y);
         }
     }
 
@@ -73,27 +67,19 @@ public class BOJ_06497_전력난 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
