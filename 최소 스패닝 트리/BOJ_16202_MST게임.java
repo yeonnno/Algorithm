@@ -11,10 +11,10 @@ import java.util.StringTokenizer;
 
 public class BOJ_16202_MST게임 {
 
-    static int N, M, K, min;
-    static ArrayList<Node>[] list;
-    static Queue<Node> Q;
+    static int N, M, K, score;
     static int[] parent, res;
+    static ArrayList<Node> list;
+    static Queue<Node> Q;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,61 +26,55 @@ public class BOJ_16202_MST게임 {
         M = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        list = new ArrayList[M + 1];
-        for (int i = 0; i <= M; i++) {
-            list[i] = new ArrayList<>();
-        }
-
+        list = new ArrayList<>();
         for (int i = 1; i <= M; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
 
-            list[i].add(new Node(s, e, i));
+            list.add(new Node(x, y, i));
         }
 
-        res = new int[K];
-        for (int i = 0; i < K; i++) {
-            Q = new LinkedList<>();
-            for (int j = i + 1; j <= M; j++) {
-                Q.offer(list[j].get(0));
-            }
-
+        res = new int[K + 1];
+        for (int i = 1; i <= K; i++) {
             parent = new int[N + 1];
-            for (int j = 1; j <= N; j++) {
+            for (int j = 1; j <= N; j++)
                 parent[j] = j;
-            }
 
-            min = 0;
+            Q = new LinkedList<>();
+            for (int j = i - 1; j < M; j++)
+                Q.offer(list.get(j));
+
+            score = 0;
 
             kruskal();
 
-            boolean check = true;
-            int tmp = find(1);
-            for (int j = 2; j <= N; j++) {
-                if (tmp != find(j)) check = false;
-            }
-
-            if (check) res[i] = min;
+            if (check()) res[i] = score;
             else break;
         }
 
-        for (int r : res) sb.append(r).append(" ");
+        for (int i = 1; i <= K; i++)
+            sb.append(res[i]).append(" ");
 
         System.out.println(sb);
+    }
+
+    private static boolean check() {
+        int tmp = find(1);
+        for (int i = 2; i <= N; i++) {
+            if (tmp != find(i)) return false;
+        }
+        return true;
     }
 
     private static void kruskal() {
         while (!Q.isEmpty()) {
             Node node = Q.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
+            if (find(node.x) == find(node.y)) continue;
 
-            if (isSameParent(x, y)) continue;
-
-            min += node.cost;
-            union(node.s, node.e);
+            score += node.cost;
+            union(node.x, node.y);
         }
     }
 
@@ -91,27 +85,19 @@ public class BOJ_16202_MST게임 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
     }
