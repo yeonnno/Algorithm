@@ -12,7 +12,7 @@ public class BOJ_01774_우주신과의교감 {
     static int N, M;
     static double res;
     static int[] parent;
-    static Point[] points;
+    static Node[] nodes;
     static PriorityQueue<Node> PQ;
 
     public static void main(String[] args) throws IOException {
@@ -24,15 +24,15 @@ public class BOJ_01774_우주신과의교감 {
         M = Integer.parseInt(st.nextToken());
 
         parent = new int[N + 1];
-        points = new Point[N + 1];
+        nodes = new Node[N + 1];
         for (int i = 1; i <= N; i++) {
             parent[i] = i;
-
             st = new StringTokenizer(br.readLine());
-            double x = Double.parseDouble(st.nextToken());
-            double y = Double.parseDouble(st.nextToken());
 
-            points[i] = new Point(i, x, y);
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+
+            nodes[i] = new Node(x, y);
         }
 
         for (int i = 0; i < M; i++) {
@@ -46,9 +46,9 @@ public class BOJ_01774_우주신과의교감 {
         PQ = new PriorityQueue<>();
         for (int i = 1; i < N; i++) {
             for (int j = i + 1; j <= N; j++) {
-                double dist = distance(points[i], points[j]);
+                double dist = getDistance(nodes[i], nodes[j]);
 
-                PQ.offer(new Node(points[i].idx, points[j].idx, dist));
+                PQ.offer(new Node(i, j, dist));
             }
         }
 
@@ -63,26 +63,15 @@ public class BOJ_01774_우주신과의교감 {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
-
-            if (isSameParent(x, y)) continue;
+            if (find(node.x) == find(node.y)) continue;
 
             res += node.cost;
-            union(node.s, node.e);
+            union(node.x, node.y);
         }
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
-    private static double distance(Point p1, Point p2) {
-        return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+    private static double getDistance(Node n1, Node n2) {
+        return Math.sqrt(Math.pow(n1.x - n2.x, 2) + Math.pow(n1.y - n2.y, 2));
     }
 
     private static void union(int x, int y) {
@@ -97,26 +86,19 @@ public class BOJ_01774_우주신과의교감 {
         else return parent[x] = find(parent[x]);
     }
 
-    private static class Point {
-        int idx;
-        double x;
-        double y;
+    private static class Node implements Comparable<Node> {
+        int x;
+        int y;
+        double cost;
 
-        Point(int idx, double x, double y) {
-            this.idx = idx;
+        public Node(int x, int y) {
             this.x = x;
             this.y = y;
         }
-    }
 
-    private static class Node implements Comparable<Node> {
-        int s;
-        int e;
-        double cost;
-
-        Node(int s, int e, double cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, double cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
