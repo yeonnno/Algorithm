@@ -10,8 +10,7 @@ import java.util.StringTokenizer;
 public class BOJ_14621_나만안되는연애 {
 
     static int N, M, res;
-    static char[] mw;
-    static int[] parent;
+    static int[] parent, mw;
     static PriorityQueue<Node> PQ;
 
     public static void main(String[] args) throws IOException {
@@ -22,54 +21,51 @@ public class BOJ_14621_나만안되는연애 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        mw = new char[N + 1];
+        mw = new int[N + 1];
         parent = new int[N + 1];
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
-            mw[i] = st.nextToken().charAt(0);
+            if (st.nextToken().charAt(0) == 'M')
+                mw[i] = 1;
+
             parent[i] = i;
         }
 
         PQ = new PriorityQueue<>();
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            PQ.offer(new Node(s, e, cost));
+            PQ.offer(new Node(x, y, cost));
         }
 
         res = 0;
 
         kruskal();
 
-        int tmp = find(1);
-        boolean check = true;
-        for (int i = 2; i <= N; i++) {
-            if (tmp == find(i)) continue;
-
-            check = false;
-            break;
-        }
-
-        if (check) System.out.println(res);
+        if (checkParent()) System.out.println(res);
         else System.out.println(-1);
+    }
+
+    private static boolean checkParent() {
+        int tmp = find(1);
+        for (int i = 2; i <= N; i++) {
+            if (tmp != find(i)) return false;
+        }
+        return true;
     }
 
     private static void kruskal() {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            if (mw[node.s] == mw[node.e]) continue;
-
-            int x = find(node.s);
-            int y = find(node.e);
-
-            if (isSamaParent(x, y)) continue;
+            if (mw[node.x] == mw[node.y]) continue;
+            if (find(node.x) == find(node.y)) continue;
 
             res += node.cost;
-            union(node.s, node.e);
+            union(node.x, node.y);
         }
     }
 
@@ -80,27 +76,19 @@ public class BOJ_14621_나만안되는연애 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSamaParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
