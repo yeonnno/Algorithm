@@ -24,9 +24,8 @@ public class BOJ_14950_정복자 {
         T = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
@@ -51,7 +50,6 @@ public class BOJ_14950_정복자 {
         PQ.offer(new Node(1, 0));
 
         int cnt = 0;
-
         while (!PQ.isEmpty()) {
             Node now = PQ.poll();
 
@@ -74,7 +72,7 @@ public class BOJ_14950_정복자 {
         int e;
         int cost;
 
-        Node(int e, int cost) {
+        public Node(int e, int cost) {
             this.e = e;
             this.cost = cost;
         }
