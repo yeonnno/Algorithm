@@ -18,66 +18,59 @@ public class BOJ_01414_불우이웃돕기 {
 
         N = Integer.parseInt(br.readLine());
 
-        int total = 0;
+        res = 0;
         map = new int[N][N];
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
             for (int j = 0; j < N; j++) {
                 char ch = s.charAt(j);
-                if (ch >= 'a' && ch <= 'z') {
+
+                if (ch >= 'a' && ch <= 'z')
                     map[i][j] = ch - 'a' + 1;
-                } else if (ch >= 'A' && ch <= 'Z') {
+                else if (ch >= 'A' && ch <= 'Z')
                     map[i][j] = ch - 'A' + 27;
-                } else {
+                else
                     map[i][j] = 0;
-                }
-                total += map[i][j];
+
+                res += map[i][j];
             }
         }
 
         PQ = new PriorityQueue<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (i == j) continue;
-                if (map[i][j] == 0) continue;
+                if (i == j || map[i][j] == 0) continue;
 
                 PQ.offer(new Node(i, j, map[i][j]));
             }
         }
 
         parent = new int[N];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++)
             parent[i] = i;
-        }
-
-        res = 0;
 
         kruskal();
 
-        int tmp = find(0);
-        boolean check = true;
-        for (int i = 1; i < N; i++) {
-            if (tmp != find(i)) {
-                check = false;
-                break;
-            }
-        }
-
-        if (check) System.out.println(total - res);
+        if (checkParent()) System.out.println(res);
         else System.out.println(-1);
+    }
+
+    private static boolean checkParent() {
+        int tmp = find(0);
+        for (int i = 1; i < N; i++) {
+            if (tmp != find(i)) return false;
+        }
+        return true;
     }
 
     private static void kruskal() {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
+            if (find(node.x) == find(node.y)) continue;
 
-            if (isSameParent(x, y)) continue;
-
-            res += node.cost;
-            union(node.s, node.e);
+            res -= node.cost;
+            union(node.x, node.y);
         }
     }
 
@@ -88,27 +81,19 @@ public class BOJ_01414_불우이웃돕기 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
