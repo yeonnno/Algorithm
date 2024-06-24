@@ -31,6 +31,7 @@ public class BOJ_01368_물대기 {
             st = new StringTokenizer(br.readLine());
             for (int j = 1; j <= N; j++) {
                 int cost = Integer.parseInt(st.nextToken());
+
                 if (i == j)
                     PQ.offer(new Node(0, i, well[i]));
                 else if (i < j)
@@ -49,13 +50,10 @@ public class BOJ_01368_물대기 {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
-
-            if (isSameParent(x, y)) continue;
+            if (find(node.x) == find(node.y)) continue;
 
             res += node.cost;
-            union(node.s, node.e);
+            union(node.x, node.y);
         }
     }
 
@@ -66,27 +64,19 @@ public class BOJ_01368_물대기 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
