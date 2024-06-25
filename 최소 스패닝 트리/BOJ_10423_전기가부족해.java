@@ -1,5 +1,5 @@
 /**
- * BOJ : 10423 G2 전기가 부족해
+ * BOJ : 10423 G3 전기가 부족해
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,25 +23,21 @@ public class BOJ_10423_전기가부족해 {
         K = Integer.parseInt(st.nextToken());
 
         parent = new int[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             parent[i] = i;
-        }
 
         PQ = new PriorityQueue<>();
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < K; i++) {
-            int n = Integer.parseInt(st.nextToken());
-
-            PQ.offer(new Node(0, n, 0));
-        }
+        for (int i = 0; i < K; i++)
+            PQ.offer(new Node(0, Integer.parseInt(st.nextToken()), 0));
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            PQ.offer(new Node(s, e, cost));
+            PQ.offer(new Node(x, y, cost));
         }
 
         res = 0;
@@ -55,13 +51,10 @@ public class BOJ_10423_전기가부족해 {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
-
-            if (isSameParent(x, y)) continue;
+            if (find(node.x) == find(node.y)) continue;
 
             res += node.cost;
-            union(node.s, node.e);
+            union(node.x, node.y);
         }
     }
 
@@ -72,27 +65,19 @@ public class BOJ_10423_전기가부족해 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
