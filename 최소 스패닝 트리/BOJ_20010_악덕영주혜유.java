@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_20010_악덕영주혜유 {
 
-    static int N, K, res, max, start;
+    static int N, K, start, res1, res2;
     static int[] parent;
     static PriorityQueue<Node> PQ;
     static ArrayList<Node>[] adj;
@@ -26,54 +26,53 @@ public class BOJ_20010_악덕영주혜유 {
         K = Integer.parseInt(st.nextToken());
 
         parent = new int[N];
-        adj = new ArrayList[N];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++)
             parent[i] = i;
-            adj[i] = new ArrayList<>();
-        }
 
         PQ = new PriorityQueue<>();
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            PQ.offer(new Node(s, e, cost));
+            PQ.offer(new Node(x, y, cost));
         }
 
-        res = 0;
+        res1 = 0;
+        adj = new ArrayList[N];
+        for (int i = 0; i < N; i++)
+            adj[i] = new ArrayList<>();
 
         kruskal();
 
-
         start = 0;
 
-        max = Integer.MIN_VALUE;
+        res2 = Integer.MIN_VALUE;
         visited = new boolean[N];
         visited[start] = true;
         dfs(start, 0);
 
-        max = Integer.MIN_VALUE;
+        res2 = Integer.MIN_VALUE;
         visited = new boolean[N];
         visited[start] = true;
         dfs(start, 0);
 
-        sb.append(res).append("\n").append(max);
+        sb.append(res1).append("\n").append(res2);
         System.out.println(sb);
     }
 
     private static void dfs(int node, int sum) {
-        if (max < sum) {
-            max = sum;
+        if (res2 < sum) {
+            res2 = sum;
             start = node;
         }
 
         for (Node next : adj[node]) {
-            if (visited[next.e]) continue;
+            if (visited[next.y]) continue;
 
-            visited[next.e] = true;
-            dfs(next.e, sum + next.cost);
+            visited[next.y] = true;
+            dfs(next.y, sum + next.cost);
         }
     }
 
@@ -81,16 +80,13 @@ public class BOJ_20010_악덕영주혜유 {
         while (!PQ.isEmpty()) {
             Node node = PQ.poll();
 
-            int x = find(node.s);
-            int y = find(node.e);
+            if (find(node.x) == find(node.y)) continue;
 
-            if (isSameParent(x, y)) continue;
+            res1 += node.cost;
+            union(node.x, node.y);
 
-            res += node.cost;
-            union(node.s, node.e);
-
-            adj[node.s].add(new Node(node.e, node.cost));
-            adj[node.e].add(new Node(node.s, node.cost));
+            adj[node.x].add(new Node(node.y, node.cost));
+            adj[node.y].add(new Node(node.x, node.cost));
         }
     }
 
@@ -101,32 +97,24 @@ public class BOJ_20010_악덕영주혜유 {
         if (x != y) parent[y] = x;
     }
 
-    private static boolean isSameParent(int x, int y) {
-        x = find(x);
-        y = find(y);
-
-        if (x == y) return true;
-        else return false;
-    }
-
     private static int find(int x) {
         if (parent[x] == x) return x;
         else return parent[x] = find(parent[x]);
     }
 
     private static class Node implements Comparable<Node> {
-        int s;
-        int e;
+        int x;
+        int y;
         int cost;
 
-        Node(int s, int e, int cost) {
-            this.s = s;
-            this.e = e;
+        public Node(int y, int cost) {
+            this.y = y;
             this.cost = cost;
         }
 
-        Node(int e, int cost) {
-            this.e = e;
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
             this.cost = cost;
         }
 
