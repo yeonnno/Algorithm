@@ -8,16 +8,20 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
-
+/**
+ * 1. 섬 구분하기
+ * 2. 섬과 섬 사이 최단거리 구하기 (다리 연결)
+ * 3. 모든 섬을 연결하는 다리 길이 최솟값 구하기
+ */
 public class BOJ_17472_다리만들기2 {
 
-    static int N, M, res;
+    static int N, M, idx, res;
+    static int[] parent;
     static int[][] map;
-    static boolean[][] visited;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
-    static int[] parent;
     static PriorityQueue<Point> PQ;
+    static boolean[][] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,8 +40,7 @@ public class BOJ_17472_다리만들기2 {
         }
 
         // 1. 섬 구분하기
-        int idx = 1;
-        visited = new boolean[N][M];
+        idx = 1;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (map[i][j] != -1) continue;
@@ -57,27 +60,25 @@ public class BOJ_17472_다리만들기2 {
             }
         }
 
-        // 3. 모든 섬을 연결하는 다리 길이 최소값 구하기
+        // 3. 모든 섬을 연결하는 다리 길이 최솟값 구하기
         parent = new int[idx];
-        for (int i = 1; i < idx; i++) {
+        for (int i = 1; i < idx; i++)
             parent[i] = i;
-        }
 
         res = 0;
 
         kruskal();
 
-        int tmp = find(1);
-        boolean check = true;
-        for (int i = 2; i < idx; i++) {
-            if (tmp == find(i)) continue;
-
-            check = false;
-            break;
-        }
-
-        if (check) System.out.println(res);
+        if (checkParent()) System.out.println(res);
         else System.out.println(-1);
+    }
+
+    private static boolean checkParent() {
+        int tmp = find(1);
+        for (int i = 2; i < idx; i++) {
+            if (tmp != find(i)) return false;
+        }
+        return true;
     }
 
     private static void kruskal() {
@@ -138,7 +139,7 @@ public class BOJ_17472_다리만들기2 {
     private static void checkLand(int i, int j, int idx) {
         Queue<Point> Q = new LinkedList<>();
         Q.offer(new Point(i, j));
-        visited[i][j] = true;
+
         map[i][j] = idx;
 
         while (!Q.isEmpty()) {
@@ -148,7 +149,7 @@ public class BOJ_17472_다리만들기2 {
                 int nx = now.x + dx[d];
                 int ny = now.y + dy[d];
 
-                if (!isPossible(nx, ny) || visited[nx][ny]) continue;
+                if (!isPossible(nx, ny)) continue;
                 if (map[nx][ny] != -1) continue;
 
                 map[nx][ny] = idx;
