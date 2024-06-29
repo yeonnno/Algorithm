@@ -38,9 +38,8 @@ public class BOJ_01944_복제로봇 {
         }
 
         PQ = new PriorityQueue<>();
-        for (int i = 0; i < M + 1; i++) {
+        for (int i = 0; i < M + 1; i++)
             BFS(i);
-        }
 
         res = 0;
 
@@ -51,9 +50,8 @@ public class BOJ_01944_복제로봇 {
 
     private static void kruskal() {
         parent = new int[M + 1];
-        for (int i = 0; i < M + 1; i++) {
+        for (int i = 0; i < M + 1; i++)
             parent[i] = i;
-        }
 
         int cnt = 0;
         while (!PQ.isEmpty()) {
@@ -93,9 +91,8 @@ public class BOJ_01944_복제로봇 {
 
             if (map[now.x][now.y] == 'S' || map[now.x][now.y] == 'K') {
                 for (int i = idx + 1; i < M + 1; i++) {
-                    if (list.get(i).x == now.x && list.get(i).y == now.y) {
+                    if (list.get(i).x == now.x && list.get(i).y == now.y)
                         PQ.offer(new Point(idx, i, now.cost));
-                    }
                 }
             }
 
