@@ -25,18 +25,17 @@ public class BOJ_11085_군사이동 {
         V = Integer.parseInt(st.nextToken());
 
         parent = new int[P];
-        for (int i = 0; i < P; i++) {
+        for (int i = 0; i < P; i++)
             parent[i] = i;
-        }
 
         PQ = new PriorityQueue<>();
         for (int i = 0; i < W; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            PQ.offer(new Node(s, e, cost));
+            PQ.offer(new Node(x, y, cost));
         }
 
         res = Integer.MAX_VALUE;
