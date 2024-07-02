@@ -22,9 +22,8 @@ public class BOJ_17090_미로탈출하기 {
         M = Integer.parseInt(st.nextToken());
 
         parent = new int[N * M + 1];
-        for (int i = 0; i <= N * M; i++) {
+        for (int i = 1; i <= N * M; i++)
             parent[i] = i;
-        }
 
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
@@ -33,17 +32,17 @@ public class BOJ_17090_미로탈출하기 {
                 int nx = i + dx[dir];
                 int ny = j + dy[dir];
 
-                if (isPossible(nx, ny)) {
+                if (isPossible(nx, ny))
                     union(i * M + j + 1, nx * M + ny + 1);
-                } else {
+                else
                     union(0, i * M + j + 1);
-                }
             }
         }
 
         res = 0;
         for (int i = 1; i <= N * M; i++) {
-            if (find(i) == 0) res++;
+            if (find(i) == 0)
+                res++;
         }
 
         System.out.println(res);
@@ -53,13 +52,10 @@ public class BOJ_17090_미로탈출하기 {
         x = find(x);
         y = find(y);
 
-        if (x == 0) {
-            parent[y] = x;
-        } else if (y == 0) {
+        if (y == 0)
             parent[x] = y;
-        } else {
+        else
             parent[y] = x;
-        }
     }
 
     private static int find(int x) {
@@ -72,8 +68,8 @@ public class BOJ_17090_미로탈출하기 {
         else return false;
     }
 
-    private static int getDir(char charAt) {
-        switch (charAt) {
+    private static int getDir(char ch) {
+        switch (ch) {
             case 'U':
                 return 0;
             case 'R':
@@ -83,7 +79,6 @@ public class BOJ_17090_미로탈출하기 {
             case 'L':
                 return 3;
         }
-
         return -1;
     }
 }
