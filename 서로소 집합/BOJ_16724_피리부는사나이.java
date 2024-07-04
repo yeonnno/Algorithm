@@ -23,14 +23,14 @@ public class BOJ_16724_피리부는사나이 {
         M = Integer.parseInt(st.nextToken());
 
         parent = new int[N * M];
-        for (int i = 0; i < N * M; i++) {
+        for (int i = 0; i < N * M; i++)
             parent[i] = i;
-        }
 
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
             for (int j = 0; j < M; j++) {
                 int dir = getDir(s.charAt(j));
+
                 int nx = i + dx[dir];
                 int ny = j + dy[dir];
 
@@ -39,9 +39,8 @@ public class BOJ_16724_피리부는사나이 {
         }
 
         HashSet<Integer> set = new HashSet<>();
-        for (int i = 0; i < N * M; i++) {
+        for (int i = 0; i < N * M; i++)
             set.add(find(i));
-        }
 
         System.out.println(set.size());
     }
@@ -69,6 +68,6 @@ public class BOJ_16724_피리부는사나이 {
             case 'L':
                 return 3;
         }
-        return 0;
+        return -1;
     }
 }
