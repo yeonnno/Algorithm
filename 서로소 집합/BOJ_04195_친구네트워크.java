@@ -11,6 +11,7 @@ public class BOJ_04195_친구네트워크 {
 
     static int F;
     static int[] parent, level;
+    static HashMap<String, Integer> map;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,15 +22,15 @@ public class BOJ_04195_친구네트워크 {
         for (int t = 0; t < T; t++) {
             F = Integer.parseInt(br.readLine());
 
-            parent = new int[F * 2];
             level = new int[F * 2];
+            parent = new int[F * 2];
             for (int i = 0; i < F * 2; i++) {
-                parent[i] = i;
                 level[i] = 1;
+                parent[i] = i;
             }
 
             int idx = 0;
-            HashMap<String, Integer> map = new HashMap<>();
+            map = new HashMap<>();
             for (int i = 0; i < F; i++) {
                 st = new StringTokenizer(br.readLine());
                 String a = st.nextToken();
@@ -53,7 +54,6 @@ public class BOJ_04195_친구네트워크 {
             parent[y] = x;
             level[x] += level[y];
         }
-
         return level[x];
     }
 
