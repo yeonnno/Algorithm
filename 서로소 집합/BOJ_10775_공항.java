@@ -17,14 +17,12 @@ public class BOJ_10775_공항 {
         P = Integer.parseInt(br.readLine());
 
         parent = new int[G + 1];
-        for (int i = 0; i <= G; i++) {
+        for (int i = 1; i <= G; i++)
             parent[i] = i;
-        }
 
         res = 0;
         for (int i = 0; i < P; i++) {
-            int x = Integer.parseInt(br.readLine());
-            int gate = find(x);
+            int gate = find(Integer.parseInt(br.readLine()));
 
             if (gate == 0) break;
 
