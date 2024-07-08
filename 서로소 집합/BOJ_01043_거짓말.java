@@ -22,20 +22,17 @@ public class BOJ_01043_거짓말 {
         M = Integer.parseInt(st.nextToken());
 
         parent = new int[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             parent[i] = i;
-        }
 
         party = new ArrayList[M + 1];
-        for (int i = 0; i <= M; i++) {
+        for (int i = 0; i <= M; i++)
             party[i] = new ArrayList<>();
-        }
 
         st = new StringTokenizer(br.readLine());
         int len = Integer.parseInt(st.nextToken());
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++)
             union(0, Integer.parseInt(st.nextToken()));
-        }
 
         for (int i = 1; i <= M; i++) {
             st = new StringTokenizer(br.readLine());
@@ -43,13 +40,14 @@ public class BOJ_01043_거짓말 {
 
             if (tmp == 0) continue;
 
-            int a = Integer.parseInt(st.nextToken());
-            party[i].add(a);
-            for (int j = 1; j < tmp; j++) {
-                int b = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            party[i].add(x);
 
-                party[i].add(b);
-                union(a, b);
+            for (int j = 1; j < tmp; j++) {
+                int y = Integer.parseInt(st.nextToken());
+
+                party[i].add(y);
+                union(x, y);
             }
         }
 
@@ -62,8 +60,7 @@ public class BOJ_01043_거짓말 {
                     check = true;
             }
 
-            if (!check)
-                res++;
+            if (!check) res++;
         }
 
         System.out.println(res);
@@ -74,8 +71,7 @@ public class BOJ_01043_거짓말 {
         y = find(y);
 
         if (x != y) {
-            if (x == 0) parent[y] = x;
-            else if (y == 0) parent[x] = y;
+            if (y == 0) parent[x] = y;
             else parent[y] = x;
         }
     }
