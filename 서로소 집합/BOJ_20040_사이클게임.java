@@ -20,9 +20,8 @@ public class BOJ_20040_사이클게임 {
         M = Integer.parseInt(st.nextToken());
 
         parent = new int[N];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++)
             parent[i] = i;
-        }
 
         res = 0;
         for (int i = 1; i <= M; i++) {
@@ -33,9 +32,9 @@ public class BOJ_20040_사이클게임 {
             if (find(x) == find(y)) {
                 res = i;
                 break;
-            } else {
-                union(x, y);
             }
+
+            union(x, y);
         }
 
         System.out.println(res);
