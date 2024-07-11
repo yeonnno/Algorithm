@@ -19,11 +19,11 @@ public class BOJ_18116_로봇조립 {
 
         N = Integer.parseInt(br.readLine());
 
-        parent = new int[MAX];
         count = new int[MAX];
+        parent = new int[MAX];
         for (int i = 1; i < MAX; i++) {
-            parent[i] = i;
             count[i] = 1;
+            parent[i] = i;
         }
 
         for (int i = 0; i < N; i++) {
@@ -31,14 +31,12 @@ public class BOJ_18116_로봇조립 {
             String s = st.nextToken();
 
             if (s.equals("I")) {
-                int a = Integer.parseInt(st.nextToken());
-                int b = Integer.parseInt(st.nextToken());
-
-                union(a, b);
-            } else {
                 int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
 
-                sb.append(count[find(x)]).append("\n");
+                union(x, y);
+            } else {
+                sb.append(count[find(Integer.parseInt(st.nextToken()))]).append("\n");
             }
         }
 
