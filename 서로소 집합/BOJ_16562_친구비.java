@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_16562_친구비 {
 
     static int N, M, K, res;
-    static int[] friendCost, parent;
+    static int[] parent, cost;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,20 +20,20 @@ public class BOJ_16562_친구비 {
         M = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        friendCost = new int[N + 1];
+        cost = new int[N + 1];
         parent = new int[N + 1];
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
-            friendCost[i] = Integer.parseInt(st.nextToken());
+            cost[i] = Integer.parseInt(st.nextToken());
             parent[i] = i;
         }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
 
-            union(a, b);
+            union(x, y);
         }
 
         res = 0;
@@ -46,7 +46,7 @@ public class BOJ_16562_친구비 {
                 continue;
             }
 
-            res += friendCost[root];
+            res += cost[root];
 
             visited[root] = true;
             visited[i] = true;
@@ -61,7 +61,7 @@ public class BOJ_16562_친구비 {
         y = find(y);
 
         if (x != y) {
-            if (friendCost[x] > friendCost[y]) parent[x] = y;
+            if (cost[x] > cost[y]) parent[x] = y;
             else parent[y] = x;
         }
     }
