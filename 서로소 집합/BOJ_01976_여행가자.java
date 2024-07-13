@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_01976_여행가자 {
 
     static int N, M;
-    static int[] parent;
+    static int[] parent, city;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,33 +19,34 @@ public class BOJ_01976_여행가자 {
         M = Integer.parseInt(br.readLine());
 
         parent = new int[N + 1];
-        for (int i = 1; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             parent[i] = i;
-        }
 
         for (int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 1; j <= N; j++) {
-                int num = Integer.parseInt(st.nextToken());
+                int x = Integer.parseInt(st.nextToken());
 
-                if (i < j && num == 1) {
+                if (i < j && x == 1)
                     union(i, j);
-                }
             }
         }
 
+        city = new int[M];
         st = new StringTokenizer(br.readLine());
-        int tmp = find(Integer.parseInt(st.nextToken()));
-        boolean check = true;
-        for (int i = 1; i < M; i++) {
-            if (tmp != find(Integer.parseInt(st.nextToken()))) {
-                check = false;
-                break;
-            }
-        }
+        for (int i = 0; i < M; i++)
+            city[i] = Integer.parseInt(st.nextToken());
 
-        if (check) System.out.println("YES");
+        if (checkCity()) System.out.println("YES");
         else System.out.println("NO");
+    }
+
+    private static boolean checkCity() {
+        int tmp = find(city[0]);
+        for (int i = 1; i < M; i++) {
+            if (tmp != find(city[i])) return false;
+        }
+        return true;
     }
 
     private static void union(int x, int y) {
