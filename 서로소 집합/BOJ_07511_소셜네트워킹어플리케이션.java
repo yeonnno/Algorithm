@@ -22,32 +22,27 @@ public class BOJ_07511_소셜네트워킹어플리케이션 {
             K = Integer.parseInt(br.readLine());
 
             parent = new int[N];
-            for (int i = 0; i < N; i++) {
+            for (int i = 0; i < N; i++)
                 parent[i] = i;
-            }
 
             for (int i = 0; i < K; i++) {
                 st = new StringTokenizer(br.readLine());
-                int a = Integer.parseInt(st.nextToken());
-                int b = Integer.parseInt(st.nextToken());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
 
-                if (find(a) != find(b)) {
-                    union(a, b);
-                }
+                union(x, y);
             }
-
-            sb.append("Scenario ").append(t).append(":\n");
 
             M = Integer.parseInt(br.readLine());
 
+            sb.append("Scenario ").append(t).append(":\n");
             for (int i = 0; i < M; i++) {
                 st = new StringTokenizer(br.readLine());
-                int a = Integer.parseInt(st.nextToken());
-                int b = Integer.parseInt(st.nextToken());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
 
-                if (find(a) == find(b)) sb.append(1);
-                else sb.append(0);
-                sb.append("\n");
+                if (find(x) == find(y)) sb.append("1\n");
+                else sb.append("0\n");
             }
             sb.append("\n");
         }
