@@ -21,20 +21,19 @@ public class BOJ_01717_집합의표현 {
         M = Integer.parseInt(st.nextToken());
 
         parent = new int[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 1; i <= N; i++)
             parent[i] = i;
-        }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int c = Integer.parseInt(st.nextToken());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
+            int op = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
 
-            if (c == 0) {
-                union(a, b);
+            if (op == 0) {
+                union(x, y);
             } else {
-                if (find(a) == find(b)) sb.append("YES\n");
+                if (find(x) == find(y)) sb.append("YES\n");
                 else sb.append("NO\n");
             }
         }
@@ -42,15 +41,15 @@ public class BOJ_01717_집합의표현 {
         System.out.print(sb);
     }
 
-    private static int find(int x) {
-        if (parent[x] == x) return x;
-        else return parent[x] = find(parent[x]);
-    }
-
     private static void union(int x, int y) {
         x = find(x);
         y = find(y);
 
         if (x != y) parent[y] = x;
+    }
+
+    private static int find(int x) {
+        if (parent[x] == x) return x;
+        else return parent[x] = find(parent[x]);
     }
 }
