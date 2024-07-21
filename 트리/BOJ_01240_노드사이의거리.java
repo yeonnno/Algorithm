@@ -5,8 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_01240_노드사이의거리 {
@@ -44,8 +42,9 @@ public class BOJ_01240_노드사이의거리 {
             int y = Integer.parseInt(st.nextToken());
 
             res = 0;
+            visited = new boolean[N + 1];
 
-            BFS(x, y);
+            DFS(x, y, 0);
 
             sb.append(res).append("\n");
         }
@@ -53,27 +52,18 @@ public class BOJ_01240_노드사이의거리 {
         System.out.print(sb);
     }
 
-    private static void BFS(int start, int end) {
-        Queue<Node> Q = new LinkedList<>();
-        Q.offer(new Node(start, 0));
+    private static void DFS(int now, int end, int sum) {
+        visited[now] = true;
 
-        visited = new boolean[N + 1];
-        visited[start] = true;
+        if (now == end) {
+            res = sum;
+            return;
+        }
 
-        while (!Q.isEmpty()) {
-            Node now = Q.poll();
+        for (Node next : tree[now]) {
+            if (visited[next.x]) continue;
 
-            if (now.x == end) {
-                res = now.cost;
-                return;
-            }
-
-            for (Node next : tree[now.x]) {
-                if (visited[next.x]) continue;
-
-                visited[next.x] = true;
-                Q.offer(new Node(next.x, now.cost + next.cost));
-            }
+            DFS(next.x, end, sum + next.cost);
         }
     }
 
