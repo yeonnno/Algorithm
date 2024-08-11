@@ -19,26 +19,25 @@ public class BOJ_01991_트리순회 {
 
         N = Integer.parseInt(br.readLine());
 
-        tree = new Node[N + 1];
+        tree = new Node[N];
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            char parent = st.nextToken().charAt(0);
+            char val = st.nextToken().charAt(0);
             char left = st.nextToken().charAt(0);
             char right = st.nextToken().charAt(0);
 
-            if (tree[parent - 'A'] == null) {
-                tree[parent - 'A'] = new Node(parent);
-            }
+            if (tree[val - 'A'] == null)
+                tree[val - 'A'] = new Node(val);
 
             if (left != '.') {
                 tree[left - 'A'] = new Node(left);
-                tree[parent - 'A'].left = tree[left - 'A'];
+                tree[val - 'A'].left = tree[left - 'A'];
             }
 
             if (right != '.') {
                 tree[right - 'A'] = new Node(right);
-                tree[parent - 'A'].right = tree[right - 'A'];
+                tree[val - 'A'].right = tree[right - 'A'];
             }
         }
 
@@ -49,9 +48,8 @@ public class BOJ_01991_트리순회 {
         sb.append("\n");
 
         postorder(tree[0]);
-        sb.append("\n");
 
-        System.out.print(sb);
+        System.out.println(sb);
     }
 
     private static void postorder(Node node) {
