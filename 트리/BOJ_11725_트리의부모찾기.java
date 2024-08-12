@@ -5,8 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_11725_트리의부모찾기 {
@@ -14,7 +12,7 @@ public class BOJ_11725_트리의부모찾기 {
     static int N;
     static int[] parent;
     static boolean[] visited;
-    static ArrayList<Integer>[] adj;
+    static ArrayList<Integer>[] tree;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,25 +21,23 @@ public class BOJ_11725_트리의부모찾기 {
 
         N = Integer.parseInt(br.readLine());
 
-        adj = new ArrayList[N + 1];
+        tree = new ArrayList[N + 1];
         for (int i = 0; i <= N; i++)
-            adj[i] = new ArrayList<>();
+            tree[i] = new ArrayList<>();
 
         for (int i = 0; i < N - 1; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
 
-            adj[x].add(y);
-            adj[y].add(x);
+            tree[x].add(y);
+            tree[y].add(x);
         }
 
         parent = new int[N + 1];
         visited = new boolean[N + 1];
-        for (int i = 1; i <= N; i++) {
-            if (!visited[i])
-                BFS(i);
-        }
+
+        DFS(1);
 
         for (int i = 2; i <= N; i++)
             sb.append(parent[i]).append("\n");
@@ -49,22 +45,15 @@ public class BOJ_11725_트리의부모찾기 {
         System.out.print(sb);
     }
 
-    private static void BFS(int v) {
-        Queue<Integer> Q = new LinkedList<>();
-        Q.offer(v);
+    private static void DFS(int now) {
+        visited[now] = true;
 
-        visited[v] = true;
+        for (int next : tree[now]) {
+            if (visited[next]) continue;
 
-        while (!Q.isEmpty()) {
-            int now = Q.poll();
-
-            for (int next : adj[now]) {
-                if (visited[next]) continue;
-
-                visited[next] = true;
-                parent[next] = now;
-                Q.offer(next);
-            }
+            visited[next] = true;
+            parent[next] = now;
+            DFS(next);
         }
     }
 }
