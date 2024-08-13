@@ -20,16 +20,16 @@ public class BOJ_09934_완전이진트리 {
 
         K = Integer.parseInt(br.readLine());
 
-        int len = (int) Math.pow(2, K) - 1;
-
-        building = new int[len + 1];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= len; i++)
-            building[i] = Integer.parseInt(st.nextToken());
-
         tree = new ArrayList[K + 1];
         for (int i = 0; i <= K; i++)
             tree[i] = new ArrayList<>();
+
+        int len = (int) Math.pow(2, K);
+
+        building = new int[len];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 1; i < len; i++)
+            building[i] = Integer.parseInt(st.nextToken());
 
         recur(1, 1, len);
 
