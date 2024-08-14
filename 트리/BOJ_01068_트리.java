@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_01068_트리 {
 
-    static int N, root, delete, res;
+    static int N, root, deleteNode, res;
     static ArrayList<Integer>[] tree;
 
     public static void main(String[] args) throws IOException {
@@ -26,24 +26,24 @@ public class BOJ_01068_트리 {
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            int v = Integer.parseInt(st.nextToken());
+            int node = Integer.parseInt(st.nextToken());
 
-            if (v == -1) {
+            if (node == -1) {
                 root = i;
                 continue;
             }
 
-            tree[v].add(i);
+            tree[node].add(i);
         }
 
-        delete = Integer.parseInt(br.readLine());
+        deleteNode = Integer.parseInt(br.readLine());
 
-        if (root == delete) {
+        if (root == deleteNode) {
             System.out.println(0);
         } else {
             res = 0;
-
-            deleteNode(root);
+            
+            nodeDelete(root);
             countLeaf(root);
 
             System.out.println(res);
@@ -61,23 +61,20 @@ public class BOJ_01068_트리 {
             if (size == 0) {
                 res++;
             } else {
-                for (int i = 0; i < size; i++)
-                    Q.offer(tree[now].get(i));
+                for (int next : tree[now])
+                    Q.offer(next);
             }
         }
     }
 
-    private static void deleteNode(int node) {
-        int size = tree[node].size();
-        for (int i = 0; i < size; i++) {
-            int child = tree[node].get(i);
-
-            if (child == delete) {
-                tree[node].remove(i);
+    private static void nodeDelete(int node) {
+        for (int child : tree[node]) {
+            if (child == deleteNode) {
+                tree[node].remove(Integer.valueOf(child));
                 return;
             }
 
-            deleteNode(child);
+            nodeDelete(child);
         }
     }
 }
