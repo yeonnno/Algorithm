@@ -5,13 +5,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_01240_노드사이의거리 {
 
     static int N, M, res;
-    static ArrayList<Node>[] tree;
     static boolean[] visited;
+    static ArrayList<Node>[] tree;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -44,7 +46,7 @@ public class BOJ_01240_노드사이의거리 {
             res = 0;
             visited = new boolean[N + 1];
 
-            DFS(x, y, 0);
+            BFS(x, y);
 
             sb.append(res).append("\n");
         }
@@ -52,18 +54,26 @@ public class BOJ_01240_노드사이의거리 {
         System.out.print(sb);
     }
 
-    private static void DFS(int now, int end, int sum) {
-        visited[now] = true;
+    private static void BFS(int start, int end) {
+        Queue<Node> Q = new LinkedList<>();
+        Q.offer(new Node(start, 0));
 
-        if (now == end) {
-            res = sum;
-            return;
-        }
+        visited[start] = true;
 
-        for (Node next : tree[now]) {
-            if (visited[next.x]) continue;
+        while (!Q.isEmpty()) {
+            Node now = Q.poll();
 
-            DFS(next.x, end, sum + next.cost);
+            if (now.x == end) {
+                res = now.cost;
+                return;
+            }
+
+            for (Node next : tree[now.x]) {
+                if (visited[next.x]) continue;
+
+                visited[next.x] = true;
+                Q.offer(new Node(next.x, now.cost + next.cost));
+            }
         }
     }
 
