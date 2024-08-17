@@ -51,17 +51,17 @@ public class BOJ_05639_이진검색트리 {
             this.right = right;
         }
 
-        public void insert(int n) {
-            if (n < this.val) {
+        public void insert(int v) {
+            if (v < this.val) {
                 if (this.left == null)
-                    this.left = new Node(n);
+                    this.left = new Node(v);
                 else
-                    this.left.insert(n);
+                    this.left.insert(v);
             } else {
                 if (this.right == null)
-                    this.right = new Node(n);
+                    this.right = new Node(v);
                 else
-                    this.right.insert(n);
+                    this.right.insert(v);
             }
         }
     }
