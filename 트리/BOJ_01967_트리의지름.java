@@ -10,8 +10,8 @@ import java.util.StringTokenizer;
 public class BOJ_01967_트리의지름 {
 
     static int N, start, res;
-    static ArrayList<Node>[] tree;
     static boolean[] visited;
+    static ArrayList<Node>[] tree;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -50,8 +50,8 @@ public class BOJ_01967_트리의지름 {
 
     private static void DFS(int now, int sum) {
         if (res < sum) {
-            start = now;
             res = sum;
+            start = now;
         }
 
         for (Node next : tree[now]) {
