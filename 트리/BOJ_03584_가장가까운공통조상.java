@@ -11,12 +11,11 @@ public class BOJ_03584_가장가까운공통조상 {
     static int N;
     static int[] parent;
     static boolean[] visited;
-    static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
-        sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
         int T = Integer.parseInt(br.readLine());
         for (int t = 0; t < T; t++) {
@@ -32,30 +31,31 @@ public class BOJ_03584_가장가까운공통조상 {
             }
 
             st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
+            int node1 = Integer.parseInt(st.nextToken());
+            int node2 = Integer.parseInt(st.nextToken());
 
             visited = new boolean[N + 1];
 
-            findParent(x, y);
+            int res = findCommonAncestor(node1, node2);
+            sb.append(res).append("\n");
         }
 
         System.out.print(sb);
     }
 
-    private static void findParent(int x, int y) {
-        while (x > 0) {
-            visited[x] = true;
-            x = parent[x];
+    private static int findCommonAncestor(int node1, int node2) {
+        while (node1 > 0) {
+            visited[node1] = true;
+            node1 = parent[node1];
         }
 
-        while (y > 0) {
-            if (visited[y]) {
-                sb.append(y).append("\n");
-                return;
-            }
+        while (node2 > 0) {
+            if (visited[node2])
+                return node2;
 
-            y = parent[y];
+            node2 = parent[node2];
         }
+
+        return -1;
     }
 }
