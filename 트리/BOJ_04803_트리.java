@@ -39,21 +39,23 @@ public class BOJ_04803_트리 {
             res = 0;
             for (int i = 1; i <= N; i++) {
                 int cnt = 0;
+
                 for (int j = 1; j <= N; j++) {
-                    if (i == find(j)) cnt++;
+                    if (i == find(j))
+                        cnt++;
                 }
 
-                if (cnt > 0) res++;
+                if (cnt > 0)
+                    res++;
             }
 
             sb.append("Case ").append(t).append(": ");
             if (res == 0)
-                sb.append("No trees.");
+                sb.append("No trees.\n");
             else if (res == 1)
-                sb.append("There is one tree.");
+                sb.append("There is one tree.\n");
             else
-                sb.append("A forest of ").append(res).append(" trees.");
-            sb.append("\n");
+                sb.append("A forest of ").append(res).append(" trees.\n");
 
             t++;
         }
