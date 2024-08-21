@@ -2,19 +2,18 @@
  * BOJ : 1595 G4 북쪽나라의 도로
  */
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class BOJ_01595_북쪽나라의도로 {
 
-    static int start, res;
     static final int N = 10001;
-    static ArrayList<Node>[] tree;
+    static int start, res;
     static boolean[] visited;
+    static ArrayList<Node>[] tree;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
 
@@ -30,12 +29,12 @@ public class BOJ_01595_북쪽나라의도로 {
                 x = Integer.parseInt(st.nextToken());
                 y = Integer.parseInt(st.nextToken());
                 cost = Integer.parseInt(st.nextToken());
+
+                tree[x].add(new Node(y, cost));
+                tree[y].add(new Node(x, cost));
             } catch (Exception e) {
                 break;
             }
-
-            tree[x].add(new Node(y, cost));
-            tree[y].add(new Node(x, cost));
         }
 
         start = 1;
