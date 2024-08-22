@@ -39,16 +39,15 @@ public class BOJ_14267_회사문화1 {
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
-            res[x] += w;
+            res[x] += cost;
         }
 
         DFS(1);
 
         for (int i = 1; i <= N; i++)
             sb.append(res[i]).append(" ");
-
         System.out.println(sb);
     }
 
