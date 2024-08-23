@@ -30,11 +30,10 @@ public class BOJ_20955_민서의응급수술 {
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
 
-            if (find(x) == find(y)) {
+            if (find(x) == find(y)) // 이미 연결된 뉴런
                 res++;
-            } else {
+            else // 연결되지 않은 뉴런
                 union(x, y);
-            }
         }
 
         HashSet<Integer> set = new HashSet<>();
