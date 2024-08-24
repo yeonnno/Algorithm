@@ -30,12 +30,12 @@ public class BOJ_16437_양구출작전 {
             int a = Integer.parseInt(st.nextToken());
             int p = Integer.parseInt(st.nextToken());
 
-            tree[p].add(i);
-
-            if (t == 'W')
-                info[i] = a * -1;
-            else
+            if (t == 'S')
                 info[i] = a;
+            else
+                info[i] = a * -1;
+
+            tree[p].add(i);
         }
 
         DFS(1, -1);
@@ -44,14 +44,12 @@ public class BOJ_16437_양구출작전 {
     }
 
     private static void DFS(int now, int parent) {
-        for (int next : tree[now]) {
+        for (int next : tree[now])
             DFS(next, now);
-        }
 
         if (parent != -1) {
-            if (info[now] > 0) {
+            if (info[now] > 0)
                 info[parent] += info[now];
-            }
         }
     }
 }
