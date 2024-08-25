@@ -10,9 +10,9 @@ import java.util.StringTokenizer;
 public class BOJ_02533_사회망서비스SNS {
 
     static int N;
-    static ArrayList<Integer>[] tree;
     static int[][] dp;
     static boolean[] visited;
+    static ArrayList<Integer>[] tree;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,27 +33,26 @@ public class BOJ_02533_사회망서비스SNS {
             tree[y].add(x);
         }
 
-        dp = new int[N + 1][2];
+        dp = new int[2][N + 1];
         visited = new boolean[N + 1];
 
         DFS(1);
 
-        System.out.println(Math.min(dp[1][0], dp[1][1]));
+        System.out.println(Math.min(dp[0][1], dp[1][1]));
     }
 
     private static void DFS(int now) {
         visited[now] = true;
 
-        dp[now][0] = 0;
-        dp[now][1] = 1;
+        dp[1][now] = 1;
 
         for (int next : tree[now]) {
             if (visited[next]) continue;
 
             DFS(next);
 
-            dp[now][0] += dp[next][1];
-            dp[now][1] += Math.min(dp[next][0], dp[next][1]);
+            dp[0][now] += dp[1][next];
+            dp[1][now] += Math.min(dp[0][next], dp[1][next]);
         }
     }
 }
