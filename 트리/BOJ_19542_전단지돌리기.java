@@ -47,7 +47,8 @@ public class BOJ_19542_전단지돌리기 {
         for (int next : tree[now]) {
             if (next == parent) continue;
 
-            depth[now] = Math.max(depth[now], DFS(next, now) + 1);
+            int nextDepth = DFS(next, now) + 1;
+            depth[now] = Math.max(depth[now], nextDepth);
         }
 
         if (now != S && depth[now] >= D)
