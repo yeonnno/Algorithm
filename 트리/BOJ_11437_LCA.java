@@ -9,9 +9,9 @@ import java.util.StringTokenizer;
 
 public class BOJ_11437_LCA {
 
-    static int N, M;
-    static ArrayList<Integer>[] tree;
+    static int N, M, res;
     static int[] depth, parent;
+    static ArrayList<Integer>[] tree;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -45,24 +45,25 @@ public class BOJ_11437_LCA {
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
 
-            sb.append(LCA(x, y)).append("\n");
+            res = LCA(x, y);
+            sb.append(res).append("\n");
         }
 
         System.out.print(sb);
     }
 
     private static int LCA(int x, int y) {
-        int xh = depth[x];
-        int yh = depth[y];
+        int xHeight = depth[x];
+        int yHeight = depth[y];
 
-        while (xh > yh) {
+        while (xHeight > yHeight) {
             x = parent[x];
-            xh--;
+            xHeight--;
         }
 
-        while (xh < yh) {
+        while (xHeight < yHeight) {
             y = parent[y];
-            yh--;
+            yHeight--;
         }
 
         while (x != y) {
