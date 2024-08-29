@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_04256_트리 {
 
     static int N;
-    static int[] inorder, preorder;
+    static int[] preorder, inorder;
     static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
@@ -22,16 +22,15 @@ public class BOJ_04256_트리 {
             N = Integer.parseInt(br.readLine());
 
             preorder = new int[N + 1];
-            inorder = new int[N + 1];
-
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < N; i++)
                 preorder[i] = Integer.parseInt(st.nextToken());
 
+            inorder = new int[N + 1];
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < N; i++)
                 inorder[i] = Integer.parseInt(st.nextToken());
-            
+
             postorder(0, 0, N);
 
             sb.append("\n");
@@ -40,14 +39,14 @@ public class BOJ_04256_트리 {
         System.out.print(sb);
     }
 
-    private static void postorder(int root, int start, int end) {
-        int r = preorder[root];
+    private static void postorder(int rootIdx, int start, int end) {
+        int root = preorder[rootIdx];
 
         for (int i = start; i < end; i++) {
-            if (r == inorder[i]) {
-                postorder(root + 1, start, i);
-                postorder(root + (i - start + 1), i + 1, end);
-                sb.append(r).append(" ");
+            if (root == inorder[i]) {
+                postorder(rootIdx + 1, start, i);
+                postorder(rootIdx + (i - start + 1), i + 1, end);
+                sb.append(root).append(" ");
                 return;
             }
         }
