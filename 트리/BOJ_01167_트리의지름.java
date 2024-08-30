@@ -23,7 +23,7 @@ public class BOJ_01167_트리의지름 {
         for (int i = 0; i <= V; i++)
             tree[i] = new ArrayList<>();
 
-        for (int i = 1; i <= V; i++) {
+        for (int i = 0; i < V; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
 
