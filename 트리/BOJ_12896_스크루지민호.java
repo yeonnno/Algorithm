@@ -27,19 +27,19 @@ public class BOJ_12896_스크루지민호 {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-
+            
             tree[x].add(y);
             tree[y].add(x);
         }
-
+        
         start = 1;
-
-        res = -1;
+        
+        res = Integer.MIN_VALUE;
         visited = new boolean[N + 1];
         visited[start] = true;
         DFS(start, 0);
 
-        res = -1;
+        res = Integer.MIN_VALUE;
         visited = new boolean[N + 1];
         visited[start] = true;
         DFS(start, 0);
