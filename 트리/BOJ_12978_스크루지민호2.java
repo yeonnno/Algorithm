@@ -35,7 +35,7 @@ public class BOJ_12978_스크루지민호2 {
 
         dp = new int[2][N + 1];
         visited = new boolean[N + 1];
-        
+
         DFS(1);
 
         System.out.println(Math.min(dp[0][1], dp[1][1]));
@@ -43,6 +43,7 @@ public class BOJ_12978_스크루지민호2 {
 
     private static void DFS(int now) {
         visited[now] = true;
+
         dp[1][now] = 1;
 
         for (int next : tree[now]) {
@@ -50,8 +51,8 @@ public class BOJ_12978_스크루지민호2 {
 
             DFS(next);
 
-            dp[1][now] += Math.min(dp[1][next], dp[0][next]);
             dp[0][now] += dp[1][next];
+            dp[1][now] += Math.min(dp[0][next], dp[1][next]);
         }
     }
 }
