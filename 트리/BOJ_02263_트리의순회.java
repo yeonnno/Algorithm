@@ -37,14 +37,16 @@ public class BOJ_02263_트리의순회 {
         System.out.println(sb);
     }
 
-    private static void preorder(int is, int ie, int ps, int pe) {
-        if (is > ie || ps > pe) return;
+    private static void preorder(int inS, int inE, int postS, int postE) {
+        if (inS > inE || postS > postE)
+            return;
 
-        int root = postorder[pe];
+        int root = postorder[postE];
         int rootIdx = inorderIdx[root];
 
+
         sb.append(root).append(" ");
-        preorder(is, rootIdx - 1, ps, ps + rootIdx - is - 1);
-        preorder(rootIdx + 1, ie, ps + rootIdx - is, pe - 1);
+        preorder(inS, rootIdx - 1, postS, postS + (rootIdx - inS) - 1);
+        preorder(rootIdx + 1, inE, postS + (rootIdx - inS), postE - 1);
     }
 }
