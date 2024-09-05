@@ -1,5 +1,5 @@
 /**
- * BOJ : 19581 G1 두 번째 트리의 지름
+ * BOJ : 19581 P5 두 번째 트리의 지름
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 public class BOJ_19581_두번째트리의지름 {
 
     static int N;
+    static boolean[] visited;
     static ArrayList<Node>[] tree;
 
     public static void main(String[] args) throws IOException {
@@ -48,12 +49,11 @@ public class BOJ_19581_두번째트리의지름 {
         Node node = new Node(start, 0);
         Q.offer(node);
 
-        boolean[] visited = new boolean[N + 1];
+        visited = new boolean[N + 1];
         visited[start] = true;
 
         while (!Q.isEmpty()) {
             Node now = Q.poll();
-
 
             if (now.cost > node.cost && now.x != end)
                 node = now;
