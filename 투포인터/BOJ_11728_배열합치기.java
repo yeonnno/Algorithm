@@ -30,21 +30,24 @@ public class BOJ_11728_배열합치기 {
         for (int i = 0; i < M; i++)
             B[i] = Integer.parseInt(st.nextToken());
 
-        int pointA = 0, pointB = 0;
-        while (pointA < N && pointB < M) {
-            if (A[pointA] <= B[pointB])
-                sb.append(A[pointA++]).append(" ");
-            else
-                sb.append(B[pointB++]).append(" ");
+        int x = 0, y = 0;
+        while (x < N && y < M) {
+            if (A[x] < B[y]) {
+                sb.append(A[x]).append(" ");
+                x++;
+            } else {
+                sb.append(B[y]).append(" ");
+                y++;
+            }
         }
 
-        if (pointA != N) {
-            for (int i = pointA; i < N; i++)
+        if (x != N) {
+            for (int i = x; i < N; i++)
                 sb.append(A[i]).append(" ");
         }
 
-        if (pointB != M) {
-            for (int i = pointB; i < M; i++)
+        if (y != M) {
+            for (int i = y; i < M; i++)
                 sb.append(B[i]).append(" ");
         }
 
