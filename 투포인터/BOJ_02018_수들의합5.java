@@ -7,22 +7,25 @@ import java.io.InputStreamReader;
 
 public class BOJ_02018_수들의합5 {
 
-    static int N;
+    static int N, res;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         N = Integer.parseInt(br.readLine());
 
-        int res = 0;
+        res = 0;
         int start = 1, end = 1, sum = 1;
         while (start <= end) {
-            if (sum == N) res++;
-
             if (sum < N) {
                 end++;
                 sum += end;
-            } else if (sum >= N) {
+            } else if (sum > N) {
+                sum -= start;
+                start++;
+            } else {
+                res++;
+
                 sum -= start;
                 start++;
             }
