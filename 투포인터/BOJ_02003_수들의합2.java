@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_02003_수들의합2 {
 
     static int N, M, res;
-    static int[] num;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,21 +19,18 @@ public class BOJ_02003_수들의합2 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        num = new int[N];
+        arr = new int[N + 1];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++)
-            num[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
 
         res = 0;
         int start = 0, end = 0, sum = 0;
-        while (true) {
-            if (sum >= M) {
-                sum -= num[start++];
-            } else if (end == N) {
-                break;
-            } else {
-                sum += num[end++];
-            }
+        while (end <= N) {
+            if (sum < M)
+                sum += arr[end++];
+            else
+                sum -= arr[start++];
 
             if (sum == M) res++;
         }
