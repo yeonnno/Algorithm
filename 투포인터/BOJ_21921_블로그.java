@@ -31,9 +31,9 @@ public class BOJ_21921_블로그 {
         res = 1;
         max = sum;
         int start = 0, end = X;
-        while (end != N) {
-            sum -= visitor[start];
-            sum += visitor[end];
+        while (end < N) {
+            sum -= visitor[start++];
+            sum += visitor[end++];
 
             if (max < sum) {
                 max = sum;
@@ -41,9 +41,6 @@ public class BOJ_21921_블로그 {
             } else if (max == sum) {
                 res++;
             }
-
-            start++;
-            end++;
         }
 
         if (max == 0) {
@@ -52,6 +49,5 @@ public class BOJ_21921_블로그 {
             System.out.println(max);
             System.out.println(res);
         }
-
     }
 }
