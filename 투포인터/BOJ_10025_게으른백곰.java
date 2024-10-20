@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_10025_게으른백곰 {
 
-    static int N, K;
-    static int[] ice;
+    static int N, K, sum, res;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,21 +19,23 @@ public class BOJ_10025_게으른백곰 {
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken()) * 2 + 1;
 
-        ice = new int[1000001];
+        arr = new int[1000001];
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             int g = Integer.parseInt(st.nextToken());
             int x = Integer.parseInt(st.nextToken());
 
-            ice[x] = g;
+            arr[x] = g;
         }
 
-        int sum = 0, res = 0;
+        sum = 0;
+        res = 0;
         for (int i = 0; i < 1000001; i++) {
             if (i - K >= 0)
-                sum -= ice[i - K];
-            sum += ice[i];
+                sum -= arr[i - K];
+            sum += arr[i];
+
             res = Math.max(res, sum);
         }
 
