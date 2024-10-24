@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_02531_회전초밥 {
 
-    static int N, D, K, C, res;
+    static int N, D, K, C, cnt, res;
     static int[] sushi, count;
 
     public static void main(String[] args) throws IOException {
@@ -25,8 +25,7 @@ public class BOJ_02531_회전초밥 {
         for (int i = 0; i < N; i++)
             sushi[i] = Integer.parseInt(br.readLine());
 
-        res = 0;
-        int cnt = 1;
+        cnt = 1;
         count = new int[D + 1];
         count[C] = 3001;
         for (int i = 0; i < K; i++) {
