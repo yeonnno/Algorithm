@@ -25,21 +25,19 @@ public class BOJ_15565_귀여운라이언 {
         for (int i = 0; i < N; i++) {
             int x = Integer.parseInt(st.nextToken());
 
-            if (x == 1) lion.add(i);
+            if (x == 1)
+                lion.add(i);
         }
 
         int size = lion.size();
-
         if (size < K) {
             System.out.println(-1);
         } else {
             res = 1000001;
             int start = 0, end = K - 1;
-
             while (end != size) {
                 int cnt = lion.get(end) - lion.get(start) + 1;
                 res = Math.min(res, cnt);
-
                 start++;
                 end++;
             }
