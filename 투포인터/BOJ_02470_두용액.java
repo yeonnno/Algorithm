@@ -27,21 +27,23 @@ public class BOJ_02470_두용액 {
 
         res1 = res2 = 0;
         min = Integer.MAX_VALUE;
-        int left = 0, right = N - 1;
-        while (left < right) {
-            int sum = arr[left] + arr[right];
+        int start = 0, end = N - 1, sum = 0;
+        while (start < end) {
+            sum = arr[start] + arr[end];
 
             if (min > Math.abs(sum)) {
                 min = Math.abs(sum);
 
-                res1 = arr[left];
-                res2 = arr[right];
-
-                if (sum == 0) break;
+                res1 = arr[start];
+                res2 = arr[end];
             }
 
-            if (sum < 0) left++;
-            else right--;
+            if (sum == 0)
+                break;
+            else if (sum < 0)
+                start++;
+            else
+                end--;
         }
 
         System.out.println(res1 + " " + res2);
