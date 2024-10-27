@@ -30,17 +30,18 @@ public class BOJ_22862_가장긴짝수연속한부분수열Large {
         res = 0;
         int start = 0, end = 0, oddCnt = 0;
         while (end < N) {
-            if (oddCnt < K) {
+            if (oddCnt < K) { // 홀수 개수가 K개 미만일 때
                 if (!even[end])
                     oddCnt++;
 
                 end++;
                 res = Math.max(res, end - start - oddCnt);
-            } else {
+            } else { // 홀수 개수가 K개를 채웠을 때
                 if (even[end]) {
                     end++;
                     res = Math.max(res, end - start - oddCnt);
                 } else {
+                    // start를 이동시키기 위해 짝수인지 홀수인지 체크
                     if (!even[start])
                         oddCnt--;
 
