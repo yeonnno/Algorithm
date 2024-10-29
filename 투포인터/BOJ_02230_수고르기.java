@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class BOJ_02230_수고르기 {
 
     static int N, M, res;
-    static int[] num;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,23 +20,21 @@ public class BOJ_02230_수고르기 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        num = new int[N];
+        arr = new int[N];
         for (int i = 0; i < N; i++)
-            num[i] = Integer.parseInt(br.readLine());
+            arr[i] = Integer.parseInt(br.readLine());
 
-        Arrays.sort(num);
+        Arrays.sort(arr);
 
         res = Integer.MAX_VALUE;
         int start = 0, end = 0;
         while (end < N) {
-            int diff = num[end] - num[start];
+            int diff = arr[end] - arr[start];
 
             if (diff == M) {
                 res = M;
                 break;
-            }
-
-            if (diff < M) {
+            } else if (diff < M) {
                 end++;
                 continue;
             }
