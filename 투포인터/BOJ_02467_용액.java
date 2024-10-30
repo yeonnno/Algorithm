@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_02467_용액 {
 
-    static int N, min, res1, res2;
+    static int N, res1, res2, min;
     static int[] arr;
 
     public static void main(String[] args) throws IOException {
@@ -32,14 +32,18 @@ public class BOJ_02467_용액 {
             int sum = arr[start] + arr[end];
 
             if (min > Math.abs(sum)) {
+                min = Math.abs(sum);
+
                 res1 = arr[start];
                 res2 = arr[end];
-
-                min = Math.abs(sum);
             }
 
-            if (sum < 0) start++;
-            else end--;
+            if (sum == 0)
+                break;
+            else if (sum < 0)
+                start++;
+            else
+                end--;
         }
 
         System.out.println(res1 + " " + res2);
