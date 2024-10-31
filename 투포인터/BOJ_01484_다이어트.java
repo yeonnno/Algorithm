@@ -7,26 +7,28 @@ import java.io.InputStreamReader;
 
 public class BOJ_01484_다이어트 {
 
-    static int N;
+    static int G;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        N = Integer.parseInt(br.readLine());
+        G = Integer.parseInt(br.readLine());
 
         boolean check = false;
-        long start = 1, end = 2;
+        long start = 1l, end = 1l;
         while (end < 100000) {
             long diff = (end * end) - (start * start);
 
-            if (diff == N) {
+            if (diff == G) {
                 sb.append(end).append("\n");
                 check = true;
             }
 
-            if (diff > N) start++;
-            else end++;
+            if (diff < G)
+                end++;
+            else
+                start++;
         }
 
         if (check)
