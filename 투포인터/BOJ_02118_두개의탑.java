@@ -23,11 +23,9 @@ public class BOJ_02118_두개의탑 {
         }
 
         res = 0;
-        int start = 0, end = 0;
-        int now = arr[start];
+        int start = 0, end = 0, now = arr[start];
         while (start <= end && end < N) {
             int min = Math.min(now, sum - now);
-
             res = Math.max(res, min);
 
             if (now == min) {
