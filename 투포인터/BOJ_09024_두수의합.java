@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_09024_두수의합 {
 
-    static int N, K, res, min;
-    static int[] num;
+    static int N, K, res;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,18 +23,17 @@ public class BOJ_09024_두수의합 {
             N = Integer.parseInt(st.nextToken());
             K = Integer.parseInt(st.nextToken());
 
-            num = new int[N];
+            arr = new int[N];
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < N; i++)
-                num[i] = Integer.parseInt(st.nextToken());
+                arr[i] = Integer.parseInt(st.nextToken());
 
-            Arrays.sort(num);
+            Arrays.sort(arr);
 
             res = 0;
-            min = Integer.MAX_VALUE;
-            int start = 0, end = N - 1;
+            int start = 0, end = N - 1, min = Integer.MAX_VALUE;
             while (start < end) {
-                int sum = num[start] + num[end];
+                int sum = arr[start] + arr[end];
                 int gap = Math.abs(sum - K);
 
                 if (gap == min) {
@@ -44,8 +43,8 @@ public class BOJ_09024_두수의합 {
                     res = 1;
                 }
 
-                if (sum >= K) end--;
-                else start++;
+                if (sum < K) start++;
+                else end--;
             }
 
             sb.append(res).append("\n");
