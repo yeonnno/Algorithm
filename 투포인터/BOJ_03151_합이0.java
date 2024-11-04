@@ -10,8 +10,8 @@ import java.util.StringTokenizer;
 public class BOJ_03151_합이0 {
 
     static int N;
-    static int[] arr;
     static long res;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,12 +26,11 @@ public class BOJ_03151_합이0 {
 
         Arrays.sort(arr);
 
-        res = 0L;
+        res = 0l;
         for (int i = 0; i < N; i++) {
             if (arr[i] > 0) break;
 
             int start = i + 1, end = N - 1;
-
             while (start < end) {
                 int s = 1, e = 1;
                 int cur = arr[i] + arr[start] + arr[end];
@@ -63,7 +62,7 @@ public class BOJ_03151_합이0 {
         System.out.println(res);
     }
 
-    private static int comb(int n) {
+    private static long comb(int n) {
         return n * (n - 1) / 2;
     }
 }
