@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_01806_부분합 {
 
-    static int N, S;
-    static int[] num;
+    static int N, S, res;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,26 +19,27 @@ public class BOJ_01806_부분합 {
         N = Integer.parseInt(st.nextToken());
         S = Integer.parseInt(st.nextToken());
 
-        num = new int[N];
+        arr = new int[N];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++)
-            num[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
 
+        res = N;
         boolean check = false;
-        int start = 0, end = 0, sum = num[0], cnt = 1, res = N;
+        int start = 0, end = 0, sum = arr[0], cnt = 1;
         while (true) {
             if (sum < S) {
                 end++;
 
                 if (end >= N) break;
 
+                sum += arr[end];
                 cnt++;
-                sum += num[end];
             } else {
                 check = true;
                 res = Math.min(res, cnt);
 
-                sum -= num[start];
+                sum -= arr[start];
                 start++;
                 cnt--;
 
