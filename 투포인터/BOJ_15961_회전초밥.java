@@ -31,24 +31,19 @@ public class BOJ_15961_회전초밥 {
         for (int i = 0; i < K; i++) {
             int x = sushi[i];
 
-            if (count[x] == 0)
+            if (count[x]++ == 0)
                 cnt++;
-
-            count[x]++;
         }
 
         res = cnt;
-
         for (int i = 0; i < N - 1; i++) {
             int start = sushi[i];
             int end = sushi[i + K < N ? i + K : (i + K) % N];
 
-            count[start]--;
-            if (count[start] == 0)
+            if (--count[start] == 0)
                 cnt--;
 
-            count[end]++;
-            if (count[end] == 1)
+            if (++count[end] == 1)
                 cnt++;
 
             res = Math.max(res, cnt);
