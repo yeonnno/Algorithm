@@ -26,12 +26,11 @@ public class BOJ_22945_팀빌딩 {
         int start = 0, end = N - 1;
         while (start <= end) {
             int min = Math.min(arr[start], arr[end]);
+
             res = Math.max(res, min * (end - start - 1));
 
-            if (arr[start] < arr[end])
-                start++;
-            else
-                end--;
+            if (arr[start] < arr[end]) start++;
+            else end--;
         }
 
         System.out.println(res);
