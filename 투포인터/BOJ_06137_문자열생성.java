@@ -4,7 +4,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class BOJ_06137_문자열생성 {
 
@@ -13,7 +12,6 @@ public class BOJ_06137_문자열생성 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = null;
         StringBuilder sb = new StringBuilder();
 
         N = Integer.parseInt(br.readLine());
@@ -26,13 +24,15 @@ public class BOJ_06137_문자열생성 {
         while (start <= end) {
             if (alpha[start] - '0' < alpha[end] - '0') {
                 sb.append(alpha[start++]);
-            } else if (alpha[start] - '0' == alpha[end] - '0') {
+            } else if (alpha[start] - '0' > alpha[end] - '0') {
+                sb.append(alpha[end--]);
+            } else {
                 int x = start, y = end;
                 boolean check = true;
 
                 while (alpha[x] == alpha[y]) {
-                    if (y > 0) y--;
                     if (x < N - 1) x++;
+                    if (y > 0) y--;
 
                     if (alpha[x] - '0' < alpha[y] - '0') check = true;
                     else if (alpha[x] - '0' > alpha[y] - '0') check = false;
@@ -40,8 +40,6 @@ public class BOJ_06137_문자열생성 {
 
                 if (check) sb.append(alpha[start++]);
                 else sb.append(alpha[end--]);
-            } else {
-                sb.append(alpha[end--]);
             }
 
             idx++;
