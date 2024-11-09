@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_13422_도둑 {
 
     static int N, M, K, total, res;
-    static int[] house;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,12 +23,12 @@ public class BOJ_13422_도둑 {
             M = Integer.parseInt(st.nextToken());
             K = Integer.parseInt(st.nextToken());
 
-            house = new int[N];
             total = 0;
+            arr = new int[N];
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < N; i++) {
-                house[i] = Integer.parseInt(st.nextToken());
-                total += house[i];
+                arr[i] = Integer.parseInt(st.nextToken());
+                total += arr[i];
             }
 
             if (N == M) {
@@ -38,13 +38,13 @@ public class BOJ_13422_도둑 {
                 res = 0;
                 int start = 0, end = M - 1, sum = 0;
                 for (int i = 0; i < M; i++)
-                    sum += house[i];
+                    sum += arr[i];
 
                 while (start < N) {
                     if (sum < K) res++;
 
-                    sum -= house[start++];
-                    sum += house[(++end) % N];
+                    sum -= arr[start++];
+                    sum += arr[(++end) % N];
                 }
 
                 sb.append(res).append("\n");
