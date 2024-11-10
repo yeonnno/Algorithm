@@ -26,8 +26,7 @@ public class BOJ_15831_준표의조약돌 {
             stone[i] = s.charAt(i);
 
         res = 0;
-        int start = 0, end = 0;
-        int bCnt = 0, wCnt = 0, len = 0;
+        int start = 0, end = 0, bCnt = 0, wCnt = 0, len = 0;
         while (end < N) {
             if (bCnt > B) {
                 if (stone[start] == 'W')
