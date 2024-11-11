@@ -22,17 +22,21 @@ public class BOJ_16472_고냥이 {
         alpha = new int[26];
         int start = 0, end = 0, cnt = 0;
         while (end < len) {
-            if (alpha[s.charAt(end) - 'a']++ == 0)
+            if (alpha[s.charAt(end) - 'a'] == 0)
                 cnt++;
 
+            alpha[s.charAt(end) - 'a']++;
 
             while (cnt > N && start < end) {
-                if (--alpha[s.charAt(start++) - 'a'] == 0)
+                alpha[s.charAt(start) - 'a']--;
+
+                if (alpha[s.charAt(start) - 'a'] == 0)
                     cnt--;
+
+                start++;
             }
 
             res = Math.max(res, end - start + 1);
-
             end++;
         }
 
