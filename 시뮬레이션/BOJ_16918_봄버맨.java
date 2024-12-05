@@ -53,6 +53,7 @@ public class BOJ_16918_봄버맨 {
                         if (bombTime[i][j] != time) continue;
 
                         map[i][j] = '.';
+
                         for (int d = 0; d < 4; d++) {
                             int nx = i + dx[d];
                             int ny = j + dy[d];
