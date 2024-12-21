@@ -35,6 +35,7 @@ public class BOJ_14503_로봇청소기 {
         }
 
         res = 1;
+
         recur(x, y, dir);
 
         System.out.println(res);
@@ -44,12 +45,12 @@ public class BOJ_14503_로봇청소기 {
         map[x][y] = 2;
 
         for (int d = 0; d < 4; d++) {
-            dir = (dir + 3) % 4;
+            dir = dir - 1 >= 0 ? dir - 1 : 3;
+
             int nx = x + dx[dir];
             int ny = y + dy[dir];
 
-            if (!isPossible(nx, ny)) continue;
-            if (map[nx][ny] != 0) continue;
+            if (!isPossible(nx, ny) || map[nx][ny] != 0) continue;
 
             res++;
             recur(nx, ny, dir);
@@ -58,12 +59,18 @@ public class BOJ_14503_로봇청소기 {
 
         int nnx = x + dx[(dir + 2) % 4];
         int nny = y + dy[(dir + 2) % 4];
+
         if (isPossible(nnx, nny) && map[nnx][nny] != 1)
             recur(nnx, nny, dir);
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < N && ny >= 0 && ny < M) return true;
-        else return false;
+        return nx >= 0 && nx < N && ny >= 0 && ny < M;
+    }
+
+    private static class Point {
+        int x;
+        int y;
+        int dir;
     }
 }
