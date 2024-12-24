@@ -28,13 +28,13 @@ public class BOJ_14719_빗물 {
         for (int i = 1; i < W - 1; i++) {
             int left = 0, right = 0;
 
-            for (int j = 0; j < i; j++)
+            for (int j = i - 1; j >= 0; j--)
                 left = Math.max(left, arr[j]);
 
             for (int j = i + 1; j < W; j++)
                 right = Math.max(right, arr[j]);
 
-            if (Math.min(left, right) > arr[i])
+            if (arr[i] < Math.min(left, right))
                 res += Math.min(left, right) - arr[i];
         }
 
