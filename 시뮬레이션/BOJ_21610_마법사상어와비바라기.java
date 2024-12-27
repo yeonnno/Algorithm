@@ -12,8 +12,8 @@ public class BOJ_21610_마법사상어와비바라기 {
 
     static int N, M, res;
     static int[][] map;
-    static boolean[][] visited;
     static Queue<Point> cloud;
+    static boolean[][] visited;
     static int[] dx = {0, 0, -1, -1, -1, 0, 1, 1, 1};
     static int[] dy = {0, -1, -1, 0, 1, 1, 1, 0, -1};
 
@@ -28,8 +28,9 @@ public class BOJ_21610_마법사상어와비바라기 {
         map = new int[N + 1][N + 1];
         for (int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= N; j++)
+            for (int j = 1; j <= N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
+            }
         }
 
         cloud = new LinkedList<>();
@@ -60,40 +61,34 @@ public class BOJ_21610_마법사상어와비바라기 {
     }
 
     private static void makeCloud() {
-        for (int x = 1; x <= N; x++) {
-            for (int y = 1; y <= N; y++) {
-                if (map[x][y] >= 2 && !visited[x][y]) {
-                    cloud.offer(new Point(x, y));
-                    map[x][y] -= 2;
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                if (!visited[i][j] && map[i][j] >= 2) {
+                    cloud.offer(new Point(i, j));
+                    map[i][j] -= 2;
                 }
             }
         }
     }
 
     private static void waterCopy() {
-        for (int x = 1; x <= N; x++) {
-            for (int y = 1; y <= N; y++) {
-                if (!visited[x][y]) continue;
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                if (!visited[i][j]) continue;
 
                 int cnt = 0;
                 for (int d = 1; d <= 4; d++) {
-                    int nx = x + dx[d * 2];
-                    int ny = y + dy[d * 2];
+                    int nx = i + dx[d * 2];
+                    int ny = j + dy[d * 2];
 
-                    if (!isPossible(nx, ny)) continue;
-                    if (map[nx][ny] == 0) continue;
+                    if (!isPossible(nx, ny) || map[nx][ny] == 0) continue;
 
                     cnt++;
                 }
 
-                map[x][y] += cnt;
+                map[i][j] += cnt;
             }
         }
-    }
-
-    private static boolean isPossible(int nx, int ny) {
-        if (nx > 0 && nx <= N && ny > 0 && ny <= N) return true;
-        else return false;
     }
 
     private static void moveCloud(int d, int s) {
@@ -110,12 +105,16 @@ public class BOJ_21610_마법사상어와비바라기 {
                 else if (x > N) x -= N;
 
                 if (y <= 0) y += N;
-                else if (y > N) y -=N;
+                else if (y > N) y -= N;
             }
 
             visited[x][y] = true;
             map[x][y]++;
         }
+    }
+
+    private static boolean isPossible(int nx, int ny) {
+        return nx > 0 && nx <= N && ny > 0 && ny <= N;
     }
 
     private static class Point {
