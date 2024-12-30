@@ -6,14 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class BOJ_01713_후보추천하기 {
 
     static int N, M;
     static Student[] students;
-    static List<Student> photos;
+    static ArrayList<Student> photos;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -66,10 +65,10 @@ public class BOJ_01713_후보추천하기 {
 
         @Override
         public int compareTo(Student o) {
-            if (o.cnt - cnt == 0) {
-                return o.time - time;
+            if (o.cnt == this.cnt) {
+                return o.time - this.time;
             }
-            return o.cnt - cnt;
+            return o.cnt - this.cnt;
         }
     }
 }
