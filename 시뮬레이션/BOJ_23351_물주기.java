@@ -30,8 +30,7 @@ public class BOJ_23351_물주기 {
         while (true) {
             Arrays.sort(arr);
 
-            if (arr[0] == 0)
-                break;
+            if (arr[0] == 0) break;
 
             for (int i = 0; i < A; i++)
                 arr[i] += B;
