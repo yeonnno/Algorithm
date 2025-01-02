@@ -25,15 +25,16 @@ public class BOJ_26215_눈치우기 {
             PQ.offer(Integer.parseInt(st.nextToken()));
 
         res = 0;
+        int x = 0, y = 0;
         while (true) {
-            int x = PQ.poll();
+            x = PQ.poll();
 
             if (PQ.isEmpty()) {
                 res += x;
                 break;
             }
 
-            int y = PQ.poll();
+            y = PQ.poll();
 
             res += y;
             PQ.offer(x - y);
