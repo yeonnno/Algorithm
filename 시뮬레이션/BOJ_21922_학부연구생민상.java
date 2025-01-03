@@ -12,8 +12,8 @@ public class BOJ_21922_학부연구생민상 {
 
     static int N, M, res;
     static int[][] map;
-    static Queue<Point> Q;
     static boolean[][][] visited;
+    static Queue<Point> Q;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -26,8 +26,8 @@ public class BOJ_21922_학부연구생민상 {
         M = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
-        Q = new LinkedList<>();
         visited = new boolean[N][M][4];
+        Q = new LinkedList<>();
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
@@ -55,9 +55,9 @@ public class BOJ_21922_학부연구생민상 {
         System.out.println(res);
     }
 
-    private static boolean isVisited(int i, int j) {
+    private static boolean isVisited(int x, int y) {
         for (int d = 0; d < 4; d++) {
-            if (visited[i][j][d])
+            if (visited[x][y][d])
                 return true;
         }
         return false;
@@ -66,11 +66,11 @@ public class BOJ_21922_학부연구생민상 {
     private static void BFS() {
         while (!Q.isEmpty()) {
             Point now = Q.poll();
+
             int nx = now.x + dx[now.dir];
             int ny = now.y + dy[now.dir];
 
-            if (!isPossible(nx, ny)) continue;
-            if (visited[nx][ny][now.dir]) continue;
+            if (!isPossible(nx, ny) || visited[nx][ny][now.dir]) continue;
 
             visited[nx][ny][now.dir] = true;
 
