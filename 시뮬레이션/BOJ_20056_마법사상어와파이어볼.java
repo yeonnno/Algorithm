@@ -34,28 +34,28 @@ public class BOJ_20056_마법사상어와파이어볼 {
         fireballs = new ArrayList<>();
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken()); // 행
-            int y = Integer.parseInt(st.nextToken()); // 열
-            int m = Integer.parseInt(st.nextToken()); // 질량
-            int s = Integer.parseInt(st.nextToken()); // 속력
-            int d = Integer.parseInt(st.nextToken()); // 방향
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+            int s = Integer.parseInt(st.nextToken());
+            int d = Integer.parseInt(st.nextToken());
 
             fireballs.add(new Fireball(x, y, m, s, d));
         }
 
         for (int i = 0; i < K; i++) {
-            moveFireball();
-            divideFireball();
+            move();
+            divide();
         }
 
         res = 0;
-        for (Fireball fireball : fireballs)
-            res += fireball.m;
+        for (Fireball now : fireballs)
+            res += now.m;
 
         System.out.println(res);
     }
 
-    private static void divideFireball() {
+    private static void divide() {
         for (int x = 0; x < N; x++) {
             for (int y = 0; y < N; y++) {
                 int size = map[x][y].size();
@@ -70,10 +70,8 @@ public class BOJ_20056_마법사상어와파이어볼 {
                     mSum += now.m;
                     sSum += now.s;
 
-                    if (now.d % 2 == 0)
-                        evenCnt++;
-                    else
-                        oddCnt++;
+                    if (now.d % 2 == 0) evenCnt++;
+                    else oddCnt++;
 
                     fireballs.remove(now);
                 }
@@ -84,7 +82,6 @@ public class BOJ_20056_마법사상어와파이어볼 {
                 if (mSum == 0) continue;
 
                 sSum /= size;
-
                 if (evenCnt == size || oddCnt == size) {
                     for (int i = 0; i < 8; i += 2) {
                         fireballs.add(new Fireball(x, y, mSum, sSum, i));
@@ -98,7 +95,7 @@ public class BOJ_20056_마법사상어와파이어볼 {
         }
     }
 
-    private static void moveFireball() {
+    private static void move() {
         for (Fireball now : fireballs) {
             now.x = (N + now.x + dx[now.d] * (now.s % N)) % N;
             now.y = (N + now.y + dy[now.d] * (now.s % N)) % N;
