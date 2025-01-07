@@ -68,8 +68,8 @@ public class BOJ_16234_인구이동 {
         Queue<Point> Q = new LinkedList<>();
         Q.offer(p);
 
-        visited[p.x][p.y] = true;
         union.add(p);
+        visited[p.x][p.y] = true;
 
         while (!Q.isEmpty()) {
             Point now = Q.poll();
@@ -82,26 +82,21 @@ public class BOJ_16234_인구이동 {
 
                 int diff = Math.abs(map[now.x][now.y] - map[nx][ny]);
                 if (diff >= L && diff <= R) {
+                    isMoved = true;
+                    visited[nx][ny] = true;
                     Q.offer(new Point(nx, ny));
                     union.add(new Point(nx, ny));
-                    visited[nx][ny] = true;
-                    isMoved = true;
                 }
             }
         }
 
-        int size = union.size();
         int sum = 0;
-        for (int i = 0; i < size; i++) {
-            Point now = union.get(i);
+        for (Point now : union)
             sum += map[now.x][now.y];
-        }
 
-        int cnt = sum / size;
-        for (int i = 0; i < size; i++) {
-            Point now = union.get(i);
+        int cnt = sum / union.size();
+        for (Point now : union)
             map[now.x][now.y] = cnt;
-        }
 
         union.removeAll(union);
     }
