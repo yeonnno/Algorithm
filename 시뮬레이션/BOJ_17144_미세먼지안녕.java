@@ -39,16 +39,7 @@ public class BOJ_17144_미세먼지안녕 {
 
         for (int i = 0; i < T; i++) {
             spread();
-
-            // 공기청정기 위쪽
-            int[] seqUp = new int[]{0, 1, 2, 3};
-            airClean(up - 1, 0, up + 1, seqUp);
-            map[up][1] = 0;
-
-            // 공기청정기 아래쪽
-            int[] seqDown = new int[]{2, 1, 0, 3};
-            airClean(down + 1, down, N, seqDown);
-            map[down][1] = 0;
+            airClean();
         }
 
         res = 2;
@@ -61,13 +52,18 @@ public class BOJ_17144_미세먼지안녕 {
         System.out.println(res);
     }
 
-    private static void airClean(int i, int minX, int maxX, int[] dir) {
-        int x = i, y = 0, d = 0;
+    private static void airClean() {
+        // 공기청정기 위쪽
+        int x = 0;
+        int y = 0;
+        int d = 0;
+        int[] dir = {1, 2, 3, 0};
+        int tmp = map[x][y];
         while (d < 4) {
             int nx = x + dx[dir[d]];
             int ny = y + dy[dir[d]];
 
-            if (nx >= minX && nx < maxX && ny >= 0 && ny < M) {
+            if (nx >= 0 && nx <= up && ny >= 0 && ny < M) {
                 map[x][y] = map[nx][ny];
                 x = nx;
                 y = ny;
@@ -75,14 +71,39 @@ public class BOJ_17144_미세먼지안녕 {
                 d++;
             }
         }
+        map[1][0] = tmp;
+        map[up][0] = -1;
+        map[up][1] = 0;
+
+        // 공기청정기 아래쪽
+        x = down;
+        y = 0;
+        d = 0;
+        dir = new int[]{2, 1, 0, 3};
+        tmp = map[x][y];
+        while (d < 4) {
+            int nx = x + dx[dir[d]];
+            int ny = y + dy[dir[d]];
+
+            if (nx >= down && nx < N && ny >= 0 && ny < M) {
+                map[x][y] = map[nx][ny];
+                x = nx;
+                y = ny;
+            } else {
+                d++;
+            }
+        }
+        map[down][1] = 0;
+        map[down][0] = -1;
     }
 
     private static void spread() {
         Queue<Point> Q = new LinkedList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (map[i][j] > 0)
-                    Q.offer(new Point (i, j));
+                if (map[i][j] > 0) {
+                    Q.offer(new Point(i, j));
+                }
             }
         }
 
