@@ -71,8 +71,8 @@ public class BOJ_02636_치즈 {
                 if (map[nx][ny] == 0) {
                     Q.offer(new Point(nx, ny));
                 } else {
-                    map[nx][ny] = 0;
                     cheese--;
+                    map[nx][ny] = 0;
                 }
             }
         }
