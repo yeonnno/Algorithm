@@ -4,9 +4,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class BOJ_11559_PuyoPuyo {
 
@@ -15,7 +13,6 @@ public class BOJ_11559_PuyoPuyo {
     static char[][] map;
     static boolean isBomb;
     static boolean[][] visited;
-    static Queue<Point> Q;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -49,6 +46,7 @@ public class BOJ_11559_PuyoPuyo {
             if (!isBomb) break;
 
             dropPuyo();
+
             res++;
         }
 
@@ -57,6 +55,7 @@ public class BOJ_11559_PuyoPuyo {
 
     private static void dropPuyo() {
         Stack<Character> stack = new Stack<>();
+
         for (int j = 0; j < 6; j++) {
             for (int i = 0; i < 12; i++) {
                 if (map[i][j] == '.') continue;
@@ -65,21 +64,21 @@ public class BOJ_11559_PuyoPuyo {
                 map[i][j] = '.';
             }
 
-            for (int i = 11; i >= 0; i--) {
-                if (stack.isEmpty()) continue;
-
-                map[i][j] = stack.pop();
-            }
+            int idx = 11;
+            while (!stack.isEmpty())
+                map[idx--][j] = stack.pop();
         }
     }
 
     private static void BFS(int x, int y, char color) {
-        Q = new LinkedList<>();
+        Queue<Point> Q = new LinkedList<>();
         Q.offer(new Point(x, y));
+
+        List<Point> rmList = new ArrayList<>();
+        rmList.add(new Point(x, y));
 
         visited[x][y] = true;
 
-        int cnt = 1;
         while (!Q.isEmpty()) {
             Point now = Q.poll();
 
@@ -90,40 +89,19 @@ public class BOJ_11559_PuyoPuyo {
                 if (!isPossible(nx, ny) || visited[nx][ny]) continue;
                 if (map[nx][ny] != color) continue;
 
-                cnt++;
                 visited[nx][ny] = true;
+                rmList.add(new Point(nx, ny));
                 Q.offer(new Point(nx, ny));
-
-                if (cnt >= 4) {
-                    cnt = 0;
-                    Q.clear();
-                    isBomb = true;
-
-                    removePuyo(nx, ny, color);
-                }
             }
         }
-    }
 
-    private static void removePuyo(int x, int y, char color) {
-        Q = new LinkedList<>();
-        Q.offer(new Point(x, y));
+        if (rmList.size() >= 4) {
+            isBomb = true;
 
-        map[x][y] = '.';
-
-        while (!Q.isEmpty()) {
-            Point now = Q.poll();
-
-            for (int d = 0; d < 4; d++) {
-                int nx = now.x + dx[d];
-                int ny = now.y + dy[d];
-
-                if (!isPossible(nx, ny)) continue;
-                if (map[nx][ny] != color) continue;
-
-                map[nx][ny] = '.';
-                Q.offer(new Point(nx, ny));
-            }
+            for (Point now : rmList)
+                map[now.x][now.y] = '.';
+        } else {
+            rmList.removeAll(rmList);
         }
     }
 
