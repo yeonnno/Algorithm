@@ -1,5 +1,5 @@
 /**
- * BOJ : 16926 S1 배열 돌리기 1
+ * BOJ : 16926 G5 배열 돌리기 1
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_16926_배열돌리기1 {
 
     static int N, M, R;
-    static int[][] map;
+    static int[][] arr;
     static int[] dx = {0, 1, 0, -1};
     static int[] dy = {1, 0, -1, 0};
 
@@ -23,51 +23,48 @@ public class BOJ_16926_배열돌리기1 {
         M = Integer.parseInt(st.nextToken());
         R = Integer.parseInt(st.nextToken());
 
-        map = new int[N][M];
+        arr = new int[N][M];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        for (int r = 0; r < R; r++) {
+        for (int r = 0; r < R; r++)
             rotate();
-        }
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                sb.append(map[i][j]).append(" ");
+                sb.append(arr[i][j]).append(" ");
             }
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void rotate() {
         int mode = Math.min(N, M) / 2;
 
         for (int m = 0; m < mode; m++) {
-            int x = m;
-            int y = m;
-            int tmp = map[x][y];
-            int d = 0;
+            int x = m, y = m, dir = 0;
+            int tmp = arr[x][y];
 
-            while (d < 4) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+            while (dir < 4) {
+                int nx = x + dx[dir];
+                int ny = y + dy[dir];
 
                 if (nx >= m && nx < N - m && ny >= m && ny < M - m) {
-                    map[x][y] = map[nx][ny];
+                    arr[x][y] = arr[nx][ny];
                     x = nx;
                     y = ny;
                 } else {
-                    d++;
+                    dir++;
                 }
             }
 
-            map[m + 1][m] = tmp;
+            arr[m + 1][m] = tmp;
         }
     }
 }
