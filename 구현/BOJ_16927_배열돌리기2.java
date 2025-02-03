@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_16927_배열돌리기2 {
 
     static int N, M, R;
-    static int[][] map;
+    static int[][] arr;
     static int[] dx = {0, 1, 0, -1};
     static int[] dy = {1, 0, -1, 0};
 
@@ -23,56 +23,53 @@ public class BOJ_16927_배열돌리기2 {
         M = Integer.parseInt(st.nextToken());
         R = Integer.parseInt(st.nextToken());
 
-        map = new int[N][M];
+        arr = new int[N][M];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        int n = N;
-        int m = M;
+        int n = N, m = M;
         int mode = Math.min(N, M) / 2;
         for (int i = 0; i < mode; i++) {
-            rotate(i, n*2 + m*2 - 4);
+            rotate(i, n * 2 + m * 2 - 4);
             n -= 2;
             m -= 2;
         }
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                sb.append(map[i][j]).append(" ");
+                sb.append(arr[i][j]).append(" ");
             }
             sb.append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static void rotate(int start, int len) {
         int r = R % len;
 
         for (int i = 0; i < r; i++) {
-            int x = start;
-            int y = start;
-            int tmp = map[x][y];
-            int d = 0;
+            int x = start, y = start, dir = 0;
+            int tmp = arr[x][y];
 
-            while (d < 4) {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+            while (dir < 4) {
+                int nx = x + dx[dir];
+                int ny = y + dy[dir];
 
                 if (nx >= start && nx < N - start && ny >= start && ny < M - start) {
-                    map[x][y] = map[nx][ny];
+                    arr[x][y] = arr[nx][ny];
                     x = nx;
                     y = ny;
                 } else {
-                    d++;
+                    dir++;
                 }
             }
 
-            map[start + 1][start] = tmp;
+            arr[start + 1][start] = tmp;
         }
     }
 }
