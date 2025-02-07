@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_02615_오목 {
 
+    static final int N = 20;
     static int[][] map;
     static int res, resX, resY;
     static int[] dx = {-1, 0, 1, 1};
@@ -18,29 +19,28 @@ public class BOJ_02615_오목 {
         StringTokenizer st = null;
         StringBuilder sb = new StringBuilder();
 
-        map = new int[20][20];
-        for (int i = 1; i < 20; i++) {
+        map = new int[N][N];
+        for (int i = 1; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j < 20; j++) {
+            for (int j = 1; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        if (solve()) {
+        if (play())
             sb.append(res).append("\n").append(resX).append(" ").append(resY);
-        } else {
-            sb.append(res);
-        }
+        else
+            sb.append(0);
 
         System.out.println(sb);
     }
 
-    private static boolean solve() {
-        for (int i = 1; i < 20; i++) {
-            for (int j = 1; j < 20; j++) {
+    private static boolean play() {
+        for (int i = 1; i < N; i++) {
+            for (int j = 1; j < N; j++) {
                 if (map[i][j] == 0) continue;
 
-                if (checkFive(i, j, map[i][j])) {
+                if (isFive(i, j, map[i][j])) {
                     res = map[i][j];
                     resX = i;
                     resY = j;
@@ -50,16 +50,12 @@ public class BOJ_02615_오목 {
             }
         }
 
-        res = 0;
-
         return false;
     }
 
-    private static boolean checkFive(int x, int y, int color) {
+    private static boolean isFive(int x, int y, int color) {
         for (int d = 0; d < 4; d++) {
-            int nx = x;
-            int ny = y;
-            int cnt = 1;
+            int nx = x, ny = y, cnt = 1;
 
             while (true) {
                 nx += dx[d];
@@ -69,10 +65,13 @@ public class BOJ_02615_오목 {
 
                 cnt++;
             }
+
             if (cnt == 5) {
                 nx = x - dx[d];
                 ny = y - dy[d];
-                if (map[nx][ny] != color) return true;
+
+                if (map[nx][ny] != color)
+                    return true;
             }
         }
 
@@ -80,7 +79,6 @@ public class BOJ_02615_오목 {
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 1 && nx < 20 && ny >= 1 && ny < 20) return true;
-        else return false;
+        return nx >= 1 && nx < N && ny >= 1 && ny < N;
     }
 }
