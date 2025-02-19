@@ -1,5 +1,5 @@
 /**
- * BOJ : S5 14916 거스름돈
+ * BOJ : 14916 S5 거스름돈
  */
 import java.io.BufferedReader;
 import java.io.IOException;
