@@ -1,5 +1,5 @@
 /**
- * BOJ : 1213 G3 팰린드롬 만들기
+ * BOJ : 1213 S3 팰린드롬 만들기
  */
 import java.io.BufferedReader;
 import java.io.IOException;
