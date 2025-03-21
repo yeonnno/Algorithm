@@ -1,18 +1,21 @@
 import java.util.*;
 
 class Solution {
+    
     static int N, M;
     static char[][] map;
-    static int[] start, end;
     static boolean[][] visited;
+    static int[] start, end;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
+    
     public int solution(String[] board) {
         N = board.length;
         M = board[0].length();
         start = new int[2];
         end = new int[2];
         map = new char[N][M];
+        
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 map[i][j] = board[i].charAt(j);
@@ -37,6 +40,7 @@ class Solution {
     public static int BFS() {
         Queue<Point> Q = new LinkedList<>();
         Q.offer(new Point(start[0], start[1], 0));
+        
         visited[start[0]][start[1]] = true;
         
         while (!Q.isEmpty()) {
@@ -70,8 +74,7 @@ class Solution {
     }
     
     public static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < N && ny >= 0 && ny < M) return true;
-        else return false;
+        return nx >= 0 && nx < N && ny >= 0 && ny < M;
     }
     
     public static class Point {
