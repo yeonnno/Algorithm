@@ -6,16 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class BOJ_14916_거스름돈 {
-
-    static int N, res;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        N = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
 
-        res = 0;
-
+        int res = 0;
         while (true) {
             if (N < 0) {
                 res = -1;
