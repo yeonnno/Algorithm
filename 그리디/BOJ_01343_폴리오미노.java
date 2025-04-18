@@ -10,13 +10,13 @@ public class BOJ_01343_폴리오미노 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        String board = br.readLine() + '.';
-        int len = board.length();
+        String str = br.readLine() + '.';
+        int len = str.length();
 
         int cnt = 0;
         boolean check = true;
         for (int i = 0; i < len; i++) {
-            char ch = board.charAt(i);
+            char ch = str.charAt(i);
 
             if (ch == 'X') {
                 cnt++;
@@ -26,7 +26,7 @@ public class BOJ_01343_폴리오미노 {
                     break;
                 }
 
-                while (cnt != 0) {
+                while (cnt > 0) {
                     if (cnt >= 4) {
                         cnt -= 4;
                         sb.append("AAAA");
@@ -43,7 +43,7 @@ public class BOJ_01343_폴리오미노 {
         if (check) {
             sb.deleteCharAt(sb.length() - 1);
             System.out.println(sb);
-        } else {
+        } else{
             System.out.println(-1);
         }
     }
