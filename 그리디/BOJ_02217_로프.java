@@ -18,7 +18,7 @@ public class BOJ_02217_로프 {
 
         Arrays.sort(arr);
 
-        int res = -1;
+        int res = 0;
         for (int i = 0; i < N; i++)
             res = Math.max(res, arr[i] * (N - i));
 
