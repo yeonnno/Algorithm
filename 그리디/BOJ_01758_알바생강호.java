@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class BOJ_01758_알바생강호 {
     public static void main(String[] args) throws IOException {
@@ -13,18 +12,18 @@ public class BOJ_01758_알바생강호 {
 
         int N = Integer.parseInt(br.readLine());
 
-        Integer[] arr = new Integer[N];
+        int[] arr = new int[N];
         for (int i = 0; i < N; i++)
             arr[i] = Integer.parseInt(br.readLine());
 
-        Arrays.sort(arr, Collections.reverseOrder());
+        Arrays.sort(arr);
 
         long res = 0;
-        for (int i = 0; i < N; i++) {
-            if (arr[i] - i > 0)
-                res += arr[i] - i;
-            else
-                break;
+        int idx = 0;
+        for (int i = N - 1; i >= 0; i--) {
+            if (arr[i] - idx >= 0)
+                res += arr[i] - idx;
+            idx++;
         }
 
         System.out.println(res);
