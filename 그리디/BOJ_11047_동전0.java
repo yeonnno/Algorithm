@@ -15,16 +15,14 @@ public class BOJ_11047_동전0 {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        int[] coin = new int[N];
+        int[] arr = new int[N];
         for (int i = 0; i < N; i++)
-            coin[i] = Integer.parseInt(br.readLine());
+            arr[i] = Integer.parseInt(br.readLine());
 
         int res = 0;
         for (int i = N - 1; i >= 0; i--) {
-            if (coin[i] > K) continue;
-
-            res += K / coin[i];
-            K %= coin[i];
+            res += K / arr[i];
+            K %= arr[i];
         }
 
         System.out.println(res);
