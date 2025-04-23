@@ -21,10 +21,10 @@ public class BOJ_11399_ATM {
 
         Arrays.sort(arr);
 
-        int res = 0, pre = 0;
-        for (int i = 0; i < N; i++) {
-            res += pre + arr[i];
-            pre += arr[i];
+        int res = arr[0];
+        for (int i = 1; i < N; i++) {
+            res += arr[i - 1] + arr[i];
+            arr[i] += arr[i - 1];
         }
 
         System.out.println(res);
