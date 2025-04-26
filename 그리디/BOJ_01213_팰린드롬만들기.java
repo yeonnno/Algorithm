@@ -25,25 +25,27 @@ public class BOJ_01213_팰린드롬만들기 {
         if (oddCnt > 1) {
             System.out.println("I'm Sorry Hansoo");
         } else {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder res = new StringBuilder();
             StringBuilder tmp = new StringBuilder();
 
             for (int i = 0; i < 26; i++) {
-                for (int j = 0; j < alpha[i] / 2; j++) {
+                if (alpha[i] == 0) continue;
+
+                int x = alpha[i] / 2;
+                for (int j = 0; j < x; j++)
                     tmp.append((char) (i + 'A'));
-                }
             }
 
-            sb.append(tmp);
+            res.append(tmp);
 
             for (int i = 0; i < 26; i++) {
                 if (alpha[i] % 2 == 1)
-                    sb.append((char) (i + 'A'));
+                    res.append((char) (i + 'A'));
             }
 
-            sb.append(tmp.reverse());
+            res.append(tmp.reverse());
 
-            System.out.println(sb);
+            System.out.println(res);
         }
     }
 }
