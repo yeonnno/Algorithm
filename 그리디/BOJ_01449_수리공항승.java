@@ -23,8 +23,7 @@ public class BOJ_01449_수리공항승 {
 
         Arrays.sort(arr);
 
-        int res = 1;
-        int len = arr[0] + (L - 1);
+        int res = 1, len = arr[0] + (L - 1);
         for (int i = 1; i < N; i++) {
             if (arr[i] <= len) continue;
 
