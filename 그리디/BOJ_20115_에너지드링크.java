@@ -18,13 +18,13 @@ public class BOJ_20115_에너지드링크 {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
-
             max = Math.max(max, arr[i]);
         }
 
         double res = max;
         for (int i = 0; i < N; i++) {
-            if (max == arr[i]) continue;
+            if (max == arr[i])
+                continue;
 
             res += arr[i] / 2;
         }
