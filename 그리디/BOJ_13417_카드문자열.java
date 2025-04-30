@@ -29,13 +29,10 @@ public class BOJ_13417_카드문자열 {
             StringBuilder sb = new StringBuilder();
 
             for (int i = 1; i < N; i++) {
-                char now = arr[i];
-
-                if (now <= DQ.peek()) {
-                    DQ.offerFirst(now);
-                } else {
-                    DQ.offerLast(now);
-                }
+                if (arr[i] <= DQ.peek())
+                    DQ.offerFirst(arr[i]);
+                else
+                    DQ.offerLast(arr[i]);
             }
 
             for (char ch : DQ)
