@@ -10,12 +10,10 @@ public class BOJ_01541_잃어버린괄호 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringTokenizer sub = new StringTokenizer(br.readLine(), "-");
-
         int res = Integer.MAX_VALUE;
+        StringTokenizer sub = new StringTokenizer(br.readLine(), "-");
         while (sub.hasMoreTokens()) {
             int tmp = 0;
-
             StringTokenizer add = new StringTokenizer(sub.nextToken(), "+");
 
             while (add.hasMoreTokens())
