@@ -17,16 +17,14 @@ public class BOJ_16953_AtoB {
 
         int res = 1;
         while (A != B) {
-            if (A > B) {
+            if (B < A) {
                 res = -1;
                 break;
             }
 
-            if (B % 2 == 0) {
-                B /= 2;
-            } else if (B % 10 == 1) {
-                B /= 10;
-            } else {
+            if (B % 2 == 0) B /= 2;
+            else if (B % 10 == 1) B /= 10;
+            else {
                 res = -1;
                 break;
             }
