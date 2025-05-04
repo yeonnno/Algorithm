@@ -10,6 +10,7 @@ public class BOJ_01138_한줄로서기 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
+        StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
 
@@ -21,21 +22,23 @@ public class BOJ_01138_한줄로서기 {
         int[] res = new int[N + 1];
 
         for (int i = 1; i <= N; i++) {
-            int j = 1;
+            int x = 1;
 
             while (true) {
-                if (arr[i] == 0 && res[j] == 0) {
-                    res[j] = i;
+                if (arr[i] == 0 && res[x] == 0) {
+                    res[x] = i;
                     break;
-                } else if (res[j] == 0) {
+                } else if (res[x] == 0) {
                     arr[i]--;
                 }
 
-                j++;
+                x++;
             }
         }
 
         for (int i = 1; i <= N; i++)
-            System.out.print(res[i] + " ");
+            sb.append(res[i]).append(" ");
+
+        System.out.println(sb);
     }
 }
