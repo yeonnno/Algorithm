@@ -16,14 +16,14 @@ public class BOJ_11501_주식 {
         for (int t = 0; t < T; t++) {
             int N = Integer.parseInt(br.readLine());
 
-            int[] arr = new int[N];
+            int[] arr = new int[N + 1];
             st = new StringTokenizer(br.readLine());
-            for (int i = 0; i < N; i++)
+            for (int i = 1; i <= N; i++)
                 arr[i] = Integer.parseInt(st.nextToken());
 
+            int max = arr[N];
             long res = 0;
-            int max = arr[N - 1];
-            for (int i = N - 2; i >= 0; i--) {
+            for (int i = N - 1; i >= 1; i--) {
                 if (arr[i] < max)
                     res += max - arr[i];
                 else
