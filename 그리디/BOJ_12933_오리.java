@@ -13,40 +13,40 @@ public class BOJ_12933_오리 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         char[] arr = br.readLine().toCharArray();
-
         int len = arr.length;
+
         if (len % 5 != 0) {
             System.out.println(-1);
-            return;
-        }
+        } else {
+            int res = 0;
 
-        int res = 0;
-        while (len != 0) {
-            int idx = 0, now = 0;
-            boolean check = false;
-            int[] tmp = new int[5];
+            while (len != 0) {
+                int idx = 0, now = 0;
+                boolean check = false;
+                int[] tmp = new int[5];
 
-            while (idx < arr.length) {
-                if (arr[idx] == quack[now]) {
-                    tmp[now++] = idx;
+                while (idx < arr.length) {
+                    if (arr[idx] == quack[now]) {
+                        tmp[now++] = idx;
 
-                    if (now == 5) {
-                        check = true;
-                        len -= 5;
-                        now = 0;
+                        if (now == 5) {
+                            now = 0;
+                            len -= 5;
+                            check = true;
 
-                        for (int i = 0; i < 5; i++)
-                            arr[tmp[i]] = 'X';
+                            for (int i = 0; i < 5; i++)
+                                arr[tmp[i]] = 'X';
+                        }
                     }
+
+                    idx++;
                 }
 
-                idx++;
+                if (check) res++;
+                else break;
             }
 
-            if (check) res++;
-            else break;
+            System.out.println(len == 0 ? res : -1);
         }
-
-        System.out.println(len == 0 ? res : -1);
     }
 }
