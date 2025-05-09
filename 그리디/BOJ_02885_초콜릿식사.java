@@ -12,12 +12,13 @@ public class BOJ_02885_초콜릿식사 {
 
         int K = Integer.parseInt(br.readLine());
 
-        int n = 1, cnt = 0;
+        int n = 1;
         while (n < K)
             n *= 2;
 
         sb.append(n).append(" ");
 
+        int cnt = 0;
         while (K > 0) {
             if (K >= n) {
                 K -= n;
