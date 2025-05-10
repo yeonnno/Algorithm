@@ -16,17 +16,17 @@ public class BOJ_01946_신입사원 {
         for (int t = 0; t < T; t++) {
             int N = Integer.parseInt(br.readLine());
 
-            int[] arr = new int[N];
+            int[] arr = new int[N + 1];
             for (int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
-                int x = Integer.parseInt(st.nextToken()) - 1;
+                int x = Integer.parseInt(st.nextToken());
                 int y = Integer.parseInt(st.nextToken());
 
                 arr[x] = y;
             }
 
-            int res = 1, min = arr[0];
-            for (int i = 1; i < N; i++) {
+            int res = 1, min = arr[1];
+            for (int i = 2; i <= N; i++) {
                 if (min > arr[i]) {
                     min = arr[i];
                     res++;
