@@ -22,23 +22,21 @@ public class BOJ_01080_행렬 {
         A = new int[N][M];
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
-            for (int j = 0; j < M; j++) {
+            for (int j = 0; j < M; j++)
                 A[i][j] = s.charAt(j) - '0';
-            }
         }
 
         B = new int[N][M];
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
-            for (int j = 0; j < M; j++) {
+            for (int j = 0; j < M; j++)
                 B[i][j] = s.charAt(j) - '0';
-            }
         }
 
         res = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (A[i][j] != B[i][j] && i + 2 < N && j + 2 < M) {
+                if (i + 2 < N && j + 2 < M && A[i][j] != B[i][j]) {
                     convertMatrix(i, j);
                     res++;
                 }
@@ -61,9 +59,8 @@ public class BOJ_01080_행렬 {
 
     private static void convertMatrix(int x, int y) {
         for (int i = x; i < x + 3; i++) {
-            for (int j = y; j < y + 3; j++) {
+            for (int j = y; j < y + 3; j++)
                 A[i][j] ^= 1;
-            }
         }
     }
 }
