@@ -24,23 +24,23 @@ public class BOJ_11497_통나무건너뛰기 {
 
             Arrays.sort(arr);
 
+            int[] tmp = new int[N];
             int left = 0, right = N - 1;
-            int[] res = new int[N];
             for (int i = 0; i < N; i++) {
                 if (i % 2 == 0) {
-                    res[left] = arr[i];
+                    tmp[left] = arr[i];
                     left++;
                 } else {
-                    res[right] = arr[i];
+                    tmp[right] = arr[i];
                     right--;
                 }
             }
 
-            int min = Math.abs(res[0] - res[N - 1]);
+            int res = Math.abs(tmp[0] - tmp[N - 1]);
             for (int i = 1; i < N; i++)
-                min = Math.max(min, Math.abs(res[i] - res[i - 1]));
+                res = Math.max(res, Math.abs(tmp[i] - tmp[i - 1]));
 
-            sb.append(min).append("\n");
+            sb.append(res).append("\n");
         }
 
         System.out.print(sb);
