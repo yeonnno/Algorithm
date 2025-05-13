@@ -15,12 +15,14 @@ public class BOJ_01105_팔 {
         String L = st.nextToken();
         String R = st.nextToken();
 
-        if (L.length() != R.length()) {
+        int lLen = L.length(), rLen = R.length();
+
+        if (lLen != rLen) {
             System.out.println(0);
         } else {
             int idx = 0, res = 0;
 
-            while (idx < L.length() && L.charAt(idx) == R.charAt(idx)) {
+            while (idx < lLen && L.charAt(idx) == R.charAt(idx)) {
                 if (L.charAt(idx) == '8')
                     res++;
 
