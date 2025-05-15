@@ -13,10 +13,11 @@ public class BOJ_15903_카드합체놀이 {
         StringTokenizer st = null;
 
         st = new StringTokenizer(br.readLine());
-        long N = Long.parseLong(st.nextToken());
-        long M = Long.parseLong(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
         PriorityQueue<Long> PQ = new PriorityQueue<>();
+
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++)
             PQ.offer(Long.parseLong(st.nextToken()));
@@ -26,12 +27,12 @@ public class BOJ_15903_카드합체놀이 {
             long y = PQ.poll();
 
             PQ.offer(x + y);
-            PQ.offer( x + y);
+            PQ.offer(x + y);
         }
 
         long res = 0;
-        for (long num : PQ)
-            res += num;
+        for (long n : PQ)
+            res += n;
 
         System.out.println(res);
     }
