@@ -11,8 +11,7 @@ public class BOJ_17615_볼모으기 {
 
         int N = Integer.parseInt(br.readLine());
 
-        String s = br.readLine();
-        char[] ball = s.toCharArray();
+        char[] ball = br.readLine().toCharArray();
         int redCnt = 0, blueCnt = 0;
         for (int i = 0; i < N; i++) {
             if (ball[i] == 'R')
