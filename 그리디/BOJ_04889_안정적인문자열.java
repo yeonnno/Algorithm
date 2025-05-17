@@ -12,18 +12,17 @@ public class BOJ_04889_안정적인문자열 {
         StringBuilder sb = new StringBuilder();
 
         int tc = 1;
+        Stack<Character> stack;
         while (true) {
-            String str = br.readLine();
+            char[] arr = br.readLine().toCharArray();
 
-            if (str.charAt(0) == '-') break;
+            if (arr[0] == '-') break;
 
-            int res = 0, len = str.length();
-            Stack<Character> stack = new Stack<>();
+            stack = new Stack<>();
+            int res = 0, len = arr.length;
             for (int i = 0; i < len; i++) {
-                char ch = str.charAt(i);
-
-                if (ch == '{') {
-                    stack.push(ch);
+                if (arr[i] == '{') {
+                    stack.push(arr[i]);
                 } else {
                     if (stack.isEmpty()) {
                         res++;
