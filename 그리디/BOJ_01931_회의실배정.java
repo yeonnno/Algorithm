@@ -37,8 +37,7 @@ public class BOJ_01931_회의실배정 {
     }
 
     private static class Room implements Comparable<Room> {
-        int start;
-        int end;
+        int start, end;
 
         public Room(int start, int end) {
             this.start = start;
@@ -49,7 +48,6 @@ public class BOJ_01931_회의실배정 {
         public int compareTo(Room o) {
             if (this.end == o.end)
                 return this.start - o.start;
-
             return this.end - o.end;
         }
     }
