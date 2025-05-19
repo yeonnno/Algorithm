@@ -24,23 +24,19 @@ public class BOJ_11000_강의실배정 {
 
         Collections.sort(list);
 
-        int time = 0;
         PriorityQueue<Integer> PQ = new PriorityQueue<>();
         for (Lecture now : list) {
-            time = now.end;
-
             if (!PQ.isEmpty() && PQ.peek() <= now.start)
                 PQ.poll();
 
-            PQ.offer(time);
+            PQ.offer(now.end);
         }
 
         System.out.println(PQ.size());
     }
 
     private static class Lecture implements Comparable<Lecture> {
-        int start;
-        int end;
+        int start, end;
 
         public Lecture(int start, int end) {
             this.start = start;
@@ -51,7 +47,6 @@ public class BOJ_11000_강의실배정 {
         public int compareTo(Lecture o) {
             if (this.start == o.start)
                 return this.end - o.end;
-
             return this.start - o.start;
         }
     }
