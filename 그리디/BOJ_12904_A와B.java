@@ -11,8 +11,9 @@ public class BOJ_12904_A와B {
 
         StringBuilder S = new StringBuilder(br.readLine());
         StringBuilder T = new StringBuilder(br.readLine());
+        int sLen = S.length();
 
-        while (S.length() < T.length()) {
+        while (sLen < T.length()) {
             int tLen = T.length();
 
             if (T.charAt(tLen - 1) == 'A') {
