@@ -1,5 +1,5 @@
 /**
- * BOJ : 1095 G5 배
+ * BOJ : 1092 G5 배
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,28 +34,28 @@ public class BOJ_01092_배 {
 
         if (crane.get(0) < box.get(0)) {
             System.out.println(-1);
-            return;
-        }
+        } else {
+            int res = 0;
 
-        int res = 0;
-        while (!box.isEmpty()) {
-            int boxIdx = 0, craneIdx = 0;
+            while (!box.isEmpty()) {
+                int craneIdx = 0, boxIdx = 0;
 
-            while (craneIdx < N) {
-                if (boxIdx == box.size())
-                    break;
+                while (craneIdx < N) {
+                    if (boxIdx == box.size())
+                        break;
 
-                if (crane.get(craneIdx) >= box.get(boxIdx)) {
-                    box.remove(boxIdx);
-                    craneIdx++;
-                } else {
-                    boxIdx++;
+                    if (box.get(boxIdx) <= crane.get(craneIdx)) {
+                        box.remove(boxIdx);
+                        craneIdx++;
+                    } else {
+                        boxIdx++;
+                    }
                 }
+
+                res++;
             }
 
-            res++;
+            System.out.println(res);
         }
-
-        System.out.println(res);
     }
 }
