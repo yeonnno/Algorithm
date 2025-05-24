@@ -16,9 +16,9 @@ public class BOJ_01052_물병 {
         int K = Integer.parseInt(st.nextToken());
 
         int res = 0;
-        while (Integer.bitCount(N) > K) {
-            N++;
+        while (K < Integer.bitCount(N)) {
             res++;
+            N++;
         }
 
         System.out.println(res);
