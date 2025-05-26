@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class BOJ_21758_꿀따기 {
 
     static int N;
-    static int[] arr;
+    static int[] arr, sum;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,15 +22,15 @@ public class BOJ_21758_꿀따기 {
         for (int i = 0; i < N; i++)
             arr[i] = Integer.parseInt(st.nextToken());
 
-        int l = left();
-        int r = right();
-        int m = mid();
+        int left = left();
+        int right = right();
+        int mid = mid();
 
-        System.out.println(Math.max(l, Math.max(r, m)));
+        System.out.println(Math.max(left, Math.max(right, mid)));
     }
 
     private static int left() {
-        int[] sum = new int[N];
+        sum = new int[N];
 
         for (int i = 1; i < N; i++)
             sum[i] = sum[i - 1] + arr[i - 1];
@@ -43,7 +43,7 @@ public class BOJ_21758_꿀따기 {
     }
 
     private static int right() {
-        int[] sum = new int[N];
+        sum = new int[N];
 
         for (int i = N - 2; i >= 0; i--)
             sum[i] = sum[i + 1] + arr[i + 1];
