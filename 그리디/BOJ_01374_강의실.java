@@ -28,9 +28,8 @@ public class BOJ_01374_강의실 {
         int res = 0;
         PriorityQueue<Integer> PQ = new PriorityQueue<>();
         for (int i = 0; i < N; i++) {
-            while (!PQ.isEmpty() && PQ.peek() <= list.get(i).start) {
+            while (!PQ.isEmpty() && PQ.peek() <= list.get(i).start)
                 PQ.poll();
-            }
 
             PQ.offer(list.get(i).end);
             res = Math.max(res, PQ.size());
@@ -40,9 +39,7 @@ public class BOJ_01374_강의실 {
     }
 
     private static class Lecture implements Comparable<Lecture> {
-        int num;
-        int start;
-        int end;
+        int num, start, end;
 
         public Lecture(int num, int start, int end) {
             this.num = num;
@@ -54,7 +51,6 @@ public class BOJ_01374_강의실 {
         public int compareTo(Lecture o) {
             if (this.start == o.start)
                 return this.end - o.end;
-
             return this.start - o.start;
         }
     }
