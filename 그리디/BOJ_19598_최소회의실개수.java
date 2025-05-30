@@ -27,9 +27,8 @@ public class BOJ_19598_최소회의실개수 {
         int res = 0;
         PriorityQueue<Integer> PQ = new PriorityQueue<>();
         for (int i = 0; i < N; i++) {
-            while (!PQ.isEmpty() && PQ.peek() <= list.get(i).start) {
+            while (!PQ.isEmpty() && PQ.peek() <= list.get(i).start)
                 PQ.poll();
-            }
 
             PQ.offer(list.get(i).end);
             res = Math.max(res, PQ.size());
@@ -39,8 +38,7 @@ public class BOJ_19598_최소회의실개수 {
     }
 
     private static class Room implements Comparable<Room> {
-        int start;
-        int end;
+        int start, end;
 
         public Room(int start, int end) {
             this.start = start;
@@ -51,7 +49,6 @@ public class BOJ_19598_최소회의실개수 {
         public int compareTo(Room o) {
             if (this.start == o.start)
                 return this.end - o.end;
-
             return this.start - o.start;
         }
     }
