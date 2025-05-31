@@ -29,9 +29,8 @@ public class BOJ_01911_흙길보수하기 {
         while (!PQ.isEmpty()) {
             Pool now = PQ.poll();
 
-            if (range < now.start) {
+            if (range < now.start)
                 range = now.start;
-            }
 
             while (range < now.end) {
                 range += L;
@@ -43,8 +42,7 @@ public class BOJ_01911_흙길보수하기 {
     }
 
     private static class Pool implements Comparable<Pool> {
-        int start;
-        int end;
+        int start, end;
 
         public Pool(int start, int end) {
             this.start = start;
@@ -55,7 +53,6 @@ public class BOJ_01911_흙길보수하기 {
         public int compareTo(Pool o) {
             if (this.start == o.start)
                 return this.end - o.end;
-
             return this.start - o.start;
         }
     }
