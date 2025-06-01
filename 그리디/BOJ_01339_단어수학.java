@@ -21,7 +21,6 @@ public class BOJ_01339_단어수학 {
 
             for (int j = 0; j < len; j++) {
                 char ch = s.charAt(j);
-
                 arr[ch - 'A'] += (int) Math.pow(10, len - j - 1);
             }
         }
@@ -30,7 +29,8 @@ public class BOJ_01339_단어수학 {
 
         int res = 0, num = 9;
         for (int i = 25; i >= 0; i--) {
-            if (arr[i] == 0) break;
+            if (arr[i] == 0)
+                break;
 
             res += arr[i] * num;
             num--;
