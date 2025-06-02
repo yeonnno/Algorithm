@@ -16,14 +16,15 @@ public class BOJ_01715_카드정렬하기 {
         for (int i = 0; i < N; i++)
             PQ.offer(Integer.parseInt(br.readLine()));
 
-        int res = 0;
-        while (PQ.size() != 1) {
+        int res = 0, size = PQ.size();
+        while (size > 1) {
             int x = PQ.poll();
             int y = PQ.poll();
 
             res += x + y;
-
             PQ.offer(x + y);
+
+            size = PQ.size();
         }
 
         System.out.println(res);
