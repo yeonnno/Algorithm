@@ -15,13 +15,12 @@ public class BOJ_01744_수묶기 {
 
         PriorityQueue<Integer> pos = new PriorityQueue<>(Collections.reverseOrder());
         PriorityQueue<Integer> neg = new PriorityQueue<>();
+
         for (int i = 0; i < N; i++) {
             int x = Integer.parseInt(br.readLine());
 
-            if (x > 0)
-                pos.offer(x);
-            else
-                neg.offer(x);
+            if (x > 0) pos.offer(x);
+            else neg.offer(x);
         }
 
         int res = 0;
