@@ -24,14 +24,11 @@ public class BOJ_01461_도서관 {
         for (int i = 0; i < N; i++) {
             int x = Integer.parseInt(st.nextToken());
 
-            if (x > 0)
-                pos.offer(x);
-            else
-                neg.offer(Math.abs(x));
+            if (x > 0) pos.offer(x);
+            else neg.offer(Math.abs(x));
         }
 
         int max = Math.max(!pos.isEmpty() ? pos.peek() : 0, !neg.isEmpty() ? neg.peek() : 0);
-
         int res = 0;
 
         while (!pos.isEmpty()) {
