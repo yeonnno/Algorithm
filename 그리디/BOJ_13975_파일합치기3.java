@@ -18,17 +18,20 @@ public class BOJ_13975_파일합치기3 {
             int K = Integer.parseInt(br.readLine());
 
             PriorityQueue<Long> PQ = new PriorityQueue<>();
+
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < K; i++)
                 PQ.offer(Long.parseLong(st.nextToken()));
 
-            long res = 0;
-            while (PQ.size() != 1) {
+            long res = 0, size = PQ.size();
+            while (size != 1) {
                 long x = PQ.poll();
                 long y = PQ.poll();
 
                 res += x + y;
                 PQ.offer(x + y);
+
+                size = PQ.size();
             }
 
             sb.append(res).append("\n");
