@@ -29,14 +29,14 @@ public class BOJ_13904_과제 {
         while (!PQ.isEmpty()) {
             Task now = PQ.poll();
 
-            if (!visited[now.day]) {
-                res += now.score;
-                visited[now.day] = true;
+            if (!visited[now.d]) {
+                res += now.w;
+                visited[now.d] = true;
             } else {
-                for (int i = now.day - 1; i >= 1; i--) {
+                for (int i = now.d - 1; i >= 1; i--) {
                     if (visited[i]) continue;
 
-                    res += now.score;
+                    res += now.w;
                     visited[i] = true;
                     break;
                 }
@@ -47,17 +47,16 @@ public class BOJ_13904_과제 {
     }
 
     private static class Task implements Comparable<Task> {
-        int day;
-        int score;
+        int d, w;
 
-        public Task(int day, int score) {
-            this.day = day;
-            this.score = score;
+        public Task(int d, int w) {
+            this.d = d;
+            this.w = w;
         }
 
         @Override
         public int compareTo(Task o) {
-            return o.score - this.score;
+            return o.w - this.w;
         }
     }
 }
