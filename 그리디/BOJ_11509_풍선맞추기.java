@@ -18,9 +18,8 @@ public class BOJ_11509_풍선맞추기 {
         for (int i = 0; i < N; i++)
             arr[i] = Integer.parseInt(st.nextToken());
 
-        int[] arrow = new int[1000001];
-
         int res = 0;
+        int[] arrow = new int[1000001];
         for (int i = 0; i < N; i++) {
             if (arrow[arr[i]] > 0) {
                 arrow[arr[i]]--;
