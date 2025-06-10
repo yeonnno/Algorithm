@@ -39,8 +39,7 @@ public class BOJ_01263_시간관리 {
     }
 
     private static class Task implements Comparable<Task> {
-        int t;
-        int s;
+        int t, s;
 
         public Task(int t, int s) {
             this.t = t;
