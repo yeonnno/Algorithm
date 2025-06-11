@@ -24,6 +24,7 @@ public class BOJ_12931_두배더하기 {
         int res = 0;
         while (total != 0) {
             int cnt = 0;
+
             for (int i = 0; i < N; i++) {
                 if (arr[i] % 2 == 1) {
                     arr[i]--;
@@ -35,9 +36,8 @@ public class BOJ_12931_두배더하기 {
                 total -= cnt;
                 res += cnt;
             } else {
-                for (int i = 0; i < N; i++) {
+                for (int i = 0; i < N; i++)
                     arr[i] /= 2;
-                }
 
                 total /= 2;
                 res++;
