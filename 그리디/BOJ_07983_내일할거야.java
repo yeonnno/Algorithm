@@ -34,8 +34,7 @@ public class BOJ_07983_내일할거야 {
     }
 
     private static class Task implements Comparable<Task> {
-        int d;
-        int t;
+        int d, t;
 
         public Task(int d, int t) {
             this.d = d;
