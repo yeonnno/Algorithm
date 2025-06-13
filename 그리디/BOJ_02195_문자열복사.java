@@ -12,7 +12,8 @@ public class BOJ_02195_문자열복사 {
         String S = br.readLine();
         String P = br.readLine();
 
-        int res = 0, idx = 0, len = P.length();
+        int len = P.length();
+        int res = 0, idx = 0;
         for (int i = 0; i < len; i++) {
             String sub = P.substring(idx, i + 1);
 
