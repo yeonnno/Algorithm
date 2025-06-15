@@ -17,6 +17,7 @@ public class BOJ_09009_피보나치 {
         fibo();
 
         Stack<Integer> stack = new Stack<>();
+
         int T = Integer.parseInt(br.readLine());
         for (int t = 0; t < T; t++) {
             int N = Integer.parseInt(br.readLine());
@@ -27,8 +28,7 @@ public class BOJ_09009_피보나치 {
                     stack.push(fiboArr[i]);
                 }
 
-                if (N == 0)
-                    break;
+                if (N == 0) break;
             }
 
             while (!stack.isEmpty())
@@ -41,7 +41,6 @@ public class BOJ_09009_피보나치 {
 
     private static void fibo() {
         fiboArr = new int[46];
-        fiboArr[0] = 0;
         fiboArr[1] = 1;
 
         for (int i = 2; i < 46; i++)
