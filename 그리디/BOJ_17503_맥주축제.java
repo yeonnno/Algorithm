@@ -47,8 +47,7 @@ public class BOJ_17503_맥주축제 {
     }
 
     private static class Beer implements Comparable<Beer> {
-        int v;
-        int c;
+        int v, c;
 
         public Beer(int v, int c) {
             this.v = v;
@@ -59,7 +58,6 @@ public class BOJ_17503_맥주축제 {
         public int compareTo(Beer o) {
             if (this.c == o.c)
                 return o.v - this.v;
-
             return this.c - o.c;
         }
     }
