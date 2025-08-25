@@ -26,53 +26,50 @@ public class BOJ_01325_효율적인해킹 {
         M = Integer.parseInt(st.nextToken());
 
         adj = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
-        }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
 
-            adj[s].add(e);
+            adj[e].add(s);
         }
 
         count = new int[N + 1];
+        int max = Integer.MIN_VALUE;
         for (int i = 1; i <= N; i++) {
+            int cnt = 1;
+
+            Queue<Integer> Q = new LinkedList<>();
+            Q.offer(i);
+
             visited = new boolean[N + 1];
-            BFS(i);
+            visited[i] = true;
+
+            while (!Q.isEmpty()) {
+                int now = Q.poll();
+
+                for (int next : adj[now]) {
+                    if (visited[next]) continue;
+
+                    visited[next] = true;
+                    cnt++;
+                    Q.offer(next);
+                }
+            }
+
+            count[i] = cnt;
+            if (max < cnt)
+                max = cnt;
         }
 
-        int max = 0;
         for (int i = 1; i <= N; i++) {
-            max = Math.max(max, count[i]);
-        }
-
-        for (int i = 1; i <= N; i++) {
-            if (count[i] == max) sb.append(i).append(" ");
+            if (count[i] == max)
+                sb.append(i).append(" ");
         }
 
         System.out.println(sb);
-    }
-
-    private static void BFS(int v) {
-        Queue<Integer> Q = new LinkedList<>();
-        Q.add(v);
-        visited[v] = true;
-
-        while (!Q.isEmpty()) {
-            int now = Q.poll();
-
-            for (int i = 0; i < adj[now].size(); i++) {
-                int next = adj[now].get(i);
-
-                if (!visited[next]) {
-                    visited[next] = true;
-                    count[next]++;
-                    Q.add(next);
-                }
-            }
-        }
     }
 }
