@@ -11,8 +11,7 @@ import java.util.StringTokenizer;
 public class BOJ_02589_보물섬 {
 
     static int N, M, res;
-    static char[][] map;
-    static boolean[][] visited;
+    static boolean[][] map, visited;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -24,30 +23,34 @@ public class BOJ_02589_보물섬 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        map = new char[N][M];
+        map = new boolean[N][M];
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
             for (int j = 0; j < M; j++) {
-                map[i][j] = s.charAt(j);
+                if (s.charAt(j) == 'L')
+                    map[i][j] = true;
             }
         }
 
+        res = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (map[i][j] == 'L') {
-                    visited = new boolean[N][M];
-                    BFS(new Point(i, j));
-                }
+                if (!map[i][j]) continue;
+
+                visited = new boolean[N][M];
+                BFS(i, j);
             }
         }
 
-        System.out.println(res-1);
+        System.out.println(res - 1);
     }
 
-    private static void BFS(Point p) {
+    private static void BFS(int x, int y) {
         Queue<Point> Q = new LinkedList<>();
-        Q.add(p);
-        visited[p.x][p.y] = true;
+        Q.offer(new Point(x, y));
+
+        visited[x][y] = true;
+
         int cnt = 0;
 
         while (!Q.isEmpty()) {
@@ -61,10 +64,10 @@ public class BOJ_02589_보물섬 {
                     int ny = now.y + dy[d];
 
                     if (!isPossible(nx, ny) || visited[nx][ny]) continue;
-                    if (map[nx][ny] == 'W') continue;
+                    if (!map[nx][ny]) continue;
 
                     visited[nx][ny] = true;
-                    Q.add(new Point(nx, ny));
+                    Q.offer(new Point(nx, ny));
                 }
             }
 
@@ -75,15 +78,13 @@ public class BOJ_02589_보물섬 {
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < N && ny >= 0 && ny < M) return true;
-        else return false;
+        return nx >= 0 && nx < N && ny >= 0 && ny < M;
     }
 
-    static class Point {
-        int x;
-        int y;
+    private static class Point {
+        int x, y;
 
-        Point(int x, int y) {
+        public Point(int x, int y) {
             this.x = x;
             this.y = y;
         }
