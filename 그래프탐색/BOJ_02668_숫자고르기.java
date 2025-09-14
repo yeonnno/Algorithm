@@ -10,7 +10,7 @@ import java.util.Collections;
 public class BOJ_02668_숫자고르기 {
 
     static int N;
-    static int[] num;
+    static int[] arr;
     static boolean[] visited;
     static ArrayList<Integer> list;
 
@@ -19,13 +19,14 @@ public class BOJ_02668_숫자고르기 {
         StringBuilder sb = new StringBuilder();
 
         N = Integer.parseInt(br.readLine());
-        num = new int[N + 1];
-        for (int i = 1; i <= N; i++) {
-            num[i] = Integer.parseInt(br.readLine());
-        }
+
+        arr = new int[N + 1];
+        for (int i = 1; i <= N; i++)
+            arr[i] = Integer.parseInt(br.readLine());
 
         list = new ArrayList<>();
         visited = new boolean[N + 1];
+
         for (int i = 1; i <= N; i++) {
             visited[i] = true;
             DFS(i, i);
@@ -33,22 +34,22 @@ public class BOJ_02668_숫자고르기 {
         }
 
         Collections.sort(list);
-        sb.append(list.size()).append("\n");
-        for (int i : list) {
-            sb.append(i).append("\n");
-        }
 
-        System.out.println(sb);
+        sb.append(list.size()).append("\n");
+        for (int x : list)
+            sb.append(x).append("\n");
+
+        System.out.print(sb);
     }
 
-    private static void DFS(int n, int start) {
-        if (num[n] == start)
+    private static void DFS(int now, int start) {
+        if (arr[now] == start)
             list.add(start);
 
-        if (!visited[num[n]]) {
-            visited[num[n]] = true;
-            DFS(num[n], start);
-            visited[num[n]] = false;
+        if (!visited[arr[now]]) {
+            visited[arr[now]] = true;
+            DFS(arr[now], start);
+            visited[arr[now]] = false;
         }
     }
 }
