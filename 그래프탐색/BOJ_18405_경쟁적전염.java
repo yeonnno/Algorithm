@@ -29,9 +29,9 @@ public class BOJ_18405_경쟁적전염 {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
-                if (map[i][j] != 0) {
-                    PQ.add(new Point(i, j, map[i][j], 0));
-                }
+
+                if (map[i][j] != 0)
+                    PQ.offer(new Point(i, j, map[i][j], 0));
             }
         }
 
@@ -49,35 +49,28 @@ public class BOJ_18405_경쟁적전염 {
         while (!PQ.isEmpty()) {
             Point now = PQ.poll();
 
-            if (now.time == S) break;
-            if (map[X][Y] != 0) break;
+            if (map[X][Y] != 0 || now.time == S) break;
 
             for (int d = 0; d < 4; d++) {
                 int nx = now.x + dx[d];
                 int ny = now.y + dy[d];
 
-                if (!isPossible(nx, ny)) continue;
-                if (map[nx][ny] != 0) continue;
+                if (!isPossible(nx, ny) || map[nx][ny] != 0) continue;
 
                 map[nx][ny] = now.virus;
-                PQ.add(new Point(nx, ny, now.virus, now.time + 1));
+                PQ.offer(new Point(nx, ny, now.virus, now.time + 1));
             }
-
         }
     }
 
     private static boolean isPossible(int nx, int ny) {
-        if (nx >= 0 && nx < N && ny >= 0 && ny < N) return true;
-        else return false;
+        return nx >= 0 && nx < N && ny >= 0 && ny < N;
     }
 
-    static class Point implements Comparable<Point>{
-        int x;
-        int y;
-        int virus;
-        int time;
+    private static class Point implements Comparable<Point> {
+        int x, y, virus, time;
 
-        Point(int x, int y, int virus, int time) {
+        public Point(int x, int y, int virus, int time) {
             this.x = x;
             this.y = y;
             this.virus = virus;
@@ -87,9 +80,9 @@ public class BOJ_18405_경쟁적전염 {
         @Override
         public int compareTo(Point o) {
             if (this.time != o.time)
-                return time - o.time;
-            else
-                return virus - o.virus;
+                return this.time - o.time;
+
+            return this.virus - o.virus;
         }
     }
 }
